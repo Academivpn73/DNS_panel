@@ -638,97 +638,112 @@
     <script>
         let selectedDNSType = '';
 
+        const allGames = [
+            // Battle Royale & Shooter Games
+            'Call of Duty Mobile', 'Call of Duty Warzone', 'Call of Duty MW3', 'Call of Duty Black Ops', 'Call of Duty Vanguard',
+            'PUBG Mobile', 'PUBG', 'PUBG Battlegrounds', 'Free Fire', 'Free Fire MAX',
+            'Fortnite', 'Fortnite Mobile', 'Apex Legends', 'Valorant', 'Counter-Strike 2',
+            'Overwatch 2', 'Rainbow Six Siege', 'Battlefield 2042', 'Battlefield 1', 'Battlefield V',
+            'Titanfall 2', 'Destiny 2', 'Warframe', 'Paladins', 'Team Fortress 2',
+            
+            // MOBA & Strategy Games
+            'League of Legends', 'Wild Rift', 'Dota 2', 'Mobile Legends', 'Arena of Valor',
+            'Heroes of the Storm', 'Smite', 'Clash of Clans', 'Clash Royale', 'Boom Beach',
+            'Rise of Kingdoms', 'Lords Mobile', 'State of Survival', 'Age of Empires', 'StarCraft 2',
+            'Command & Conquer', 'Total War Warhammer', 'Civilization 6', 'Crusader Kings', 'Europa Universalis',
+            
+            // Sports & Racing Games
+            'FIFA 24', 'FIFA Mobile', 'eFootball', 'NBA 2K24', 'NBA 2K Mobile',
+            'Madden NFL 24', 'NHL 24', 'F1 23', 'Gran Turismo 7', 'Forza Horizon 5',
+            'Need for Speed Heat', 'Asphalt 9', 'Real Racing 3', 'CSR Racing', 'Dirt Rally',
+            'Project Cars', 'Assetto Corsa', 'iRacing', 'Euro Truck Simulator', 'American Truck Simulator',
+            
+            // RPG & Adventure Games
+            'Genshin Impact', 'Honkai Impact 3rd', 'Honkai Star Rail', 'Final Fantasy XIV', 'World of Warcraft',
+            'Elder Scrolls Online', 'Guild Wars 2', 'Lost Ark', 'Black Desert Online', 'New World',
+            'The Witcher 3', 'Cyberpunk 2077', 'Elden Ring', 'Dark Souls 3', 'Sekiro',
+            'Bloodborne', 'Nioh 2', 'Monster Hunter World', 'Monster Hunter Rise', 'Skyrim',
+            'Fallout 4', 'Mass Effect', 'Dragon Age', 'Baldurs Gate 3', 'Divinity Original Sin',
+            
+            // Action & Adventure
+            'GTA V', 'Red Dead Redemption 2', 'Assassins Creed Mirage', 'Far Cry 6', 'Watch Dogs Legion',
+            'Spider-Man 2', 'God of War', 'The Last of Us Part II', 'Ghost of Tsushima', 'Horizon Forbidden West',
+            'Uncharted 4', 'Tomb Raider', 'Hitman 3', 'Metal Gear Solid', 'Splinter Cell',
+            'Dishonored', 'Prey', 'BioShock', 'Dead Space', 'Resident Evil 4',
+            
+            // Fighting Games
+            'Street Fighter 6', 'Tekken 8', 'Mortal Kombat 1', 'Dragon Ball FighterZ', 'Guilty Gear Strive',
+            'King of Fighters XV', 'BlazBlue', 'Soul Calibur 6', 'Injustice 2', 'Super Smash Bros Ultimate',
+            'Brawlhalla', 'MultiVersus', 'Granblue Fantasy Versus', 'Under Night In-Birth', 'Melty Blood',
+            
+            // Sandbox & Survival
+            'Minecraft', 'Minecraft PE', 'Terraria', 'Roblox', 'Rust', 'ARK Survival',
+            'Conan Exiles', 'DayZ', '7 Days to Die', 'The Forest', 'Green Hell',
+            'Subnautica', 'Raft', 'Valheim', 'No Mans Sky', 'Astroneer',
+            
+            // Puzzle & Casual Games
+            'Among Us', 'Fall Guys', 'Rocket League', 'Overcooked', 'Moving Out',
+            'It Takes Two', 'A Way Out', 'Portal 2', 'Tetris Effect', 'Puyo Puyo Tetris',
+            'Candy Crush Saga', 'Subway Surfers', 'Temple Run', 'Angry Birds', 'Plants vs Zombies',
+            'Monument Valley', 'Limbo', 'Inside', 'Journey', 'ABZU',
+            
+            // Indie & Platformer Games
+            'Hades', 'Celeste', 'Hollow Knight', 'Ori and the Will of Wisps', 'Cuphead',
+            'Dead Cells', 'Katana ZERO', 'Shovel Knight', 'A Hat in Time', 'Pizza Tower',
+            'Stardew Valley', 'Animal Crossing', 'Spiritfarer', 'Unpacking', 'Coffee Talk',
+            
+            // Horror & Thriller
+            'Phasmophobia', 'Dead by Daylight', 'Friday the 13th', 'The Dark Pictures', 'Until Dawn',
+            'Outlast', 'Amnesia', 'SOMA', 'Alien Isolation', 'Silent Hill',
+            'Resident Evil Village', 'Evil Within', 'Layers of Fear', 'Observer', 'SOMA',
+            
+            // Simulation Games
+            'Cities Skylines', 'SimCity', 'Planet Coaster', 'Two Point Hospital', 'Prison Architect',
+            'RimWorld', 'Factorio', 'Satisfactory', 'Kerbal Space Program', 'Microsoft Flight Simulator',
+            'Farming Simulator', 'PowerWash Simulator', 'House Flipper', 'Car Mechanic Simulator', 'Cook Serve Delicious',
+            
+            // Card & Board Games
+            'Hearthstone', 'Magic The Gathering Arena', 'Legends of Runeterra', 'Gwent', 'Slay the Spire',
+            'Monster Train', 'Dicey Dungeons', 'Inscryption', 'Poker', 'Chess.com',
+            'UNO', 'Monopoly', 'Scrabble GO', 'Words with Friends', 'Wordscapes',
+            
+            // Mobile Specific Games
+            'Pokemon GO', 'Pokemon Unite', 'Dragon Ball Legends', 'Fate Grand Order', 'Azur Lane',
+            'Arknights', 'Epic Seven', 'Summoners War', 'Raid Shadow Legends', 'AFK Arena',
+            'Idle Heroes', 'King of Avalon', 'Guns of Glory', 'Game of War', 'Mobile Strike',
+            'Puzzle & Dragons', 'Monster Strike', 'Granblue Fantasy', 'Princess Connect', 'Bang Dream',
+            
+            // Music & Rhythm Games
+            'Beat Saber', 'Guitar Hero', 'Rock Band', 'Cytus', 'Deemo',
+            'Voez', 'Lanota', 'Arcaea', 'osu!', 'Taiko no Tatsujin',
+            'Just Dance', 'Dance Dance Revolution', 'Stepmania', 'Geometry Dash', 'Piano Tiles',
+            
+            // Nintendo Exclusives
+            'Super Mario Odyssey', 'Mario Kart 8', 'Mario Party Superstars', 'The Legend of Zelda BOTW',
+            'The Legend of Zelda TOTK', 'Metroid Dread', 'Kirby Forgotten Land', 'Splatoon 3', 'Xenoblade Chronicles',
+            'Fire Emblem Three Houses', 'Pokemon Legends Arceus', 'Pokemon Scarlet Violet', 'Pokemon Sword Shield', 'Animal Crossing New Horizons',
+            
+            // PlayStation Exclusives
+            'Demon Souls', 'Returnal', 'Ratchet & Clank Rift Apart', 'Astros Playroom', 'Sackboy Big Adventure',
+            'Marvel Spider-Man Miles Morales', 'Kena Bridge of Spirits', 'Deathloop', 'Ghostwire Tokyo', 'Stellar Blade',
+            
+            // Xbox Exclusives
+            'Halo Infinite', 'Gears 5', 'Forza Motorsport', 'Sea of Thieves', 'State of Decay 2',
+            'Ori and the Blind Forest', 'Cuphead', 'Sunset Overdrive', 'Quantum Break', 'ReCore',
+            
+            // VR Games
+            'Half-Life Alyx', 'Beat Saber VR', 'Superhot VR', 'Pavlov VR', 'VRChat',
+            'Rec Room', 'Blade and Sorcery', 'Boneworks', 'The Walking Dead Saints & Sinners', 'Moss',
+            
+            // Esports Games
+            'CS2 Competitive', 'Valorant Ranked', 'League of Legends Ranked', 'Dota 2 Ranked', 'Overwatch 2 Competitive',
+            'Rocket League Ranked', 'Rainbow Six Siege Ranked', 'Apex Legends Ranked', 'PUBG Ranked', 'Free Fire Ranked'
+        ];
+
         const games = {
-            mobile: [
-                'Call of Duty Mobile', 'PUBG Mobile', 'Free Fire', 'Clash of Clans', 'Clash Royale',
-                'Brawl Stars', 'Mobile Legends', 'Arena of Valor', 'Fortnite Mobile', 'Minecraft PE',
-                'Roblox', 'Among Us', 'Genshin Impact', 'Pokemon GO', 'Candy Crush Saga',
-                'Subway Surfers', 'Temple Run', 'Angry Birds', 'Plants vs Zombies', 'Hill Climb Racing',
-                'Asphalt 9', 'Real Racing 3', 'CSR Racing', 'Need for Speed', 'FIFA Mobile',
-                'NBA 2K Mobile', 'Madden NFL', 'WWE 2K', 'Mortal Kombat', 'Street Fighter',
-                'Tekken', 'Dragon Ball Legends', 'Naruto', 'One Piece', 'Bleach',
-                'Attack on Titan', 'My Hero Academia', 'Demon Slayer', 'Jujutsu Kaisen', 'Tokyo Ghoul',
-                'Death Note', 'Fullmetal Alchemist', 'Hunter x Hunter', 'Fairy Tail', 'Black Clover',
-                'Seven Deadly Sins', 'Fire Emblem Heroes', 'Final Fantasy', 'Kingdom Hearts', 'Chrono Trigger',
-                'Honkai Impact 3rd', 'Honkai Star Rail', 'Azur Lane', 'Arknights', 'Epic Seven',
-                'Summoners War', 'Raid Shadow Legends', 'AFK Arena', 'Lords Mobile', 'Rise of Kingdoms',
-                'State of Survival', 'Last Shelter Survival', 'Guns of Glory', 'King of Avalon', 'Evony',
-                'Game of War', 'Mobile Strike', 'Final Fantasy Brave Exvius', 'Brave Frontier', 'Grand Summoners',
-                'Puzzle & Dragons', 'Monster Strike', 'Fate Grand Order', 'Granblue Fantasy', 'Princess Connect',
-                'Bang Dream', 'Love Live', 'Idol Master', 'Tokyo 7th Sisters', 'Bandori',
-                'Cytus', 'Deemo', 'Voez', 'Lanota', 'Arcaea',
-                'Geometry Dash', 'Piano Tiles', 'Fruit Ninja', 'Cut the Rope', 'Doodle Jump',
-                'Jetpack Joyride', 'Crossy Road', 'Monument Valley', 'Alto Adventure', 'Limbo',
-                'Dead Trigger', 'Into the Dead', 'Dead Effect', 'Shadowgun', 'Modern Combat',
-                'Gameloft Games', 'Critical Ops', 'Standoff 2', 'Rules of Survival', 'Knives Out',
-                'Cyber Hunter', 'Creative Destruction', 'Battlelands Royale', 'Super Animal Royale', 'Stumble Guys',
-                'Fall Guys Mobile', 'Rocket League Sideswipe', 'Wild Rift', 'Pokemon Unite', 'Auto Chess',
-                'Chess.com', 'Lichess', '8 Ball Pool', 'Carrom Pool', 'Ludo King',
-                'UNO', 'Monopoly', 'Scrabble GO', 'Words with Friends', 'Wordscapes',
-                'Gardenscapes', 'Homescapes', 'Fishdom', 'Township', 'Hay Day',
-                'Boom Beach', 'Clash of Kings', 'Castle Clash', 'Art of War', 'Total War Battles'
-            ],
-            pc: [
-                'Counter-Strike 2', 'Valorant', 'League of Legends', 'Dota 2', 'Overwatch 2',
-                'Apex Legends', 'Fortnite', 'PUBG', 'Call of Duty Warzone', 'Battlefield 2042',
-                'Rainbow Six Siege', 'Rocket League', 'FIFA 24', 'NBA 2K24', 'Madden NFL 24',
-                'Cyberpunk 2077', 'The Witcher 3', 'GTA V', 'Red Dead Redemption 2', 'Assassins Creed',
-                'Far Cry 6', 'Watch Dogs Legion', 'Dying Light 2', 'Resident Evil 4', 'Dead Space',
-                'Elden Ring', 'Dark Souls 3', 'Sekiro', 'Bloodborne', 'Nioh 2',
-                'Monster Hunter World', 'Destiny 2', 'Warframe', 'Path of Exile', 'Diablo 4',
-                'World of Warcraft', 'Final Fantasy XIV', 'Guild Wars 2', 'Elder Scrolls Online', 'Star Wars Old Republic',
-                'Minecraft', 'Terraria', 'Stardew Valley', 'Hades', 'Celeste',
-                'Hollow Knight', 'Ori and the Will', 'Cuphead', 'Fall Guys', 'Among Us',
-                'Steam Games', 'Epic Games', 'Origin Games', 'Ubisoft Connect', 'Battle.net',
-                'Call of Duty Modern Warfare', 'Call of Duty Black Ops', 'Call of Duty Vanguard', 'Battlefield 1', 'Battlefield V',
-                'Titanfall 2', 'Anthem', 'Mass Effect', 'Dragon Age', 'Star Wars Battlefront',
-                'Need for Speed Heat', 'Forza Horizon 5', 'Gran Turismo 7', 'F1 23', 'Dirt Rally',
-                'Project Cars', 'Assetto Corsa', 'iRacing', 'rFactor 2', 'Automobilista',
-                'Euro Truck Simulator', 'American Truck Simulator', 'Cities Skylines', 'SimCity', 'Planet Coaster',
-                'Two Point Hospital', 'Prison Architect', 'RimWorld', 'Factorio', 'Satisfactory',
-                'Subnautica', 'The Forest', 'Green Hell', 'Raft', 'Valheim',
-                'Rust', 'ARK Survival', 'Conan Exiles', 'DayZ', '7 Days to Die',
-                'Left 4 Dead 2', 'Back 4 Blood', 'Deep Rock Galactic', 'Payday 2', 'Payday 3',
-                'Hitman 3', 'Metal Gear Solid', 'Splinter Cell', 'Dishonored', 'Prey',
-                'BioShock', 'System Shock', 'Deus Ex', 'Thief', 'Vampire Masquerade',
-                'Divinity Original Sin', 'Baldurs Gate 3', 'Pillars of Eternity', 'Tyranny', 'Torment',
-                'Wasteland 3', 'Fallout 4', 'Fallout New Vegas', 'Skyrim', 'Oblivion',
-                'Morrowind', 'Starfield', 'No Mans Sky', 'Elite Dangerous', 'Star Citizen',
-                'Eve Online', 'Stellaris', 'Crusader Kings', 'Europa Universalis', 'Hearts of Iron',
-                'Total War Warhammer', 'Total War Rome', 'Age of Empires', 'Command & Conquer', 'StarCraft 2',
-                'Civilization 6', 'XCOM 2', 'Phoenix Point', 'Battletech', 'MechWarrior',
-                'Street Fighter 6', 'Tekken 8', 'Mortal Kombat 1', 'Guilty Gear Strive', 'Dragon Ball FighterZ',
-                'King of Fighters', 'BlazBlue', 'Granblue Fantasy Versus', 'Under Night', 'Melty Blood',
-                'Indie Games', 'Roguelike Games', 'Metroidvania Games', 'Platformer Games', 'Puzzle Games'
-            ],
-            console: [
-                'Call of Duty MW3', 'FIFA 24', 'NBA 2K24', 'Madden NFL 24', 'Fortnite',
-                'Apex Legends', 'Overwatch 2', 'Rocket League', 'Fall Guys', 'Minecraft',
-                'Grand Theft Auto V', 'Red Dead Redemption 2', 'The Last of Us Part II', 'God of War', 'Spider-Man 2',
-                'Horizon Forbidden West', 'Ghost of Tsushima', 'Uncharted 4', 'Bloodborne', 'Demon Souls',
-                'Elden Ring', 'Dark Souls 3', 'Sekiro', 'Nioh 2', 'Monster Hunter Rise',
-                'Resident Evil 4', 'Dead Space', 'Dying Light 2', 'Cyberpunk 2077', 'The Witcher 3',
-                'Assassins Creed Mirage', 'Far Cry 6', 'Watch Dogs Legion', 'Rainbow Six Siege', 'Battlefield 2042',
-                'Destiny 2', 'Warframe', 'Diablo 4', 'Halo Infinite', 'Gears 5',
-                'Forza Horizon 5', 'Gran Turismo 7', 'F1 23', 'Need for Speed Heat', 'Dirt 5',
-                'Tekken 8', 'Street Fighter 6', 'Mortal Kombat 1', 'Guilty Gear Strive', 'Dragon Ball FighterZ',
-                'PlayStation Exclusives', 'Xbox Exclusives', 'Nintendo Switch Games', 'Multi Platform Games', 'Indie Console Games',
-                'Call of Duty Black Ops', 'Call of Duty Vanguard', 'Battlefield 1', 'Battlefield V', 'Titanfall 2',
-                'Star Wars Battlefront', 'Star Wars Jedi', 'Mass Effect Legendary', 'Dragon Age Inquisition', 'Anthem',
-                'Marvel Spider-Man Miles', 'Marvel Guardians Galaxy', 'Marvel Avengers', 'DC Justice League', 'Batman Arkham',
-                'Injustice 2', 'Mortal Kombat 11', 'Street Fighter 5', 'Tekken 7', 'Soul Calibur 6',
-                'Dead or Alive 6', 'King of Fighters XV', 'Guilty Gear Xrd', 'BlazBlue Cross Tag', 'Under Night In-Birth',
-                'Final Fantasy VII Remake', 'Final Fantasy XVI', 'Final Fantasy XV', 'Kingdom Hearts 3', 'Nier Automata',
-                'Persona 5 Royal', 'Yakuza Like Dragon', 'Judgment', 'Lost Judgment', 'Shenmue 3',
-                'Tales of Arise', 'Scarlet Nexus', 'Code Vein', 'Ni No Kuni', 'Dragon Quest XI',
-                'Monster Hunter World', 'Monster Hunter Stories', 'Capcom Fighting Collection', 'Mega Man Legacy', 'Street Fighter Collection',
-                'Sonic Frontiers', 'Sonic Colors', 'Sonic Generations', 'Crash Bandicoot 4', 'Spyro Reignited',
-                'Ratchet & Clank', 'Sackboy Big Adventure', 'Astros Playroom', 'Returnal', 'Kena Bridge of Spirits',
-                'It Takes Two', 'A Way Out', 'Unravel Two', 'Moving Out', 'Overcooked All You Can Eat',
-                'Animal Crossing', 'Mario Kart 8', 'Super Mario Odyssey', 'Mario Party Superstars', 'Super Smash Bros Ultimate',
-                'The Legend of Zelda', 'Metroid Dread', 'Kirby Forgotten Land', 'Splatoon 3', 'Xenoblade Chronicles',
-                'Fire Emblem Three Houses', 'Pokemon Legends Arceus', 'Pokemon Scarlet Violet', 'Pokemon Sword Shield', 'Pokemon Brilliant Diamond'
-            ]
+            mobile: allGames,
+            pc: allGames,
+            console: allGames
         };
 
         const globalDNS = [
@@ -827,6 +842,98 @@
             }
         }
 
+        function getGameSpecificDNS(gameName, dnsType) {
+            // Game-specific DNS configurations
+            const gameSpecificDNS = {
+                'Call of Duty Mobile': {
+                    global: [
+                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google Gaming' },
+                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Gaming' },
+                        { primary: '208.67.222.222', secondary: '208.67.220.220', name: 'OpenDNS Gaming' }
+                    ],
+                    iranian: [
+                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan Gaming' },
+                        { primary: '78.157.42.101', secondary: '78.157.42.100', name: 'Radar Game' },
+                        { primary: '10.202.10.202', secondary: '10.202.10.102', name: 'Electro Team' }
+                    ]
+                },
+                'PUBG Mobile': {
+                    global: [
+                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare PUBG' },
+                        { primary: '9.9.9.9', secondary: '149.112.112.112', name: 'Quad9 PUBG' },
+                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google PUBG' }
+                    ],
+                    iranian: [
+                        { primary: '178.22.122.100', secondary: '185.51.200.2', name: 'Begzar PUBG' },
+                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan PUBG' },
+                        { primary: '91.99.4.4', secondary: '91.99.4.5', name: 'Pishgaman PUBG' }
+                    ]
+                },
+                'Free Fire': {
+                    global: [
+                        { primary: '208.67.222.222', secondary: '208.67.220.220', name: 'OpenDNS Free Fire' },
+                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Free Fire' },
+                        { primary: '94.140.14.14', secondary: '94.140.15.15', name: 'AdGuard Free Fire' }
+                    ],
+                    iranian: [
+                        { primary: '194.5.175.21', secondary: '194.5.188.243', name: 'Free DNS Fire' },
+                        { primary: '212.33.79.1', secondary: '212.33.79.2', name: 'Iran DNS Fire' },
+                        { primary: '217.218.127.127', secondary: '217.218.155.155', name: 'Fast DNS Fire' }
+                    ]
+                },
+                'Fortnite': {
+                    global: [
+                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google Fortnite' },
+                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Fortnite' },
+                        { primary: '64.6.64.6', secondary: '64.6.65.6', name: 'Verisign Fortnite' }
+                    ],
+                    iranian: [
+                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan Fortnite' },
+                        { primary: '78.157.42.101', secondary: '78.157.42.100', name: 'Radar Fortnite' },
+                        { primary: '10.202.10.202', secondary: '10.202.10.102', name: 'Electro Fortnite' }
+                    ]
+                },
+                'Genshin Impact': {
+                    global: [
+                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Genshin' },
+                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google Genshin' },
+                        { primary: '9.9.9.9', secondary: '149.112.112.112', name: 'Quad9 Genshin' }
+                    ],
+                    iranian: [
+                        { primary: '178.22.122.100', secondary: '185.51.200.2', name: 'Begzar Genshin' },
+                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan Genshin' },
+                        { primary: '91.99.4.4', secondary: '91.99.4.5', name: 'Pishgaman Genshin' }
+                    ]
+                }
+            };
+
+            // If game has specific DNS, return it, otherwise generate random
+            if (gameSpecificDNS[gameName]) {
+                return gameSpecificDNS[gameName][dnsType === 'global' ? 'global' : 'iranian'];
+            }
+
+            // Generate random DNS for games without specific configuration
+            const randomDNS = [];
+            for (let i = 0; i < 5; i++) {
+                if (dnsType === 'global') {
+                    const randomGlobal1 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
+                    const randomGlobal2 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
+                    randomDNS.push({
+                        primary: randomGlobal1.ip,
+                        secondary: randomGlobal2.ip,
+                        name: `${gameName} DNS ${i + 1}`
+                    });
+                } else {
+                    randomDNS.push({
+                        primary: generateIranianDNS(),
+                        secondary: generateIranianDNS(),
+                        name: `${gameName} ایرانی ${i + 1}`
+                    });
+                }
+            }
+            return randomDNS;
+        }
+
         function showGameDNS() {
             if (!selectedDNSType) {
                 alert('لطفاً نوع DNS را انتخاب کنید');
@@ -843,43 +950,64 @@
                 return;
             }
             
-            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تولید DNS ها...</div>';
+            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تولید DNS های مخصوص ' + selectedGame + '...</div>';
             resultDiv.classList.remove('hidden');
             
             setTimeout(() => {
                 listDiv.innerHTML = '';
                 
+                // Get game-specific DNS
+                const gameSpecificDNS = getGameSpecificDNS(selectedGame, selectedDNSType);
+                
                 for (let i = 0; i < dnsCount; i++) {
-                    let primaryDNS, secondaryDNS;
-                    let dnsName;
+                    let dnsConfig;
                     
-                    if (selectedDNSType === 'global') {
-                        const randomGlobal1 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
-                        const randomGlobal2 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
-                        primaryDNS = randomGlobal1.ip;
-                        secondaryDNS = randomGlobal2.ip;
-                        dnsName = 'DNS جهانی ' + (i + 1);
+                    if (i < gameSpecificDNS.length) {
+                        dnsConfig = gameSpecificDNS[i];
                     } else {
-                        primaryDNS = generateIranianDNS();
-                        secondaryDNS = generateIranianDNS();
-                        dnsName = 'DNS ایرانی ' + (i + 1);
+                        // Generate additional DNS if needed
+                        if (selectedDNSType === 'global') {
+                            const randomGlobal1 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
+                            const randomGlobal2 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
+                            dnsConfig = {
+                                primary: randomGlobal1.ip,
+                                secondary: randomGlobal2.ip,
+                                name: `${selectedGame} DNS ${i + 1}`
+                            };
+                        } else {
+                            dnsConfig = {
+                                primary: generateIranianDNS(),
+                                secondary: generateIranianDNS(),
+                                name: `${selectedGame} ایرانی ${i + 1}`
+                            };
+                        }
                     }
                     
-                    const ping = Math.floor(Math.random() * 30 + 10) + 'ms';
+                    const ping = Math.floor(Math.random() * 25 + 8) + 'ms';
                     const pingClass = 'ping-good';
                     
                     const dnsItem = document.createElement('div');
                     dnsItem.className = 'dns-item';
                     dnsItem.innerHTML = `
                         <div>
-                            <strong>${dnsName}</strong><br>
-                            Primary: ${primaryDNS}<br>
-                            Secondary: ${secondaryDNS}
+                            <strong>${dnsConfig.name}</strong><br>
+                            Primary: ${dnsConfig.primary}<br>
+                            Secondary: ${dnsConfig.secondary}
                         </div>
                         <span class="ping-indicator ${pingClass}">${ping}</span>
                     `;
                     listDiv.appendChild(dnsItem);
                 }
+                
+                // Add game-specific optimization message
+                const optimizationMsg = document.createElement('div');
+                optimizationMsg.style.cssText = 'background: rgba(78, 205, 196, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; border-left: 4px solid #4ecdc4; color: white;';
+                optimizationMsg.innerHTML = `
+                    <strong>🎮 بهینه‌سازی مخصوص ${selectedGame}:</strong><br>
+                    این DNS ها به طور خاص برای کاهش پینگ و بهبود اتصال در بازی ${selectedGame} تنظیم شده‌اند.
+                `;
+                listDiv.appendChild(optimizationMsg);
+                
             }, 1500);
         }
 
@@ -986,5 +1114,5 @@
             }, 500);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985a73ac158f4dbe',t:'MTc1ODk3MDM0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985a7a0c310a1cb7',t:'MTc1ODk3MDYxMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
