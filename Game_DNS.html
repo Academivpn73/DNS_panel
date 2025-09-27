@@ -544,6 +544,8 @@
                 transform: translateZ(0);
                 -webkit-backface-visibility: hidden;
                 backface-visibility: hidden;
+                animation: none !important;
+                transition: none !important;
             }
             
             body {
@@ -551,6 +553,8 @@
                 line-height: 1.5;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
             }
             
             .title {
@@ -621,10 +625,8 @@
                 padding: 20px 15px;
                 margin: 0 5px;
                 border-radius: 15px;
-                background: rgba(255,255,255,0.15) !important;
-                backdrop-filter: blur(10px) !important;
-                border: 2px solid rgba(255,255,255,0.25) !important;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+                background: rgba(255,255,255,0.2) !important;
+                border: 1px solid rgba(255,255,255,0.3) !important;
             }
 
             .radio-group {
@@ -686,6 +688,8 @@
                 margin: 0;
                 border-radius: 15px;
                 text-align: center;
+                background: rgba(255,255,255,0.15) !important;
+                border: 1px solid rgba(255,255,255,0.2) !important;
             }
 
             .feature-card h3 {
@@ -727,8 +731,8 @@
                 min-height: 45px;
                 width: 100%;
                 box-sizing: border-box;
-                background: rgba(255,255,255,0.2) !important;
-                border: 2px solid rgba(255,255,255,0.3) !important;
+                background: rgba(255,255,255,0.25) !important;
+                border: 1px solid rgba(255,255,255,0.4) !important;
                 color: white !important;
                 font-family: 'Vazirmatn', sans-serif !important;
             }
@@ -752,6 +756,8 @@
                 padding: 25px 20px;
                 margin: 20px 0;
                 border-radius: 20px;
+                background: rgba(0,0,0,0.2) !important;
+                border: 1px solid rgba(255,255,255,0.15) !important;
             }
 
             .dns-item {
@@ -807,6 +813,21 @@
                 padding: 25px 20px;
                 margin: 20px 0 25px 0;
                 border-radius: 20px;
+                background: rgba(255,255,255,0.1) !important;
+                border: 1px solid rgba(255,255,255,0.15) !important;
+            }
+            
+            /* Mobile performance boost */
+            .radio-item, .btn, .tab {
+                will-change: auto !important;
+            }
+            
+            .container {
+                contain: layout style !important;
+            }
+            
+            .content {
+                contain: layout style !important;
             }
 
             h2 {
@@ -1040,11 +1061,20 @@
             * {
                 animation: none !important;
                 transition: none !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                background-attachment: fixed !important;
             }
             
             .title, .subtitle, .feature-icon, .tab, .btn, .feature-card, .contact-buttons, .telegram-box, .support-box {
                 animation: none !important;
                 transition: none !important;
+                transform: none !important;
+                box-shadow: none !important;
             }
             
             .tab:hover, .btn:hover, .feature-card:hover, .telegram-box:hover, .support-box:hover {
@@ -1054,14 +1084,25 @@
             
             .tab.active {
                 transform: none !important;
+                box-shadow: none !important;
             }
             
             .title::after {
                 animation: none !important;
+                display: none !important;
             }
             
             .content::before, .tab::before, .btn::before, .telegram-box::before, .support-box::before {
                 display: none !important;
+            }
+            
+            .dns-result, .feature-card, .content {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+            
+            .loading .spinner {
+                animation: spin 1s linear infinite !important;
             }
         }
     </style>
@@ -2147,5 +2188,5 @@
             }, 800);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985b6d8773981e20',t:'MTc1ODk4MDU4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985c47a0b0e38c46',t:'MTc1ODk4OTUxNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
