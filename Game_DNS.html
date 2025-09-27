@@ -129,110 +129,7 @@
             75% { transform: translateY(-3px) rotate(-1deg); }
         }
 
-        .music-control {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: 3px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            width: 80px;
-            height: 80px;
-            color: white;
-            cursor: pointer;
-            backdrop-filter: blur(20px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4), inset 0 2px 10px rgba(255,255,255,0.1);
-            animation: musicFloat 3s ease-in-out infinite;
-            overflow: hidden;
-        }
 
-        .music-control::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.6s ease;
-            opacity: 0;
-        }
-
-        .music-control:hover::before {
-            animation: shimmer 1.5s ease-in-out infinite;
-            opacity: 1;
-        }
-
-        .music-control:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-            transform: scale(1.15) rotate(-5deg);
-            box-shadow: 0 25px 50px rgba(118, 75, 162, 0.6), inset 0 2px 15px rgba(255,255,255,0.2);
-            border-color: rgba(255,255,255,0.4);
-        }
-
-        .music-control.playing {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
-            animation: musicPlaying 0.8s ease-in-out infinite alternate;
-            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.5), inset 0 2px 15px rgba(255,255,255,0.2);
-        }
-
-        .music-control.playing::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 120%;
-            height: 120%;
-            border: 2px solid rgba(255, 107, 107, 0.3);
-            border-radius: 20px;
-            transform: translate(-50%, -50%);
-            animation: musicWave 2s ease-in-out infinite;
-        }
-
-        @keyframes musicFloat {
-            0%, 100% { 
-                transform: translateY(0px) rotate(0deg);
-                box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4), inset 0 2px 10px rgba(255,255,255,0.1);
-            }
-            50% { 
-                transform: translateY(-8px) rotate(2deg);
-                box-shadow: 0 25px 45px rgba(102, 126, 234, 0.6), inset 0 2px 15px rgba(255,255,255,0.15);
-            }
-        }
-
-        @keyframes musicPlaying {
-            0% { 
-                transform: scale(1) rotate(0deg);
-                filter: brightness(1);
-            }
-            100% { 
-                transform: scale(1.08) rotate(1deg);
-                filter: brightness(1.1);
-            }
-        }
-
-        @keyframes musicWave {
-            0% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1.3);
-                opacity: 0;
-            }
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
 
         .tabs {
             display: flex;
@@ -488,13 +385,7 @@
                 flex-direction: column;
             }
 
-            .music-control {
-                width: 60px;
-                height: 60px;
-                font-size: 1.5rem;
-                top: 15px;
-                right: 15px;
-            }
+
 
             .contact-buttons {
                 flex-direction: column;
@@ -505,7 +396,7 @@
 </head>
 <body>
 
-    <button class="music-control" onclick="toggleMusic()">🎵</button>
+
     
 
 
@@ -533,12 +424,118 @@
         </div>
 
         <div class="tabs">
-            <div class="tab active" onclick="showTab('gaming')">🎮 گیمینگ</div>
+            <div class="tab active" onclick="showTab('welcome')">🏠 خانه</div>
+            <div class="tab" onclick="showTab('gaming')">🎮 گیمینگ</div>
             <div class="tab" onclick="showTab('download')">📥 دانلود و تحریم‌شکن</div>
             <div class="tab" onclick="showTab('ping')">📡 تست پینگ</div>
         </div>
 
-        <div id="gaming" class="content">
+        <div id="welcome" class="content">
+            <div style="text-align: center; margin-bottom: 40px;">
+                <h2 style="color: #4ecdc4; font-size: 2.5rem; margin-bottom: 20px; text-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                    🎯 به بهترین سایت DNS ایران خوش آمدید!
+                </h2>
+                <p style="color: white; font-size: 1.2rem; line-height: 1.8; margin-bottom: 30px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                    سایت Academi DNS Best با بیش از سال ها تجربه، بهترین و سریع‌ترین DNS های ایران و جهان را برای شما فراهم می‌کند
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🎮</div>
+                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.4rem;">DNS گیمینگ</h3>
+                    <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                        DNS های مخصوص بازی با کمترین پینگ برای موبایل، PC و کنسول. بیش از 300 بازی پشتیبانی می‌شود!
+                    </p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📥</div>
+                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.4rem;">تحریم‌شکن</h3>
+                    <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                        DNS های قدرتمند برای دور زدن تحریم و دانلود سریع. دسترسی آزاد به تمام سایت‌ها و سرویس‌ها!
+                    </p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📡</div>
+                    <h3 style="color: white; margin-bottom: 15px; font-size: 1.4rem;">تست پینگ</h3>
+                    <p style="color: rgba(255,255,255,0.9); line-height: 1.6;">
+                        تست سرعت و کیفیت DNS ها. بهترین DNS را برای اینترنت خود پیدا کنید!
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; margin-bottom: 30px; border: 2px solid rgba(78, 205, 196, 0.3);">
+                <h3 style="color: #4ecdc4; text-align: center; margin-bottom: 25px; font-size: 1.8rem;">
+                    📚 راهنمای استفاده از سایت
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #ff6b6b;">
+                        <h4 style="color: #ff6b6b; margin-bottom: 10px;">گام 1️⃣</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            از منوی بالا، بخش مورد نظر خود را انتخاب کنید (گیمینگ، دانلود یا تست پینگ)
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #4ecdc4;">
+                        <h4 style="color: #4ecdc4; margin-bottom: 10px;">گام 2️⃣</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            تنظیمات مورد نظر خود را انتخاب کنید (نوع دستگاه، بازی، تعداد DNS و...)
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #ffd93d;">
+                        <h4 style="color: #ffd93d; margin-bottom: 10px;">گام 3️⃣</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            روی دکمه "نمایش DNS ها" کلیک کنید و DNS های بهینه را دریافت کنید
+                        </p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border-left: 4px solid #6c5ce7;">
+                        <h4 style="color: #6c5ce7; margin-bottom: 10px;">گام 4️⃣</h4>
+                        <p style="color: white; line-height: 1.6;">
+                            DNS های ارائه شده را در تنظیمات شبکه دستگاه خود وارد کنید
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+                <h3 style="color: white; margin-bottom: 20px; font-size: 1.8rem;">
+                    🚀 درباره کانال ما
+                </h3>
+                <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+                    کانال <strong>@Academii73</strong> با بیش از 10 هزار عضو، مرجع اصلی DNS، VPN و تحریم‌شکن در ایران است.
+                    <br>
+                    هر روز جدیدترین DNS ها، آموزش‌های کاربردی و اخبار فناوری را دریافت کنید!
+                </p>
+                
+                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 15px; backdrop-filter: blur(10px);">
+                        <span style="color: #4ecdc4; font-weight: bold;">✅ DNS های روزانه</span>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 15px; backdrop-filter: blur(10px);">
+                        <span style="color: #ff6b6b; font-weight: bold;">🎮 DNS گیمینگ</span>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 15px; backdrop-filter: blur(10px);">
+                        <span style="color: #ffd93d; font-weight: bold;">🔧 آموزش تنظیمات</span>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 15px; backdrop-filter: blur(10px);">
+                        <span style="color: #6c5ce7; font-weight: bold;">🆓 کاملاً رایگان</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px;">
+                    <a href="https://t.me/Academii73" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: linear-gradient(45deg, #0088cc, #229ed9); color: white; text-decoration: none; padding: 15px 30px; border-radius: 25px; font-weight: bold; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(0,136,204,0.4); transition: all 0.3s ease;">
+                        📱 عضویت در کانال تلگرام
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="gaming" class="content hidden">
             <h2 style="color: white; text-align: center; margin-bottom: 30px;">DNS مخصوص گیمینگ</h2>
             
             <div class="dns-type-selection">
@@ -579,6 +576,12 @@
                     <option value="3">3 عدد</option>
                     <option value="4">4 عدد</option>
                     <option value="5">5 عدد</option>
+                    <option value="6">6 عدد</option>
+                    <option value="8">8 عدد</option>
+                    <option value="10">10 عدد</option>
+                    <option value="12">12 عدد</option>
+                    <option value="15">15 عدد</option>
+                    <option value="20">20 عدد</option>
                 </select>
                 <button class="btn" onclick="showGameDNS()" style="margin-top: 10px;">نمایش DNS ها</button>
             </div>
@@ -599,6 +602,11 @@
                     <option value="5">5 عدد</option>
                     <option value="7">7 عدد</option>
                     <option value="10">10 عدد</option>
+                    <option value="12">12 عدد</option>
+                    <option value="15">15 عدد</option>
+                    <option value="20">20 عدد</option>
+                    <option value="25">25 عدد</option>
+                    <option value="30">30 عدد</option>
                 </select>
             </div>
             
@@ -628,9 +636,7 @@
     </div>
 
     <script>
-        let isMusicPlaying = false;
         let selectedDNSType = '';
-        let audioElement = null;
 
         const games = {
             mobile: [
@@ -643,7 +649,24 @@
                 'Tekken', 'Dragon Ball Legends', 'Naruto', 'One Piece', 'Bleach',
                 'Attack on Titan', 'My Hero Academia', 'Demon Slayer', 'Jujutsu Kaisen', 'Tokyo Ghoul',
                 'Death Note', 'Fullmetal Alchemist', 'Hunter x Hunter', 'Fairy Tail', 'Black Clover',
-                'Seven Deadly Sins', 'Fire Emblem Heroes', 'Final Fantasy', 'Kingdom Hearts', 'Chrono Trigger'
+                'Seven Deadly Sins', 'Fire Emblem Heroes', 'Final Fantasy', 'Kingdom Hearts', 'Chrono Trigger',
+                'Honkai Impact 3rd', 'Honkai Star Rail', 'Azur Lane', 'Arknights', 'Epic Seven',
+                'Summoners War', 'Raid Shadow Legends', 'AFK Arena', 'Lords Mobile', 'Rise of Kingdoms',
+                'State of Survival', 'Last Shelter Survival', 'Guns of Glory', 'King of Avalon', 'Evony',
+                'Game of War', 'Mobile Strike', 'Final Fantasy Brave Exvius', 'Brave Frontier', 'Grand Summoners',
+                'Puzzle & Dragons', 'Monster Strike', 'Fate Grand Order', 'Granblue Fantasy', 'Princess Connect',
+                'Bang Dream', 'Love Live', 'Idol Master', 'Tokyo 7th Sisters', 'Bandori',
+                'Cytus', 'Deemo', 'Voez', 'Lanota', 'Arcaea',
+                'Geometry Dash', 'Piano Tiles', 'Fruit Ninja', 'Cut the Rope', 'Doodle Jump',
+                'Jetpack Joyride', 'Crossy Road', 'Monument Valley', 'Alto Adventure', 'Limbo',
+                'Dead Trigger', 'Into the Dead', 'Dead Effect', 'Shadowgun', 'Modern Combat',
+                'Gameloft Games', 'Critical Ops', 'Standoff 2', 'Rules of Survival', 'Knives Out',
+                'Cyber Hunter', 'Creative Destruction', 'Battlelands Royale', 'Super Animal Royale', 'Stumble Guys',
+                'Fall Guys Mobile', 'Rocket League Sideswipe', 'Wild Rift', 'Pokemon Unite', 'Auto Chess',
+                'Chess.com', 'Lichess', '8 Ball Pool', 'Carrom Pool', 'Ludo King',
+                'UNO', 'Monopoly', 'Scrabble GO', 'Words with Friends', 'Wordscapes',
+                'Gardenscapes', 'Homescapes', 'Fishdom', 'Township', 'Hay Day',
+                'Boom Beach', 'Clash of Kings', 'Castle Clash', 'Art of War', 'Total War Battles'
             ],
             pc: [
                 'Counter-Strike 2', 'Valorant', 'League of Legends', 'Dota 2', 'Overwatch 2',
@@ -655,7 +678,28 @@
                 'Monster Hunter World', 'Destiny 2', 'Warframe', 'Path of Exile', 'Diablo 4',
                 'World of Warcraft', 'Final Fantasy XIV', 'Guild Wars 2', 'Elder Scrolls Online', 'Star Wars Old Republic',
                 'Minecraft', 'Terraria', 'Stardew Valley', 'Hades', 'Celeste',
-                'Hollow Knight', 'Ori and the Will', 'Cuphead', 'Fall Guys', 'Among Us'
+                'Hollow Knight', 'Ori and the Will', 'Cuphead', 'Fall Guys', 'Among Us',
+                'Steam Games', 'Epic Games', 'Origin Games', 'Ubisoft Connect', 'Battle.net',
+                'Call of Duty Modern Warfare', 'Call of Duty Black Ops', 'Call of Duty Vanguard', 'Battlefield 1', 'Battlefield V',
+                'Titanfall 2', 'Anthem', 'Mass Effect', 'Dragon Age', 'Star Wars Battlefront',
+                'Need for Speed Heat', 'Forza Horizon 5', 'Gran Turismo 7', 'F1 23', 'Dirt Rally',
+                'Project Cars', 'Assetto Corsa', 'iRacing', 'rFactor 2', 'Automobilista',
+                'Euro Truck Simulator', 'American Truck Simulator', 'Cities Skylines', 'SimCity', 'Planet Coaster',
+                'Two Point Hospital', 'Prison Architect', 'RimWorld', 'Factorio', 'Satisfactory',
+                'Subnautica', 'The Forest', 'Green Hell', 'Raft', 'Valheim',
+                'Rust', 'ARK Survival', 'Conan Exiles', 'DayZ', '7 Days to Die',
+                'Left 4 Dead 2', 'Back 4 Blood', 'Deep Rock Galactic', 'Payday 2', 'Payday 3',
+                'Hitman 3', 'Metal Gear Solid', 'Splinter Cell', 'Dishonored', 'Prey',
+                'BioShock', 'System Shock', 'Deus Ex', 'Thief', 'Vampire Masquerade',
+                'Divinity Original Sin', 'Baldurs Gate 3', 'Pillars of Eternity', 'Tyranny', 'Torment',
+                'Wasteland 3', 'Fallout 4', 'Fallout New Vegas', 'Skyrim', 'Oblivion',
+                'Morrowind', 'Starfield', 'No Mans Sky', 'Elite Dangerous', 'Star Citizen',
+                'Eve Online', 'Stellaris', 'Crusader Kings', 'Europa Universalis', 'Hearts of Iron',
+                'Total War Warhammer', 'Total War Rome', 'Age of Empires', 'Command & Conquer', 'StarCraft 2',
+                'Civilization 6', 'XCOM 2', 'Phoenix Point', 'Battletech', 'MechWarrior',
+                'Street Fighter 6', 'Tekken 8', 'Mortal Kombat 1', 'Guilty Gear Strive', 'Dragon Ball FighterZ',
+                'King of Fighters', 'BlazBlue', 'Granblue Fantasy Versus', 'Under Night', 'Melty Blood',
+                'Indie Games', 'Roguelike Games', 'Metroidvania Games', 'Platformer Games', 'Puzzle Games'
             ],
             console: [
                 'Call of Duty MW3', 'FIFA 24', 'NBA 2K24', 'Madden NFL 24', 'Fortnite',
@@ -667,17 +711,57 @@
                 'Assassins Creed Mirage', 'Far Cry 6', 'Watch Dogs Legion', 'Rainbow Six Siege', 'Battlefield 2042',
                 'Destiny 2', 'Warframe', 'Diablo 4', 'Halo Infinite', 'Gears 5',
                 'Forza Horizon 5', 'Gran Turismo 7', 'F1 23', 'Need for Speed Heat', 'Dirt 5',
-                'Tekken 8', 'Street Fighter 6', 'Mortal Kombat 1', 'Guilty Gear Strive', 'Dragon Ball FighterZ'
+                'Tekken 8', 'Street Fighter 6', 'Mortal Kombat 1', 'Guilty Gear Strive', 'Dragon Ball FighterZ',
+                'PlayStation Exclusives', 'Xbox Exclusives', 'Nintendo Switch Games', 'Multi Platform Games', 'Indie Console Games',
+                'Call of Duty Black Ops', 'Call of Duty Vanguard', 'Battlefield 1', 'Battlefield V', 'Titanfall 2',
+                'Star Wars Battlefront', 'Star Wars Jedi', 'Mass Effect Legendary', 'Dragon Age Inquisition', 'Anthem',
+                'Marvel Spider-Man Miles', 'Marvel Guardians Galaxy', 'Marvel Avengers', 'DC Justice League', 'Batman Arkham',
+                'Injustice 2', 'Mortal Kombat 11', 'Street Fighter 5', 'Tekken 7', 'Soul Calibur 6',
+                'Dead or Alive 6', 'King of Fighters XV', 'Guilty Gear Xrd', 'BlazBlue Cross Tag', 'Under Night In-Birth',
+                'Final Fantasy VII Remake', 'Final Fantasy XVI', 'Final Fantasy XV', 'Kingdom Hearts 3', 'Nier Automata',
+                'Persona 5 Royal', 'Yakuza Like Dragon', 'Judgment', 'Lost Judgment', 'Shenmue 3',
+                'Tales of Arise', 'Scarlet Nexus', 'Code Vein', 'Ni No Kuni', 'Dragon Quest XI',
+                'Monster Hunter World', 'Monster Hunter Stories', 'Capcom Fighting Collection', 'Mega Man Legacy', 'Street Fighter Collection',
+                'Sonic Frontiers', 'Sonic Colors', 'Sonic Generations', 'Crash Bandicoot 4', 'Spyro Reignited',
+                'Ratchet & Clank', 'Sackboy Big Adventure', 'Astros Playroom', 'Returnal', 'Kena Bridge of Spirits',
+                'It Takes Two', 'A Way Out', 'Unravel Two', 'Moving Out', 'Overcooked All You Can Eat',
+                'Animal Crossing', 'Mario Kart 8', 'Super Mario Odyssey', 'Mario Party Superstars', 'Super Smash Bros Ultimate',
+                'The Legend of Zelda', 'Metroid Dread', 'Kirby Forgotten Land', 'Splatoon 3', 'Xenoblade Chronicles',
+                'Fire Emblem Three Houses', 'Pokemon Legends Arceus', 'Pokemon Scarlet Violet', 'Pokemon Sword Shield', 'Pokemon Brilliant Diamond'
             ]
         };
 
         const globalDNS = [
             { name: 'Google DNS', ip: '8.8.8.8' },
+            { name: 'Google DNS 2', ip: '8.8.4.4' },
             { name: 'Cloudflare', ip: '1.1.1.1' },
+            { name: 'Cloudflare 2', ip: '1.0.0.1' },
             { name: 'OpenDNS', ip: '208.67.222.222' },
+            { name: 'OpenDNS 2', ip: '208.67.220.220' },
             { name: 'Quad9', ip: '9.9.9.9' },
+            { name: 'Quad9 Secure', ip: '149.112.112.112' },
             { name: 'AdGuard', ip: '94.140.14.14' },
-            { name: 'CleanBrowsing', ip: '185.228.168.9' }
+            { name: 'AdGuard Family', ip: '94.140.15.15' },
+            { name: 'CleanBrowsing', ip: '185.228.168.9' },
+            { name: 'CleanBrowsing Adult', ip: '185.228.169.9' },
+            { name: 'Comodo Secure', ip: '8.26.56.26' },
+            { name: 'Comodo Secure 2', ip: '8.20.247.20' },
+            { name: 'Level3', ip: '209.244.0.3' },
+            { name: 'Level3 2', ip: '209.244.0.4' },
+            { name: 'Verisign', ip: '64.6.64.6' },
+            { name: 'Verisign 2', ip: '64.6.65.6' },
+            { name: 'DNS.WATCH', ip: '84.200.69.80' },
+            { name: 'DNS.WATCH 2', ip: '84.200.70.40' },
+            { name: 'SafeDNS', ip: '195.46.39.39' },
+            { name: 'SafeDNS 2', ip: '195.46.39.40' },
+            { name: 'FreeDNS', ip: '37.235.1.174' },
+            { name: 'FreeDNS 2', ip: '37.235.1.177' },
+            { name: 'Alternate DNS', ip: '198.101.242.72' },
+            { name: 'Alternate DNS 2', ip: '23.253.163.53' },
+            { name: 'UncensoredDNS', ip: '91.239.100.100' },
+            { name: 'UncensoredDNS 2', ip: '89.233.43.71' },
+            { name: 'Hurricane Electric', ip: '74.82.42.42' },
+            { name: 'puntCAT', ip: '109.69.8.51' }
         ];
 
         function generateIranianDNS() {
@@ -693,72 +777,7 @@
             return range + third + '.' + fourth;
         }
 
-        function toggleMusic() {
-            const btn = document.querySelector('.music-control');
-            
-            if (isMusicPlaying) {
-                // Stop music
-                if (audioElement) {
-                    audioElement.pause();
-                    audioElement.currentTime = 0;
-                }
-                btn.innerHTML = '🎵';
-                btn.classList.remove('playing');
-                isMusicPlaying = false;
-            } else {
-                // Start music
-                try {
-                    if (!audioElement) {
-                        audioElement = new Audio();
-                        // Convert Google Drive link to direct download link
-                        audioElement.src = 'https://drive.google.com/uc?export=download&id=1cwxjqc5InB4SRhI2WsVokDFxfGq8I9eg';
-                        audioElement.loop = true;
-                        audioElement.volume = 0.7;
-                        
-                        audioElement.addEventListener('error', function() {
-                            console.log('Could not load audio file');
-                            btn.innerHTML = '❌';
-                            btn.classList.remove('playing');
-                            setTimeout(() => {
-                                btn.innerHTML = '🎵';
-                            }, 2000);
-                            isMusicPlaying = false;
-                        });
-                        
-                        audioElement.addEventListener('loadstart', function() {
-                            btn.innerHTML = '⏳';
-                        });
-                        
-                        audioElement.addEventListener('canplay', function() {
-                            if (isMusicPlaying) {
-                                btn.innerHTML = '🎶';
-                                btn.classList.add('playing');
-                            }
-                        });
-                    }
-                    
-                    audioElement.play().then(() => {
-                        btn.innerHTML = '🎶';
-                        btn.classList.add('playing');
-                        isMusicPlaying = true;
-                    }).catch((error) => {
-                        console.log('Playback failed:', error);
-                        btn.innerHTML = '❌';
-                        setTimeout(() => {
-                            btn.innerHTML = '🎵';
-                        }, 2000);
-                        isMusicPlaying = false;
-                    });
-                    
-                } catch (e) {
-                    console.log('Audio not supported:', e);
-                    btn.innerHTML = '❌';
-                    setTimeout(() => {
-                        btn.innerHTML = '🎵';
-                    }, 2000);
-                }
-            }
-        }
+
 
         function showTab(tabName) {
             document.querySelectorAll('.content').forEach(content => {
@@ -875,7 +894,12 @@
             setTimeout(() => {
                 listDiv.innerHTML = '';
                 
-                const dnsNames = ['Shecan', 'Radar Game', 'Electro Team', 'Begzar', 'Pishgaman', 'Free DNS', 'Iran DNS', 'Fast DNS', 'Secure DNS', 'Speed DNS'];
+                const dnsNames = [
+                    'Shecan', 'Radar Game', 'Electro Team', 'Begzar', 'Pishgaman', 'Free DNS', 'Iran DNS', 'Fast DNS', 'Secure DNS', 'Speed DNS',
+                    'Gaming DNS', 'Ultra DNS', 'Turbo DNS', 'Power DNS', 'Smart DNS', 'Quick DNS', 'Flash DNS', 'Boost DNS', 'Pro DNS', 'Elite DNS',
+                    'Super DNS', 'Mega DNS', 'Hyper DNS', 'Rapid DNS', 'Swift DNS', 'Blazing DNS', 'Lightning DNS', 'Rocket DNS', 'Sonic DNS', 'Nitro DNS',
+                    'Premium DNS', 'Advanced DNS', 'Ultimate DNS', 'Supreme DNS', 'Master DNS', 'Champion DNS', 'Victory DNS', 'Winner DNS', 'Hero DNS', 'Legend DNS'
+                ];
                 
                 for (let i = 0; i < dnsCount; i++) {
                     const primaryDNS = generateIranianDNS();
@@ -962,5 +986,5 @@
             }, 500);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985a44deb1201db0',t:'MTc1ODk2ODQzMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985a73ac158f4dbe',t:'MTc1ODk3MDM0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
