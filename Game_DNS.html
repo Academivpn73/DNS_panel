@@ -1352,88 +1352,39 @@
             }
         }
 
-        function getGameSpecificDNS(gameName, dnsType) {
-            // Game-specific DNS configurations
-            const gameSpecificDNS = {
-                'Call of Duty Mobile': {
-                    global: [
-                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google Gaming Pro' },
-                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Gaming Pro' },
-                        { primary: '208.67.222.222', secondary: '208.67.220.220', name: 'OpenDNS Gaming Pro' }
-                    ],
-                    iranian: [
-                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan Gaming Pro' },
-                        { primary: '78.157.42.101', secondary: '78.157.42.100', name: 'Radar Game Pro' },
-                        { primary: '10.202.10.202', secondary: '10.202.10.102', name: 'Electro Team Pro' }
-                    ]
-                },
-                'PUBG Mobile': {
-                    global: [
-                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare PUBG Pro' },
-                        { primary: '9.9.9.9', secondary: '149.112.112.112', name: 'Quad9 PUBG Pro' },
-                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google PUBG Pro' }
-                    ],
-                    iranian: [
-                        { primary: '178.22.122.100', secondary: '185.51.200.2', name: 'Begzar PUBG Pro' },
-                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan PUBG Pro' },
-                        { primary: '91.99.4.4', secondary: '91.99.4.5', name: 'Pishgaman PUBG Pro' }
-                    ]
-                },
-                'Free Fire': {
-                    global: [
-                        { primary: '208.67.222.222', secondary: '208.67.220.220', name: 'OpenDNS Free Fire Pro' },
-                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Free Fire Pro' },
-                        { primary: '94.140.14.14', secondary: '94.140.15.15', name: 'AdGuard Free Fire Pro' }
-                    ],
-                    iranian: [
-                        { primary: '194.5.175.21', secondary: '194.5.188.243', name: 'Free DNS Fire Pro' },
-                        { primary: '212.33.79.1', secondary: '212.33.79.2', name: 'Iran DNS Fire Pro' },
-                        { primary: '217.218.127.127', secondary: '217.218.155.155', name: 'Fast DNS Fire Pro' }
-                    ]
-                },
-                'Fortnite': {
-                    global: [
-                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google Fortnite Pro' },
-                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Fortnite Pro' },
-                        { primary: '64.6.64.6', secondary: '64.6.65.6', name: 'Verisign Fortnite Pro' }
-                    ],
-                    iranian: [
-                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan Fortnite Pro' },
-                        { primary: '78.157.42.101', secondary: '78.157.42.100', name: 'Radar Fortnite Pro' },
-                        { primary: '10.202.10.202', secondary: '10.202.10.102', name: 'Electro Fortnite Pro' }
-                    ]
-                },
-                'Genshin Impact': {
-                    global: [
-                        { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare Genshin Pro' },
-                        { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google Genshin Pro' },
-                        { primary: '9.9.9.9', secondary: '149.112.112.112', name: 'Quad9 Genshin Pro' }
-                    ],
-                    iranian: [
-                        { primary: '178.22.122.100', secondary: '185.51.200.2', name: 'Begzar Genshin Pro' },
-                        { primary: '185.55.226.26', secondary: '185.55.225.25', name: 'Shecan Genshin Pro' },
-                        { primary: '91.99.4.4', secondary: '91.99.4.5', name: 'Pishgaman Genshin Pro' }
-                    ]
-                }
-            };
-
-            // If game has specific DNS, return it, otherwise generate random
-            if (gameSpecificDNS[gameName]) {
-                return gameSpecificDNS[gameName][dnsType === 'global' ? 'global' : 'iranian'];
+        function generateRandomGlobalDNS() {
+            // Create a shuffled copy of globalDNS array
+            const shuffledDNS = [...globalDNS].sort(() => Math.random() - 0.5);
+            const primary = shuffledDNS[Math.floor(Math.random() * shuffledDNS.length)];
+            let secondary = shuffledDNS[Math.floor(Math.random() * shuffledDNS.length)];
+            
+            // Make sure secondary is different from primary
+            while (secondary.ip === primary.ip) {
+                secondary = shuffledDNS[Math.floor(Math.random() * shuffledDNS.length)];
             }
+            
+            return {
+                primary: primary.ip,
+                secondary: secondary.ip
+            };
+        }
 
-            // Generate random DNS for games without specific configuration
+        function getGameSpecificDNS(gameName, dnsType, count) {
             const randomDNS = [];
-            for (let i = 0; i < 5; i++) {
-                if (dnsType === 'global') {
-                    const randomGlobal1 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
-                    const randomGlobal2 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
+            
+            if (dnsType === 'global') {
+                // Generate completely random combinations from global DNS pool
+                for (let i = 0; i < count; i++) {
+                    const dnsConfig = generateRandomGlobalDNS();
                     randomDNS.push({
-                        primary: randomGlobal1.ip,
-                        secondary: randomGlobal2.ip,
+                        primary: dnsConfig.primary,
+                        secondary: dnsConfig.secondary,
                         name: `${gameName} Pro ${i + 1}`
                     });
-                } else {
+                }
+            } else {
+                // Generate Iranian DNS
+                for (let i = 0; i < count; i++) {
                     randomDNS.push({
                         primary: generateIranianDNS(),
                         secondary: generateIranianDNS(),
@@ -1441,7 +1392,38 @@
                     });
                 }
             }
+            
             return randomDNS;
+        }
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ کپی شد!';
+                button.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'linear-gradient(135deg, #ff0080, #7928ca)';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ کپی شد!';
+                button.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = 'linear-gradient(135deg, #ff0080, #7928ca)';
+                }, 2000);
+            });
         }
 
         function showGameDNS() {
@@ -1466,48 +1448,34 @@
             setTimeout(() => {
                 listDiv.innerHTML = '';
                 
-                // Get game-specific DNS
-                const gameSpecificDNS = getGameSpecificDNS(selectedGame, selectedDNSType);
+                // Get completely random DNS configurations
+                const gameSpecificDNS = getGameSpecificDNS(selectedGame, selectedDNSType, dnsCount);
                 
-                for (let i = 0; i < dnsCount; i++) {
-                    let dnsConfig;
-                    
-                    if (i < gameSpecificDNS.length) {
-                        dnsConfig = gameSpecificDNS[i];
-                    } else {
-                        // Generate additional DNS if needed
-                        if (selectedDNSType === 'global') {
-                            const randomGlobal1 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
-                            const randomGlobal2 = globalDNS[Math.floor(Math.random() * globalDNS.length)];
-                            dnsConfig = {
-                                primary: randomGlobal1.ip,
-                                secondary: randomGlobal2.ip,
-                                name: `${selectedGame} Pro ${i + 1}`
-                            };
-                        } else {
-                            dnsConfig = {
-                                primary: generateIranianDNS(),
-                                secondary: generateIranianDNS(),
-                                name: `${selectedGame} ایرانی پرو ${i + 1}`
-                            };
-                        }
-                    }
-                    
+                gameSpecificDNS.forEach((dnsConfig, i) => {
                     const ping = Math.floor(Math.random() * 20 + 5) + 'ms';
                     const pingClass = 'ping-good';
                     
                     const dnsItem = document.createElement('div');
                     dnsItem.className = 'dns-item';
+                    dnsItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; flex-wrap: wrap; gap: 15px;';
+                    
+                    const dnsText = `${dnsConfig.primary}, ${dnsConfig.secondary}`;
+                    
                     dnsItem.innerHTML = `
-                        <div>
+                        <div style="flex: 1; min-width: 250px;">
                             <strong style="color: #ff0080;">${dnsConfig.name}</strong><br>
                             <span style="color: #00d4ff;">Primary:</span> ${dnsConfig.primary}<br>
                             <span style="color: #00d4ff;">Secondary:</span> ${dnsConfig.secondary}
                         </div>
-                        <span class="ping-indicator ${pingClass}">${ping}</span>
+                        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                            <span class="ping-indicator ${pingClass}">${ping}</span>
+                            <button onclick="copyToClipboard('${dnsText}', this)" style="background: linear-gradient(135deg, #ff0080, #7928ca); border: none; padding: 10px 20px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 14px; white-space: nowrap;">
+                                📋 کپی DNS
+                            </button>
+                        </div>
                     `;
                     listDiv.appendChild(dnsItem);
-                }
+                });
                 
                 // Add game-specific optimization message
                 const optimizationMsg = document.createElement('div');
@@ -1545,16 +1513,23 @@
                     const secondaryDNS = generateIranianDNS();
                     const ping = Math.floor(Math.random() * 20 + 8) + 'ms';
                     const dnsName = dnsNames[i % dnsNames.length];
+                    const dnsText = `${primaryDNS}, ${secondaryDNS}`;
                     
                     const dnsItem = document.createElement('div');
                     dnsItem.className = 'dns-item';
+                    dnsItem.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; flex-wrap: wrap; gap: 15px;';
                     dnsItem.innerHTML = `
-                        <div>
+                        <div style="flex: 1; min-width: 250px;">
                             <strong style="color: #ff0080;">${dnsName}</strong><br>
                             <span style="color: #00d4ff;">Primary:</span> ${primaryDNS}<br>
                             <span style="color: #00d4ff;">Secondary:</span> ${secondaryDNS}
                         </div>
-                        <span class="ping-indicator ping-good">${ping}</span>
+                        <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                            <span class="ping-indicator ping-good">${ping}</span>
+                            <button onclick="copyToClipboard('${dnsText}', this)" style="background: linear-gradient(135deg, #ff0080, #7928ca); border: none; padding: 10px 20px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 14px; white-space: nowrap;">
+                                📋 کپی DNS
+                            </button>
+                        </div>
                     `;
                     listDiv.appendChild(dnsItem);
                 }
@@ -1584,12 +1559,17 @@
                     const dnsCard = document.createElement('div');
                     dnsCard.className = 'dns-result';
                     dnsCard.innerHTML = `
-                        <div class="dns-item">
-                            <div>
+                        <div class="dns-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; flex-wrap: wrap; gap: 15px;">
+                            <div style="flex: 1; min-width: 200px;">
                                 <strong style="color: #ff0080;">${dns.name} Pro</strong><br>
                                 <span style="color: #00d4ff;">${dns.ip}</span>
                             </div>
-                            <span class="ping-indicator ${pingClass}">${ping}ms</span>
+                            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                <span class="ping-indicator ${pingClass}">${ping}ms</span>
+                                <button onclick="copyToClipboard('${dns.ip}', this)" style="background: linear-gradient(135deg, #ff0080, #7928ca); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 12px; white-space: nowrap;">
+                                    📋 کپی
+                                </button>
+                            </div>
                         </div>
                     `;
                     resultsDiv.appendChild(dnsCard);
@@ -1613,12 +1593,17 @@
                 
                 resultsDiv.innerHTML = `
                     <div class="dns-result">
-                        <div class="dns-item">
-                            <div>
+                        <div class="dns-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; flex-wrap: wrap; gap: 15px;">
+                            <div style="flex: 1; min-width: 200px;">
                                 <strong style="color: #ff0080;">DNS شما</strong><br>
                                 <span style="color: #00d4ff;">${customDNS}</span>
                             </div>
-                            <span class="ping-indicator ${pingClass}">${ping}ms</span>
+                            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                <span class="ping-indicator ${pingClass}">${ping}ms</span>
+                                <button onclick="copyToClipboard('${customDNS}', this)" style="background: linear-gradient(135deg, #ff0080, #7928ca); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 12px; white-space: nowrap;">
+                                    📋 کپی
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1635,5 +1620,5 @@
             }, 800);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985ac310f6a635ff',t:'MTc1ODk3MzYwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985acbf5224e3731',t:'MTc1ODk3Mzk2NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
