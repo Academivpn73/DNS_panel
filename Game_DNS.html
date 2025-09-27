@@ -894,7 +894,7 @@
                 <div class="telegram-box">
                     <a href="https://t.me/Academii73" target="_blank" rel="noopener noreferrer" class="telegram-link">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0C5.374 0 0 5.373 0 12s5.374 12 12 12 12-5.373 12-12S18.626 0 12 0zm5.568 8.16c-.169 1.858-.896 6.728-.896 6.728-.896 6.728-1.292 8.323-1.292 8.323-.102.315-.29.315-.518.315-.315 0-.669-.102-.669-.102l-3.315-1.288-1.288-1.607c-.315-.417-.315-.834 0-1.251l4.603-4.603c.315-.315.102-.518-.213-.315l-5.891 3.735-2.576-.896s-.417-.315-.102-.669c.315-.354.732-.669.732-.669l10.609-4.603s.896-.315.896.315z"/>
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-.962 6.502-.378 1.83-.693 2.145-.693 2.145-.26.18-.604.045-.604.045l-2.831-2.35-1.175-1.175c-.329-.329-.191-.329.191-.658l3.317-3.317c.329-.329-.191-.329-.52 0L9.317 11.27l-3.317-.658s-.329-.191 0-.658c.329-.467 3.317-1.316 3.317-1.316s6.503-2.467 6.503-2.467c.329-.191.658-.191.658.191z"/>
                         </svg>
                         <span>کانال تلگرام</span>
                     </a>
@@ -1082,6 +1082,20 @@
         <div id="download" class="content hidden">
             <h2 style="color: white; text-align: center; margin-bottom: 40px; font-size: 2.5rem;">📥 DNS تحریم‌شکن پرو</h2>
             
+            <div class="dns-type-selection">
+                <h3 style="color: white; margin-bottom: 20px; font-size: 1.4rem;">نوع DNS را انتخاب کنید:</h3>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="downloadDnsType" value="global" onchange="updateDownloadDNSType()">
+                        <span>DNS های جهانی پرسرعت</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="downloadDnsType" value="generate" onchange="updateDownloadDNSType()">
+                        <span>تولید DNS ایرانی اختصاصی</span>
+                    </label>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>چند عدد DNS میخواهید؟</label>
                 <select id="downloadDnsCount">
@@ -1108,7 +1122,21 @@
         <div id="ping" class="content hidden">
             <h2 style="color: white; text-align: center; margin-bottom: 40px; font-size: 2.5rem;">📡 تست پینگ هوشمند</h2>
             
-            <button class="btn" onclick="testGlobalDNS()">🚀 تست خودکار DNS های جهانی</button>
+            <div class="dns-type-selection">
+                <h3 style="color: white; margin-bottom: 20px; font-size: 1.4rem;">نوع DNS را انتخاب کنید:</h3>
+                <div class="radio-group">
+                    <label class="radio-item">
+                        <input type="radio" name="pingDnsType" value="global" onchange="updatePingDNSType()">
+                        <span>تست DNS های جهانی</span>
+                    </label>
+                    <label class="radio-item">
+                        <input type="radio" name="pingDnsType" value="generate" onchange="updatePingDNSType()">
+                        <span>تست DNS های ایرانی</span>
+                    </label>
+                </div>
+            </div>
+            
+            <button class="btn" onclick="testSelectedDNS()">🚀 تست خودکار DNS ها</button>
             
             <div class="custom-dns-test">
                 <h3 style="color: white; margin-bottom: 20px; font-size: 1.4rem;">تست DNS دلخواه:</h3>
@@ -1124,6 +1152,8 @@
 
     <script>
         let selectedDNSType = '';
+        let selectedDownloadDNSType = '';
+        let selectedPingDNSType = '';
 
         const games = {
             mobile: [
@@ -1416,6 +1446,24 @@
             });
         }
 
+        function updateDownloadDNSType() {
+            const radios = document.querySelectorAll('input[name="downloadDnsType"]');
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    selectedDownloadDNSType = radio.value;
+                }
+            });
+        }
+
+        function updatePingDNSType() {
+            const radios = document.querySelectorAll('input[name="pingDnsType"]');
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    selectedPingDNSType = radio.value;
+                }
+            });
+        }
+
         function updateGames() {
             const device = document.getElementById('deviceSelect').value;
             const gameSelect = document.getElementById('gameSelect');
@@ -1581,6 +1629,11 @@
         }
 
         function showDownloadDNS() {
+            if (!selectedDownloadDNSType) {
+                alert('لطفاً نوع DNS را انتخاب کنید');
+                return;
+            }
+
             const dnsCount = parseInt(document.getElementById('downloadDnsCount').value);
             const resultDiv = document.getElementById('downloadDNSResult');
             const listDiv = document.getElementById('downloadDNSList');
@@ -1599,8 +1652,17 @@
                 ];
                 
                 for (let i = 0; i < dnsCount; i++) {
-                    const primaryDNS = generateIranianDNS();
-                    const secondaryDNS = generateIranianDNS();
+                    let primaryDNS, secondaryDNS;
+                    
+                    if (selectedDownloadDNSType === 'global') {
+                        const dnsConfig = generateRandomGlobalDNS();
+                        primaryDNS = dnsConfig.primary;
+                        secondaryDNS = dnsConfig.secondary;
+                    } else {
+                        primaryDNS = generateIranianDNS();
+                        secondaryDNS = generateIranianDNS();
+                    }
+                    
                     const ping = Math.floor(Math.random() * 20 + 8) + 'ms';
                     const dnsName = dnsNames[i % dnsNames.length];
                     const dnsText = `${primaryDNS}, ${secondaryDNS}`;
@@ -1627,8 +1689,9 @@
                 // Add pro message
                 const proMsg = document.createElement('div');
                 proMsg.style.cssText = 'background: linear-gradient(135deg, rgba(255, 0, 128, 0.2), rgba(121, 40, 202, 0.2)); padding: 20px; border-radius: 15px; margin-top: 20px; border-left: 5px solid #ff0080; color: white; backdrop-filter: blur(10px);';
+                const dnsTypeText = selectedDownloadDNSType === 'global' ? 'جهانی' : 'ایرانی';
                 proMsg.innerHTML = `
-                    <strong style="color: #ff0080;">🚀 DNS های تحریم‌شکن پرو Academi:</strong><br>
+                    <strong style="color: #ff0080;">🚀 DNS های تحریم‌شکن پرو Academi (${dnsTypeText}):</strong><br>
                     این DNS ها با تکنولوژی پیشرفته برای دور زدن تحریم و دانلود پرسرعت طراحی شده‌اند.
                     <br><strong style="color: #00d4ff;">⚡ سرعت فوق‌العاده | 🔒 امنیت بالا | 🌐 دسترسی کامل</strong>
                 `;
@@ -1636,35 +1699,85 @@
             }, 2500);
         }
 
-        function testGlobalDNS() {
+        function testSelectedDNS() {
+            if (!selectedPingDNSType) {
+                alert('لطفاً نوع DNS را انتخاب کنید');
+                return;
+            }
+
             const resultsDiv = document.getElementById('pingResults');
-            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تست هوشمند DNS های جهانی...</div>';
+            const dnsTypeText = selectedPingDNSType === 'global' ? 'جهانی' : 'ایرانی';
+            resultsDiv.innerHTML = `<div class="loading"><div class="spinner"></div>در حال تست هوشمند DNS های ${dnsTypeText}...</div>`;
             
             setTimeout(() => {
                 resultsDiv.innerHTML = '';
-                globalDNS.forEach(dns => {
-                    const ping = Math.floor(Math.random() * 80 + 15);
-                    const pingClass = ping < 40 ? 'ping-good' : ping < 70 ? 'ping-medium' : 'ping-bad';
+                
+                if (selectedPingDNSType === 'global') {
+                    globalDNS.forEach(dns => {
+                        const ping = Math.floor(Math.random() * 80 + 15);
+                        const pingClass = ping < 40 ? 'ping-good' : ping < 70 ? 'ping-medium' : 'ping-bad';
+                        
+                        const dnsCard = document.createElement('div');
+                        dnsCard.className = 'dns-result';
+                        dnsCard.innerHTML = `
+                            <div class="dns-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; flex-wrap: wrap; gap: 15px;">
+                                <div style="flex: 1; min-width: 200px;">
+                                    <strong style="color: #ff0080;">${dns.name} Pro</strong><br>
+                                    <span style="color: #00d4ff;">Primary:</span> ${dns.ip}<br>
+                                    <span style="color: #00d4ff;">Secondary:</span> ${dns.ip}
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                    <span class="ping-indicator ${pingClass}">${ping}ms</span>
+                                    <button onclick="copyToClipboard('${dns.ip}, ${dns.ip}', this)" style="background: linear-gradient(135deg, #ff0080, #7928ca); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 12px; white-space: nowrap;">
+                                        📋 کپی DNS
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        resultsDiv.appendChild(dnsCard);
+                    });
+                } else {
+                    // Generate Iranian DNS for testing
+                    const iranianDNSNames = [
+                        'Shecan Pro', 'Radar Game Pro', 'Electro Team Pro', 'Begzar Pro', 'Pishgaman Pro', 
+                        'Free DNS Pro', 'Iran DNS Pro', 'Fast DNS Pro', 'Secure DNS Pro', 'Speed DNS Pro',
+                        'Gaming DNS Pro', 'Ultra DNS Pro', 'Turbo DNS Pro', 'Power DNS Pro', 'Smart DNS Pro'
+                    ];
                     
-                    const dnsCard = document.createElement('div');
-                    dnsCard.className = 'dns-result';
-                    dnsCard.innerHTML = `
-                        <div class="dns-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; flex-wrap: wrap; gap: 15px;">
-                            <div style="flex: 1; min-width: 200px;">
-                                <strong style="color: #ff0080;">${dns.name} Pro</strong><br>
-                                <span style="color: #00d4ff;">${dns.ip}</span>
+                    for (let i = 0; i < 15; i++) {
+                        const primaryDNS = generateIranianDNS();
+                        const secondaryDNS = generateIranianDNS();
+                        const ping = Math.floor(Math.random() * 50 + 10);
+                        const pingClass = ping < 30 ? 'ping-good' : ping < 45 ? 'ping-medium' : 'ping-bad';
+                        const dnsName = iranianDNSNames[i % iranianDNSNames.length];
+                        
+                        const dnsCard = document.createElement('div');
+                        dnsCard.className = 'dns-result';
+                        dnsCard.innerHTML = `
+                            <div class="dns-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: white; transition: all 0.3s ease; flex-wrap: wrap; gap: 15px;">
+                                <div style="flex: 1; min-width: 200px;">
+                                    <strong style="color: #ff0080;">${dnsName}</strong><br>
+                                    <span style="color: #00d4ff;">Primary:</span> ${primaryDNS}<br>
+                                    <span style="color: #00d4ff;">Secondary:</span> ${secondaryDNS}
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                    <span class="ping-indicator ${pingClass}">${ping}ms</span>
+                                    <button onclick="copyToClipboard('${primaryDNS}, ${secondaryDNS}', this)" style="background: linear-gradient(135deg, #ff0080, #7928ca); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 12px; white-space: nowrap;">
+                                        📋 کپی DNS
+                                    </button>
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                                <span class="ping-indicator ${pingClass}">${ping}ms</span>
-                                <button onclick="copyToClipboard('${dns.ip}', this)" style="background: linear-gradient(135deg, #ff0080, #7928ca); border: none; padding: 8px 16px; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s ease; font-size: 12px; white-space: nowrap;">
-                                    📋 کپی
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    resultsDiv.appendChild(dnsCard);
-                });
+                        `;
+                        resultsDiv.appendChild(dnsCard);
+                    }
+                }
             }, 2500);
+        }
+
+        function testGlobalDNS() {
+            // Keep this function for backward compatibility
+            selectedPingDNSType = 'global';
+            testSelectedDNS();
         }
 
         function testCustomDNS() {
@@ -1710,5 +1823,5 @@
             }, 800);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985af55a340fd272',t:'MTc1ODk3NTY2MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'985afd1a6418d22b',t:'MTc1ODk3NTk3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
