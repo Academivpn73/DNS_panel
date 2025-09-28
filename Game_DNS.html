@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academi DNS Manager - بهترین DNS های ایران</title>
+    <title>Academi DNS Manager</title>
+    <link rel="icon" type="image/png" href="https://github.com/Academivpn73/DNS_panel/blob/main/Academi_logo.png?raw=true">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -220,6 +221,7 @@
             font-weight: 600;
             font-size: 0.95rem;
             white-space: nowrap;
+            user-select: none;
         }
 
         .tab:hover {
@@ -255,7 +257,7 @@
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         .section-title {
@@ -291,6 +293,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            box-sizing: border-box;
         }
 
         .form-group select:focus, 
@@ -456,6 +459,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            cursor: pointer;
         }
 
         .feature-card:hover {
@@ -504,13 +508,13 @@
         .hamburger-menu {
             position: fixed;
             top: 20px;
-            right: 20px;
+            left: 20px;
             z-index: 1000;
         }
 
         .hamburger-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             display: flex;
@@ -520,21 +524,24 @@
             cursor: pointer;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .hamburger-icon:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
         }
 
         .hamburger-icon span {
-            width: 20px;
-            height: 2px;
+            width: 25px;
+            height: 3px;
             background: white;
-            margin: 2px 0;
+            margin: 3px 0;
             transition: 0.3s;
             border-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .menu-overlay {
@@ -601,21 +608,288 @@
             transform: scale(1.1);
         }
 
+        .menu-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-option {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-option:hover:not(.disabled) {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .menu-option.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .option-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .menu-option h4 {
+            color: white;
+            margin: 10px 0 5px 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .menu-option p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Game Center Animations */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Game Center Styles */
+        .game-center-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            display: none;
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .game-center-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .game-center-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 25px;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 80vh;
+            padding: 30px;
+            margin-top: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-center-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-center-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .close-game-center {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-game-center:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Auth Styles */
+        .login-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .auth-tab {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .auth-tab.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .auth-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .auth-form h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+            font-family: 'Vazirmatn', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .auth-form input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .auth-form input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
+        }
+
+        /* Game Center Main */
+        .game-center-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+        }
+
+        .user-info {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .user-info h3 {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .user-score {
+            color: #f39c12;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
 
         .game-card {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
         }
 
         .game-card:hover {
@@ -626,20 +900,331 @@
 
         .game-icon {
             font-size: 3rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .game-card h4 {
             color: white;
-            margin: 10px 0 5px 0;
-            font-size: 1.1rem;
-            font-weight: 700;
+            margin: 10px 0;
+            font-size: 1.2rem;
         }
 
         .game-card p {
             color: rgba(255, 255, 255, 0.8);
-            margin: 0;
+            margin: 10px 0;
+        }
+
+        .game-reward {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-weight: 600;
             font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        /* Leaderboard Styles */
+        .leaderboard-list {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .leaderboard-rank {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #f39c12;
+            min-width: 50px;
+        }
+
+        .leaderboard-user {
+            flex: 1;
+            margin: 0 15px;
+        }
+
+        .leaderboard-username {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .leaderboard-telegram {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-score {
+            color: #27ae60;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Game Player Styles */
+        .game-player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .game-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-container canvas {
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .game-controls {
+            text-align: center;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'Vazirmatn', sans-serif;
+            margin-bottom: 15px;
+        }
+
+        .game-instructions {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0;
+        }
+
+        /* User Profile Styles */
+        .user-profile {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .profile-info {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .profile-info h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #f39c12;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .game-history {
+            margin-top: 20px;
+        }
+
+        .game-history h4 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .history-game {
+            color: white;
+            font-weight: 600;
+        }
+
+        .history-score {
+            color: #27ae60;
+            font-weight: 700;
+        }
+
+        .history-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+        }
+
+        /* Profile Styles */
+        .profile-content {
+            padding: 20px 0;
+        }
+
+        .profile-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .profile-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar-container {
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-info-details {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .profile-info-details h3 {
+            color: white;
+            font-size: 1.8rem;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .profile-info-details p {
+            color: rgba(255, 255, 255, 0.8);
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+
+        .edit-profile-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .edit-profile-form h3 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+        }
+
+        .avatar-upload-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+        .avatar-preview {
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .save-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1rem;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.4);
         }
 
         /* Mobile Responsive */
@@ -706,6 +1291,87 @@
                 flex-direction: column;
                 gap: 10px;
             }
+            
+            /* Game Center Mobile */
+            .game-center-container {
+                margin: 10px;
+                padding: 20px;
+                max-width: calc(100vw - 20px);
+            }
+            
+            .game-center-nav {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .nav-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+            
+            .game-card {
+                padding: 20px;
+            }
+            
+            .game-icon {
+                font-size: 2.5rem;
+            }
+            
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .profile-nav {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .edit-profile-form {
+                padding: 0 10px;
+            }
+            
+            .leaderboard-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                text-align: right;
+            }
+            
+            .leaderboard-rank {
+                align-self: center;
+            }
+            
+            .menu-content {
+                margin: 10px;
+                padding: 20px;
+                max-height: calc(100vh - 40px);
+            }
+            
+            .menu-options {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .auth-form {
+                padding: 0 10px;
+            }
+            
+            .auth-tabs {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -730,6 +1396,65 @@
             .content {
                 padding: 15px;
             }
+            
+            .game-center-container {
+                margin: 5px;
+                padding: 15px;
+            }
+            
+            .game-center-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .game-card {
+                padding: 15px;
+            }
+            
+            .profile-info-details h3 {
+                font-size: 1.4rem;
+            }
+            
+            .profile-info-details p {
+                font-size: 1rem;
+            }
+            
+            .hamburger-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .hamburger-icon span {
+                width: 20px;
+                height: 2px;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn, .nav-btn, .auth-btn, .save-btn, .upload-btn, .copy-btn {
+                min-height: 44px;
+                padding: 12px 20px;
+            }
+            
+            .tab, .auth-tab {
+                min-height: 44px;
+                padding: 12px 16px;
+            }
+            
+            .game-card, .menu-option, .feature-card {
+                min-height: 120px;
+                padding: 20px;
+            }
+            
+            .leaderboard-item {
+                min-height: 60px;
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -737,7 +1462,7 @@
     <div class="floating-particles" id="particles"></div>
     
     <!-- Hamburger Menu -->
-    <div class="hamburger-menu" id="hamburgerMenu">
+    <div class="hamburger-menu">
         <div class="hamburger-icon" onclick="toggleMenu()">
             <span></span>
             <span></span>
@@ -746,39 +1471,292 @@
         <div class="menu-overlay" id="menuOverlay">
             <div class="menu-content">
                 <div class="menu-header">
-                    <h3>🎮 گیم سنتر</h3>
+                    <h3>📱 منوی اصلی</h3>
                     <button class="close-menu" onclick="toggleMenu()">✕</button>
                 </div>
-                <div class="games-grid">
-                    <div class="game-card" onclick="playGame('snake')">
-                        <div class="game-icon">🐍</div>
-                        <h4>Snake Classic</h4>
-                        <p>بازی کلاسیک مار</p>
+                <div class="menu-options">
+                    <div class="menu-option" onclick="showGameCenter()">
+                        <div class="option-icon">🎮</div>
+                        <h4>گیم سنتر</h4>
+                        <p>مجموعه بازی‌های آنلاین جهانی</p>
                     </div>
-                    <div class="game-card" onclick="playGame('tetris')">
-                        <div class="game-icon">🧩</div>
-                        <h4>Tetris</h4>
-                        <p>پازل کلاسیک</p>
+                    <div class="menu-option" onclick="showMainProfile()">
+                        <div class="option-icon">👤</div>
+                        <h4>پروفایل من</h4>
+                        <p>مدیریت حساب کاربری و تنظیمات</p>
                     </div>
-                    <div class="game-card" onclick="playGame('pong')">
-                        <div class="game-icon">🏓</div>
-                        <h4>Pong</h4>
-                        <p>بازی دو نفره</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Profile Overlay -->
+    <div class="game-center-overlay" id="mainProfileOverlay">
+        <div class="game-center-container">
+            <div class="game-center-header">
+                <h2>👤 پروفایل کاربری</h2>
+                <button class="close-game-center" onclick="closeMainProfile()">✕</button>
+            </div>
+            
+            <!-- Main Profile Login Section -->
+            <div id="mainProfileLoginSection" class="login-section">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="showMainAuthTab('login')">ورود</button>
+                    <button class="auth-tab" onclick="showMainAuthTab('register')">ثبت نام</button>
+                </div>
+                
+                <div id="mainLoginForm" class="auth-form">
+                    <h3>🔐 ورود به حساب کاربری</h3>
+                    <input type="email" id="mainLoginEmail" placeholder="ایمیل" required>
+                    <input type="password" id="mainLoginPassword" placeholder="رمز عبور" required>
+                    <button onclick="mainLoginUser()" class="auth-btn">ورود</button>
+                </div>
+                
+                <div id="mainRegisterForm" class="auth-form hidden">
+                    <h3>📝 ثبت نام</h3>
+                    <input type="text" id="mainRegisterName" placeholder="نام و نام خانوادگی" required>
+                    <input type="text" id="mainRegisterUsername" placeholder="نام کاربری" required>
+                    <input type="email" id="mainRegisterEmail" placeholder="ایمیل" required>
+                    <input type="text" id="mainRegisterTelegram" placeholder="آیدی تلگرام (بدون @)" required>
+                    <input type="password" id="mainRegisterPassword" placeholder="رمز عبور" required>
+                    <button onclick="mainRegisterUser()" class="auth-btn">ثبت نام</button>
+                </div>
+            </div>
+            
+            <!-- Main Profile Content -->
+            <div id="mainProfileContent" class="profile-content hidden">
+                <div class="profile-nav">
+                    <button class="nav-btn active" onclick="showMainProfileSection('info')">📋 اطلاعات</button>
+                    <button class="nav-btn" onclick="showMainProfileSection('edit')">✏️ ویرایش</button>
+                    <button class="nav-btn logout-btn" onclick="mainLogoutUser()">🚪 خروج</button>
+                </div>
+                
+                <!-- Profile Info Section -->
+                <div id="mainProfileInfoSection" class="profile-section">
+                    <div class="profile-card">
+                        <div class="profile-avatar-container">
+                            <img id="mainProfileAvatar" src="" alt="Profile" class="profile-avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiByeD0iNTAiIGZpbGw9IiM2NjdlZWEiLz4KPHN2ZyB4PSIyNSIgeT0iMjAiIHdpZHRoPSI1MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkgxNVYxNi41SDlWMjJIM1Y5QzMgNy45IDMuOSA3IDUgN0g5QzEwLjEgNyAxMSA3LjkgMTEgOUgxM0MxMyA3LjkgMTMuOSA3IDE1IDdIMTlDMjAuMSA3IDIxIDcuOSAyMSA5WiIvPgo8L3N2Zz4KPC9zdmc+'">
+                        </div>
+                        <div class="profile-info-details">
+                            <h3 id="mainProfileName"></h3>
+                            <p id="mainProfileUsername"></p>
+                            <p id="mainProfileEmail"></p>
+                            <p id="mainProfileTelegram"></p>
+                        </div>
                     </div>
-                    <div class="game-card" onclick="playGame('memory')">
-                        <div class="game-icon">🧠</div>
-                        <h4>Memory Game</h4>
-                        <p>تقویت حافظه</p>
+                </div>
+                
+                <!-- Profile Edit Section -->
+                <div id="mainProfileEditSection" class="profile-section hidden">
+                    <div class="edit-profile-form">
+                        <h3>✏️ ویرایش پروفایل</h3>
+                        
+                        <div class="avatar-upload-section">
+                            <div class="avatar-preview">
+                                <img id="editProfileAvatar" src="" alt="Profile" class="profile-avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiByeD0iNTAiIGZpbGw9IiM2NjdlZWEiLz4KPHN2ZyB4PSIyNSIgeT0iMjAiIHdpZHRoPSI1MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkgxNVYxNi41SDlWMjJIM1Y5QzMgNy45IDMuOSA3IDUgN0g5QzEwLjEgNyAxMSA3LjkgMTEgOUgxM0MxMyA3LjkgMTMuOSA3IDE1IDdIMTlDMjAuMSA3IDIxIDcuOSAyMSA5WiIvPgo8L3N2Zz4KPC9zdmc+'">
+                            </div>
+                            <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+                            <button onclick="document.getElementById('avatarUpload').click()" class="upload-btn">📷 تغییر عکس</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>نام و نام خانوادگی:</label>
+                            <input type="text" id="editProfileName" placeholder="نام و نام خانوادگی">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>نام کاربری:</label>
+                            <input type="text" id="editProfileUsername" placeholder="نام کاربری">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>ایمیل:</label>
+                            <input type="email" id="editProfileEmail" placeholder="ایمیل">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>آیدی تلگرام:</label>
+                            <input type="text" id="editProfileTelegram" placeholder="آیدی تلگرام (بدون @)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>رمز عبور جدید (اختیاری):</label>
+                            <input type="password" id="editProfilePassword" placeholder="رمز عبور جدید">
+                        </div>
+                        
+                        <button onclick="saveMainProfile()" class="save-btn">💾 ذخیره تغییرات</button>
                     </div>
-                    <div class="game-card" onclick="playGame('flappy')">
-                        <div class="game-icon">🐦</div>
-                        <h4>Flappy Bird</h4>
-                        <p>پرنده پرنده</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Center Overlay -->
+    <div class="game-center-overlay" id="gameCenterOverlay">
+        <div class="game-center-container">
+            <div class="game-center-header">
+                <h2>🎮 گیم سنتر آکادمی</h2>
+                <button class="close-game-center" onclick="closeGameCenter()">✕</button>
+            </div>
+            
+            <!-- Login Section -->
+            <div id="loginSection" class="login-section">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="showAuthTab('login')">ورود</button>
+                    <button class="auth-tab" onclick="showAuthTab('register')">ثبت نام</button>
+                </div>
+                
+                <div id="loginForm" class="auth-form">
+                    <h3>🔐 ورود به حساب کاربری</h3>
+                    <input type="email" id="loginEmail" placeholder="ایمیل" required>
+                    <input type="password" id="loginPassword" placeholder="رمز عبور" required>
+                    <button onclick="loginUser()" class="auth-btn">ورود</button>
+                </div>
+                
+                <div id="registerForm" class="auth-form hidden">
+                    <h3>📝 ثبت نام</h3>
+                    <input type="text" id="registerUsername" placeholder="نام کاربری" required>
+                    <input type="email" id="registerEmail" placeholder="ایمیل" required>
+                    <input type="text" id="registerTelegram" placeholder="آیدی تلگرام (بدون @)" required>
+                    <input type="password" id="registerPassword" placeholder="رمز عبور" required>
+                    <button onclick="registerUser()" class="auth-btn">ثبت نام</button>
+                </div>
+            </div>
+            
+            <!-- Game Center Main Content -->
+            <div id="gameCenterMain" class="game-center-main hidden">
+                <div class="game-center-nav">
+                    <button class="nav-btn active" onclick="showGameSection('games')">🎮 بازی‌ها</button>
+                    <button class="nav-btn" onclick="showGameSection('leaderboard')">🏆 جدول امتیازات</button>
+                    <button class="nav-btn" onclick="showGameSection('profile')">👤 پروفایل</button>
+                    <button class="nav-btn" onclick="showGameSection('editProfile')">✏️ ویرایش پروفایل</button>
+                    <button class="nav-btn logout-btn" onclick="logoutUser()">🚪 خروج</button>
+                </div>
+                
+                <!-- Games Section -->
+                <div id="gamesSection" class="game-section">
+                    <div class="user-info">
+                        <h3>سلام <span id="currentUsername"></span>! 👋</h3>
+                        <div class="user-score">امتیاز کل: <span id="userTotalScore">0</span></div>
                     </div>
-                    <div class="game-card" onclick="playGame('racing')">
-                        <div class="game-icon">🏎️</div>
-                        <h4>Racing</h4>
-                        <p>مسابقه ماشین</p>
+                    
+                    <div class="games-grid">
+                        <div class="game-card" onclick="playGame('snake')">
+                            <div class="game-icon">🐍</div>
+                            <h4>Snake</h4>
+                            <p>بازی کلاسیک مار</p>
+                            <div class="game-reward">+10 امتیاز</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="playGame('sudoku')">
+                            <div class="game-icon">🔢</div>
+                            <h4>Sudoku</h4>
+                            <p>معمای اعداد</p>
+                            <div class="game-reward">+25 امتیاز</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="playGame('memory')">
+                            <div class="game-icon">🧠</div>
+                            <h4>Memory Game</h4>
+                            <p>بازی حافظه</p>
+                            <div class="game-reward">+15 امتیاز</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="playGame('puzzle')">
+                            <div class="game-icon">🧩</div>
+                            <h4>Sliding Puzzle</h4>
+                            <p>معمای کشویی</p>
+                            <div class="game-reward">+20 امتیاز</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="playGame('wordguess')">
+                            <div class="game-icon">📝</div>
+                            <h4>Word Guess</h4>
+                            <p>حدس کلمه</p>
+                            <div class="game-reward">+18 امتیاز</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="playGame('mathquiz')">
+                            <div class="game-icon">➕</div>
+                            <h4>Math Quiz</h4>
+                            <p>مسابقه ریاضی</p>
+                            <div class="game-reward">+22 امتیاز</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leaderboard Section -->
+                <div id="leaderboardSection" class="game-section hidden">
+                    <h3>🏆 جدول امتیازات</h3>
+                    <div id="leaderboardList" class="leaderboard-list">
+                        <!-- Leaderboard will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Profile Section -->
+                <div id="profileSection" class="game-section hidden">
+                    <h3>👤 پروفایل من</h3>
+                    <div id="userProfile" class="user-profile">
+                        <!-- Profile will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Edit Profile Section -->
+                <div id="editProfileSection" class="game-section hidden">
+                    <h3>✏️ ویرایش پروفایل</h3>
+                    <div class="edit-profile-form">
+                        <div class="avatar-upload-section">
+                            <div class="avatar-preview">
+                                <img id="gameEditProfileAvatar" src="" alt="Profile" class="profile-avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiByeD0iNTAiIGZpbGw9IiM2NjdlZWEiLz4KPHN2ZyB4PSIyNSIgeT0iMjAiIHdpZHRoPSI1MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzEzLjEgMiAxNCAyLjkgMTQgNEMxNCA1LjEgMTMuMSA2IDEyIDZDMTAuOSA2IDEwIDUuMSAxMCA0QzEwIDIuOSAxMC45IDIgMTIgMlpNMjEgOVYyMkgxNVYxNi41SDlWMjJIM1Y5QzMgNy45IDMuOSA3IDUgN0g5QzEwLjEgNyAxMSA3LjkgMTEgOUgxM0MxMyA3LjkgMTMuOSA3IDE1IDdIMTlDMjAuMSA7IDIxIDcuOSAyMSA5WiIvPgo8L3N2Zz4KPC9zdmc+'">
+                            </div>
+                            <input type="file" id="gameAvatarUpload" accept="image/*" style="display: none;" onchange="handleGameAvatarUpload(event)">
+                            <button onclick="document.getElementById('gameAvatarUpload').click()" class="upload-btn">📷 تغییر عکس</button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>نام و نام خانوادگی:</label>
+                            <input type="text" id="gameEditProfileName" placeholder="نام و نام خانوادگی">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>نام کاربری:</label>
+                            <input type="text" id="gameEditProfileUsername" placeholder="نام کاربری">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>ایمیل:</label>
+                            <input type="email" id="gameEditProfileEmail" placeholder="ایمیل">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>آیدی تلگرام:</label>
+                            <input type="text" id="gameEditProfileTelegram" placeholder="آیدی تلگرام (بدون @)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>رمز عبور جدید (اختیاری):</label>
+                            <input type="password" id="gameEditProfilePassword" placeholder="رمز عبور جدید">
+                        </div>
+                        
+                        <button onclick="saveGameProfile()" class="save-btn">💾 ذخیره تغییرات</button>
+                    </div>
+                </div>
+                
+                <!-- Game Player -->
+                <div id="gamePlayer" class="game-player hidden">
+                    <div class="game-player-header">
+                        <button onclick="backToGames()" class="back-btn">← بازگشت</button>
+                        <h3 id="currentGameTitle"></h3>
+                        <div class="game-score">امتیاز: <span id="gameScore">0</span></div>
+                    </div>
+                    
+                    <div id="gameContainer" class="game-container">
+                        <canvas id="gameCanvas" width="400" height="400"></canvas>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button id="startGameBtn" onclick="startCurrentGame()" class="start-btn">🎮 شروع بازی</button>
+                        <p class="game-instructions">از کلیدهای جهت‌دار یا WASD استفاده کنید</p>
                     </div>
                 </div>
             </div>
@@ -854,32 +1832,32 @@
             </div>
             
             <div class="welcome-grid">
-                <div class="feature-card" onclick="showTab('gaming'); event.stopPropagation();" style="cursor: pointer;">
+                <div class="feature-card" onclick="showTab('gaming')">
                     <div class="card-icon">🎮</div>
                     <h3>DNS گیمینگ</h3>
                     <p>DNS های مخصوص بازی با کمترین تاخیر و بهترین کیفیت اتصال برای تجربه گیمینگ بی‌نظیر</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">✅ DNS های پیشرفته</div>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">⚡ پینگ فوق‌العاده پایین</div>
                 </div>
 
-                <div class="feature-card" onclick="showTab('download'); event.stopPropagation();" style="cursor: pointer;">
+                <div class="feature-card" onclick="showTab('download')">
                     <div class="card-icon">📥</div>
                     <h3>DNS دانلود</h3>
                     <p>دسترسی سریع و پایدار به تمام سایت‌های دانلود و پلتفرم‌های محتوا با سرعت بالا</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">🎮 گیمینگ حرفه‌ای</div>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">🚀 سرعت بالا</div>
                 </div>
 
-                <div class="feature-card" onclick="showTab('universal'); event.stopPropagation();" style="cursor: pointer;">
+                <div class="feature-card" onclick="showTab('universal')">
                     <div class="card-icon">🌍</div>
                     <h3>DNS همه کاره</h3>
                     <p>یک راه‌حل کامل برای تمام نیازهای اینترنتی شما با پوشش جهانی و کیفیت عالی</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">🔧 آموزش تخصصی</div>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">🌐 پوشش جهانی</div>
                 </div>
 
-                <div class="feature-card" onclick="showTab('ping'); event.stopPropagation();" style="cursor: pointer;">
+                <div class="feature-card" onclick="showTab('ping')">
                     <div class="card-icon">📡</div>
                     <h3>تست پینگ</h3>
                     <p>ابزار پیشرفته برای تست و انتخاب بهترین DNS متناسب با موقعیت و نیاز شما</p>
-                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">🆓 کاملاً رایگان</div>
+                    <div style="margin-top: 15px; padding: 8px 16px; background: rgba(255,255,255,0.2); border-radius: 15px; font-size: 0.9rem; font-weight: 600;">🔍 تست دقیق</div>
                 </div>
             </div>
 
@@ -905,11 +1883,11 @@
                 <label>نوع DNS را انتخاب کنید:</label>
                 <div class="radio-group">
                     <label class="radio-item">
-                        <input type="radio" name="dnsType" value="global" onchange="updateDNSType()">
+                        <input type="radio" name="gamingDnsType" value="global">
                         <span>🌐 DNS های جهانی</span>
                     </label>
                     <label class="radio-item">
-                        <input type="radio" name="dnsType" value="generate" onchange="updateDNSType()">
+                        <input type="radio" name="gamingDnsType" value="generate">
                         <span>🇮🇷 DNS ایرانی اختصاصی</span>
                     </label>
                 </div>
@@ -917,7 +1895,7 @@
 
             <div class="form-group">
                 <label>نوع دستگاه:</label>
-                <select id="deviceSelect" onchange="updateGames()">
+                <select id="gamingDeviceSelect" onchange="updateGamingGames()">
                     <option value="">انتخاب کنید...</option>
                     <option value="mobile">📱 موبایل (Android/iOS)</option>
                     <option value="pc">💻 کامپیوتر (Windows/Mac/Linux)</option>
@@ -927,14 +1905,14 @@
 
             <div class="form-group">
                 <label>بازی مورد نظر:</label>
-                <select id="gameSelect" onchange="enableDNSCount()">
+                <select id="gamingGameSelect" onchange="enableGamingDNSCount()">
                     <option value="">ابتدا دستگاه را انتخاب کنید...</option>
                 </select>
             </div>
 
-            <div class="form-group" id="dnsCountGroup" style="display: none;">
+            <div class="form-group" id="gamingDnsCountGroup" style="display: none;">
                 <label>تعداد DNS:</label>
-                <select id="dnsCount">
+                <select id="gamingDnsCount">
                     <option value="3">3 عدد (سریع)</option>
                     <option value="5">5 عدد (متوسط)</option>
                     <option value="8">8 عدد (کامل)</option>
@@ -943,9 +1921,9 @@
                 <button class="btn" onclick="showGameDNS()">🚀 دریافت DNS ها</button>
             </div>
 
-            <div id="gameDNSResult" class="dns-result hidden">
+            <div id="gamingDNSResult" class="dns-result hidden">
                 <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem; font-weight: 700;">🎯 DNS های گیمینگ:</h3>
-                <div id="gameDNSList"></div>
+                <div id="gamingDNSList"></div>
             </div>
         </div>
 
@@ -1030,6 +2008,8 @@
             </div>
         </div>
 
+
+
         <div id="ping" class="content hidden">
             <h2 class="section-title">📡 تست پینگ</h2>
             
@@ -1072,25 +2052,7 @@
     </div>
 
     <script>
-        // Initialize particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = Math.random() * 3 + 2 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        window.addEventListener('load', createParticles);
-
-        let selectedDNSType = '';
-
+        // Global variables
         const games = {
             mobile: [
                 '🔫 Call of Duty Mobile', '🎯 PUBG Mobile', '🔥 Free Fire', '🏗️ Fortnite Mobile', 
@@ -1109,46 +2071,1259 @@
             ]
         };
 
+        // Initialize particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 3 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 8 + 12) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Tab functionality
         function showTab(tabName) {
-            const contents = document.querySelectorAll('.content');
-            contents.forEach(content => content.classList.add('hidden'));
+            // Hide all content sections
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.add('hidden');
+            });
             
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => tab.classList.remove('active'));
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
             
-            document.getElementById(tabName).classList.remove('hidden');
+            // Show selected content
+            const targetContent = document.getElementById(tabName);
+            if (targetContent) {
+                targetContent.classList.remove('hidden');
+            }
+            
+            // Find and activate the correct tab
+            document.querySelectorAll('.tab').forEach(tab => {
+                if (tab.onclick && tab.onclick.toString().includes(tabName)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+
+        // Menu functionality
+        function toggleMenu() {
+            const overlay = document.getElementById('menuOverlay');
+            overlay.classList.toggle('active');
+        }
+
+        function showGameCenter() {
+            toggleMenu();
+            // Open Game Center in a new overlay instead of tab
+            document.getElementById('gameCenterOverlay').classList.add('active');
+            loadGameCenter();
+        }
+
+        function showMainProfile() {
+            toggleMenu();
+            document.getElementById('mainProfileOverlay').classList.add('active');
+            loadMainProfile();
+        }
+
+        function closeMainProfile() {
+            document.getElementById('mainProfileOverlay').classList.remove('active');
+        }
+
+        function loadMainProfile() {
+            const savedUser = localStorage.getItem('currentMainUser');
+            if (savedUser) {
+                currentMainUser = JSON.parse(savedUser);
+                showMainProfileContent();
+            } else {
+                showMainProfileLogin();
+            }
+        }
+
+        function showMainProfileLogin() {
+            document.getElementById('mainProfileLoginSection').classList.remove('hidden');
+            document.getElementById('mainProfileContent').classList.add('hidden');
+        }
+
+        function showMainProfileContent() {
+            document.getElementById('mainProfileLoginSection').classList.add('hidden');
+            document.getElementById('mainProfileContent').classList.remove('hidden');
+            
+            // Update profile display
+            document.getElementById('mainProfileName').textContent = currentMainUser.name || currentMainUser.username;
+            document.getElementById('mainProfileUsername').textContent = '@' + currentMainUser.username;
+            document.getElementById('mainProfileEmail').textContent = currentMainUser.email;
+            document.getElementById('mainProfileTelegram').textContent = '@' + currentMainUser.telegram;
+            
+            if (currentMainUser.avatar) {
+                document.getElementById('mainProfileAvatar').src = currentMainUser.avatar;
+            }
+            
+            showMainProfileSection('info');
+        }
+
+        function showMainAuthTab(tab) {
+            document.querySelectorAll('#mainProfileLoginSection .auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#mainProfileLoginSection .auth-form').forEach(f => f.classList.add('hidden'));
+            
+            if (tab === 'login') {
+                document.querySelector('#mainProfileLoginSection .auth-tab').classList.add('active');
+                document.getElementById('mainLoginForm').classList.remove('hidden');
+            } else {
+                document.querySelectorAll('#mainProfileLoginSection .auth-tab')[1].classList.add('active');
+                document.getElementById('mainRegisterForm').classList.remove('hidden');
+            }
+        }
+
+        function mainRegisterUser() {
+            const name = document.getElementById('mainRegisterName').value.trim();
+            const username = document.getElementById('mainRegisterUsername').value.trim();
+            const email = document.getElementById('mainRegisterEmail').value.trim();
+            const telegram = document.getElementById('mainRegisterTelegram').value.trim();
+            const password = document.getElementById('mainRegisterPassword').value;
+
+            if (!name || !username || !email || !telegram || !password) {
+                showNotification('⚠️ لطفاً تمام فیلدها را پر کنید');
+                return;
+            }
+
+            if (users.find(u => u.email === email)) {
+                showNotification('⚠️ این ایمیل قبلاً ثبت شده است');
+                return;
+            }
+
+            if (users.find(u => u.telegram === telegram)) {
+                showNotification('⚠️ این آیدی تلگرام قبلاً ثبت شده است');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name,
+                username,
+                email,
+                telegram,
+                password,
+                totalScore: 0,
+                joinDate: new Date().toISOString(),
+                avatar: null
+            };
+
+            users.push(newUser);
+            localStorage.setItem('gameUsers', JSON.stringify(users));
+            
+            currentMainUser = newUser;
+            localStorage.setItem('currentMainUser', JSON.stringify(currentMainUser));
+            
+            showNotification('✅ ثبت نام با موفقیت انجام شد!');
+            showMainProfileContent();
+        }
+
+        function mainLoginUser() {
+            const email = document.getElementById('mainLoginEmail').value.trim();
+            const password = document.getElementById('mainLoginPassword').value;
+
+            if (!email || !password) {
+                showNotification('⚠️ لطفاً ایمیل و رمز عبور را وارد کنید');
+                return;
+            }
+
+            const user = users.find(u => u.email === email && u.password === password);
+            if (!user) {
+                showNotification('⚠️ ایمیل یا رمز عبور اشتباه است');
+                return;
+            }
+
+            currentMainUser = user;
+            localStorage.setItem('currentMainUser', JSON.stringify(currentMainUser));
+            
+            showNotification('✅ ورود با موفقیت انجام شد!');
+            showMainProfileContent();
+        }
+
+        function mainLogoutUser() {
+            currentMainUser = null;
+            localStorage.removeItem('currentMainUser');
+            showMainProfileLogin();
+            showNotification('👋 با موفقیت خارج شدید');
+        }
+
+        function showMainProfileSection(section) {
+            document.querySelectorAll('.profile-nav .nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.profile-section').forEach(sec => sec.classList.add('hidden'));
+            
             event.target.classList.add('active');
-        }
-
-        function updateDNSType() {
-            const dnsType = document.querySelector('input[name="dnsType"]:checked').value;
-            selectedDNSType = dnsType;
-        }
-
-        function updateGames() {
-            const deviceType = document.getElementById('deviceSelect').value;
-            const gameSelect = document.getElementById('gameSelect');
+            document.getElementById('mainProfile' + section.charAt(0).toUpperCase() + section.slice(1) + 'Section').classList.remove('hidden');
             
-            if (deviceType && games[deviceType]) {
-                gameSelect.innerHTML = '<option value="">انتخاب کنید...</option>';
-                games[deviceType].forEach(game => {
+            if (section === 'edit') {
+                loadMainProfileEditForm();
+            }
+        }
+
+        function loadMainProfileEditForm() {
+            document.getElementById('editProfileName').value = currentMainUser.name || '';
+            document.getElementById('editProfileUsername').value = currentMainUser.username || '';
+            document.getElementById('editProfileEmail').value = currentMainUser.email || '';
+            document.getElementById('editProfileTelegram').value = currentMainUser.telegram || '';
+            
+            if (currentMainUser.avatar) {
+                document.getElementById('editProfileAvatar').src = currentMainUser.avatar;
+            }
+        }
+
+        function handleAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                    showNotification('⚠️ حجم فایل نباید بیشتر از 5 مگابایت باشد');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatarUrl = e.target.result;
+                    document.getElementById('editProfileAvatar').src = avatarUrl;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveMainProfile() {
+            const name = document.getElementById('editProfileName').value.trim();
+            const username = document.getElementById('editProfileUsername').value.trim();
+            const email = document.getElementById('editProfileEmail').value.trim();
+            const telegram = document.getElementById('editProfileTelegram').value.trim();
+            const password = document.getElementById('editProfilePassword').value;
+
+            if (!name || !username || !email || !telegram) {
+                showNotification('⚠️ لطفاً فیلدهای اجباری را پر کنید');
+                return;
+            }
+
+            // Check for duplicate email (except current user)
+            if (users.find(u => u.email === email && u.id !== currentMainUser.id)) {
+                showNotification('⚠️ این ایمیل توسط کاربر دیگری استفاده می‌شود');
+                return;
+            }
+
+            // Check for duplicate telegram (except current user)
+            if (users.find(u => u.telegram === telegram && u.id !== currentMainUser.id)) {
+                showNotification('⚠️ این آیدی تلگرام توسط کاربر دیگری استفاده می‌شود');
+                return;
+            }
+
+            // Update user data
+            currentMainUser.name = name;
+            currentMainUser.username = username;
+            currentMainUser.email = email;
+            currentMainUser.telegram = telegram;
+            
+            if (password) {
+                currentMainUser.password = password;
+            }
+
+            const avatarSrc = document.getElementById('editProfileAvatar').src;
+            if (avatarSrc && !avatarSrc.includes('data:image/svg+xml')) {
+                currentMainUser.avatar = avatarSrc;
+            }
+
+            // Update in users array
+            const userIndex = users.findIndex(u => u.id === currentMainUser.id);
+            if (userIndex !== -1) {
+                users[userIndex] = currentMainUser;
+                localStorage.setItem('gameUsers', JSON.stringify(users));
+            }
+
+            localStorage.setItem('currentMainUser', JSON.stringify(currentMainUser));
+            
+            showNotification('✅ پروفایل با موفقیت به‌روزرسانی شد!');
+            showMainProfileContent();
+        }
+
+        // Game Center System Variables
+        let currentUser = null;
+        let currentMainUser = null;
+        let currentGame = null;
+        let gameScore = 0;
+        let gameInterval = null;
+        let canvas, ctx;
+        let users = JSON.parse(localStorage.getItem('gameUsers') || '[]');
+        let gameHistory = JSON.parse(localStorage.getItem('gameHistory') || '[]');
+
+        // Game Center Functions
+        function loadGameCenter() {
+            // Check if user is logged in
+            const savedUser = localStorage.getItem('currentGameUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showGameCenterMain();
+            } else {
+                showLoginSection();
+            }
+        }
+
+        function closeGameCenter() {
+            document.getElementById('gameCenterOverlay').classList.remove('active');
+        }
+
+        function showAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.add('hidden'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tab').classList.add('active');
+                document.getElementById('loginForm').classList.remove('hidden');
+            } else {
+                document.querySelectorAll('.auth-tab')[1].classList.add('active');
+                document.getElementById('registerForm').classList.remove('hidden');
+            }
+        }
+
+        function registerUser() {
+            const username = document.getElementById('registerUsername').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const telegram = document.getElementById('registerTelegram').value.trim();
+            const password = document.getElementById('registerPassword').value;
+
+            if (!username || !email || !telegram || !password) {
+                showNotification('⚠️ لطفاً تمام فیلدها را پر کنید');
+                return;
+            }
+
+            if (users.find(u => u.email === email)) {
+                showNotification('⚠️ این ایمیل قبلاً ثبت شده است');
+                return;
+            }
+
+            if (users.find(u => u.telegram === telegram)) {
+                showNotification('⚠️ این آیدی تلگرام قبلاً ثبت شده است');
+                return;
+            }
+
+            const newUser = {
+                id: Date.now(),
+                name: username, // Use username as name for game center
+                username,
+                email,
+                telegram,
+                password,
+                totalScore: 0,
+                joinDate: new Date().toISOString(),
+                avatar: null
+            };
+
+            users.push(newUser);
+            localStorage.setItem('gameUsers', JSON.stringify(users));
+            
+            currentUser = newUser;
+            localStorage.setItem('currentGameUser', JSON.stringify(currentUser));
+            
+            showNotification('✅ ثبت نام با موفقیت انجام شد!');
+            showGameCenterMain();
+        }
+
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showNotification('⚠️ لطفاً ایمیل و رمز عبور را وارد کنید');
+                return;
+            }
+
+            const user = users.find(u => u.email === email && u.password === password);
+            if (!user) {
+                showNotification('⚠️ ایمیل یا رمز عبور اشتباه است');
+                return;
+            }
+
+            currentUser = user;
+            localStorage.setItem('currentGameUser', JSON.stringify(currentUser));
+            
+            showNotification('✅ ورود با موفقیت انجام شد!');
+            showGameCenterMain();
+        }
+
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentGameUser');
+            showLoginSection();
+            showNotification('👋 با موفقیت خارج شدید');
+        }
+
+        function showLoginSection() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('gameCenterMain').classList.add('hidden');
+        }
+
+        function showGameCenterMain() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('gameCenterMain').classList.remove('hidden');
+            
+            document.getElementById('currentUsername').textContent = currentUser.username;
+            document.getElementById('userTotalScore').textContent = currentUser.totalScore;
+            
+            showGameSection('games');
+        }
+
+        function showGameSection(section) {
+            document.querySelectorAll('.game-center-nav .nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.game-section').forEach(sec => sec.classList.add('hidden'));
+            
+            event.target.classList.add('active');
+            document.getElementById(section + 'Section').classList.remove('hidden');
+            
+            if (section === 'leaderboard') {
+                loadLeaderboard();
+            } else if (section === 'profile') {
+                loadUserProfile();
+            } else if (section === 'editProfile') {
+                loadGameProfileEditForm();
+            }
+        }
+
+        function loadGameProfileEditForm() {
+            document.getElementById('gameEditProfileName').value = currentUser.name || '';
+            document.getElementById('gameEditProfileUsername').value = currentUser.username || '';
+            document.getElementById('gameEditProfileEmail').value = currentUser.email || '';
+            document.getElementById('gameEditProfileTelegram').value = currentUser.telegram || '';
+            
+            if (currentUser.avatar) {
+                document.getElementById('gameEditProfileAvatar').src = currentUser.avatar;
+            }
+        }
+
+        function handleGameAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                    showNotification('⚠️ حجم فایل نباید بیشتر از 5 مگابایت باشد');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatarUrl = e.target.result;
+                    document.getElementById('gameEditProfileAvatar').src = avatarUrl;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveGameProfile() {
+            const name = document.getElementById('gameEditProfileName').value.trim();
+            const username = document.getElementById('gameEditProfileUsername').value.trim();
+            const email = document.getElementById('gameEditProfileEmail').value.trim();
+            const telegram = document.getElementById('gameEditProfileTelegram').value.trim();
+            const password = document.getElementById('gameEditProfilePassword').value;
+
+            if (!name || !username || !email || !telegram) {
+                showNotification('⚠️ لطفاً فیلدهای اجباری را پر کنید');
+                return;
+            }
+
+            // Check for duplicate email (except current user)
+            if (users.find(u => u.email === email && u.id !== currentUser.id)) {
+                showNotification('⚠️ این ایمیل توسط کاربر دیگری استفاده می‌شود');
+                return;
+            }
+
+            // Check for duplicate telegram (except current user)
+            if (users.find(u => u.telegram === telegram && u.id !== currentUser.id)) {
+                showNotification('⚠️ این آیدی تلگرام توسط کاربر دیگری استفاده می‌شود');
+                return;
+            }
+
+            // Update user data
+            currentUser.name = name;
+            currentUser.username = username;
+            currentUser.email = email;
+            currentUser.telegram = telegram;
+            
+            if (password) {
+                currentUser.password = password;
+            }
+
+            const avatarSrc = document.getElementById('gameEditProfileAvatar').src;
+            if (avatarSrc && !avatarSrc.includes('data:image/svg+xml')) {
+                currentUser.avatar = avatarSrc;
+            }
+
+            // Update in users array
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('gameUsers', JSON.stringify(users));
+            }
+
+            localStorage.setItem('currentGameUser', JSON.stringify(currentUser));
+            
+            // Update main user if same
+            if (currentMainUser && currentMainUser.id === currentUser.id) {
+                currentMainUser = currentUser;
+                localStorage.setItem('currentMainUser', JSON.stringify(currentMainUser));
+            }
+            
+            showNotification('✅ پروفایل با موفقیت به‌روزرسانی شد!');
+            
+            // Update display
+            document.getElementById('currentUsername').textContent = currentUser.username;
+            showGameSection('profile');
+        }
+
+        function loadLeaderboard() {
+            const sortedUsers = [...users].sort((a, b) => b.totalScore - a.totalScore);
+            const leaderboardList = document.getElementById('leaderboardList');
+            
+            let html = '';
+            sortedUsers.forEach((user, index) => {
+                const rank = index + 1;
+                const rankEmoji = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+                
+                html += `
+                    <div class="leaderboard-item" onclick="showUserDetails('${user.id}')">
+                        <div class="leaderboard-rank">${rankEmoji}</div>
+                        <div class="leaderboard-user">
+                            <div class="leaderboard-username">${user.username}</div>
+                            <div class="leaderboard-telegram">@${user.telegram}</div>
+                        </div>
+                        <div class="leaderboard-score">${user.totalScore}</div>
+                    </div>
+                `;
+            });
+            
+            leaderboardList.innerHTML = html;
+        }
+
+        function showUserDetails(userId) {
+            const user = users.find(u => u.id == userId);
+            if (!user) return;
+            
+            const userGames = gameHistory.filter(g => g.userId == userId);
+            
+            let detailsHtml = `
+                <div style="background: rgba(255,255,255,0.2); border-radius: 20px; padding: 25px; margin: 20px 0;">
+                    <h4 style="color: white; margin-bottom: 20px; text-align: center;">📊 جزئیات ${user.username}</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; text-align: center;">
+                            <div style="color: #f39c12; font-size: 1.5rem; font-weight: 800;">${user.totalScore}</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">امتیاز کل</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; text-align: center;">
+                            <div style="color: #27ae60; font-size: 1.5rem; font-weight: 800;">${userGames.length}</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">بازی انجام شده</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; text-align: center;">
+                            <div style="color: #3498db; font-size: 1.5rem; font-weight: 800;">@${user.telegram}</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">تلگرام</div>
+                        </div>
+                    </div>
+                    <h5 style="color: white; margin-bottom: 15px;">🎮 تاریخچه بازی‌ها:</h5>
+                    <div style="max-height: 300px; overflow-y: auto;">
+            `;
+            
+            userGames.sort((a, b) => new Date(b.date) - new Date(a.date)).forEach(game => {
+                const date = new Date(game.date).toLocaleDateString('fa-IR');
+                const time = new Date(game.date).toLocaleTimeString('fa-IR');
+                detailsHtml += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; margin-bottom: 8px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+                        <div style="color: white; font-weight: 600;">${game.gameName}</div>
+                        <div style="color: #27ae60; font-weight: 700;">+${game.score}</div>
+                        <div style="color: rgba(255,255,255,0.6); font-size: 0.8rem;">${date} ${time}</div>
+                    </div>
+                `;
+            });
+            
+            detailsHtml += `
+                    </div>
+                    <button onclick="closeUserDetails()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 10px 20px; border-radius: 15px; cursor: pointer; font-weight: 600; margin-top: 15px; width: 100%;">بستن</button>
+                </div>
+            `;
+            
+            document.getElementById('leaderboardList').innerHTML = detailsHtml;
+        }
+
+        function closeUserDetails() {
+            loadLeaderboard();
+        }
+
+        function loadUserProfile() {
+            const userGames = gameHistory.filter(g => g.userId == currentUser.id);
+            const gameStats = {};
+            
+            userGames.forEach(game => {
+                if (!gameStats[game.gameName]) {
+                    gameStats[game.gameName] = { count: 0, totalScore: 0 };
+                }
+                gameStats[game.gameName].count++;
+                gameStats[game.gameName].totalScore += game.score;
+            });
+            
+            let profileHtml = `
+                <div class="profile-info">
+                    <h4>👤 ${currentUser.username}</h4>
+                    <p style="color: rgba(255,255,255,0.8);">@${currentUser.telegram}</p>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">${currentUser.totalScore}</div>
+                        <div class="stat-label">امتیاز کل</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${userGames.length}</div>
+                        <div class="stat-label">بازی انجام شده</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${Object.keys(gameStats).length}</div>
+                        <div class="stat-label">نوع بازی</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${new Date(currentUser.joinDate).toLocaleDateString('fa-IR')}</div>
+                        <div class="stat-label">تاریخ عضویت</div>
+                    </div>
+                </div>
+                
+                <div class="game-history">
+                    <h4>🎮 تاریخچه بازی‌ها</h4>
+            `;
+            
+            userGames.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10).forEach(game => {
+                const date = new Date(game.date).toLocaleDateString('fa-IR');
+                const time = new Date(game.date).toLocaleTimeString('fa-IR');
+                profileHtml += `
+                    <div class="history-item">
+                        <div class="history-game">${game.gameName}</div>
+                        <div class="history-score">+${game.score}</div>
+                        <div class="history-date">${date} ${time}</div>
+                    </div>
+                `;
+            });
+            
+            profileHtml += '</div>';
+            document.getElementById('userProfile').innerHTML = profileHtml;
+        }
+
+        // Game Functions
+        function playGame(gameType) {
+            currentGame = gameType;
+            document.getElementById('gamesSection').classList.add('hidden');
+            document.getElementById('gamePlayer').classList.remove('hidden');
+            
+            const gameTitles = {
+                'snake': '🐍 Snake',
+                'sudoku': '🔢 Sudoku',
+                'memory': '🧠 Memory Game',
+                'puzzle': '🧩 Sliding Puzzle',
+                'wordguess': '📝 Word Guess',
+                'mathquiz': '➕ Math Quiz'
+            };
+            
+            document.getElementById('currentGameTitle').textContent = gameTitles[gameType];
+            document.getElementById('gameScore').textContent = '0';
+            gameScore = 0;
+            
+            canvas = document.getElementById('gameCanvas');
+            ctx = canvas.getContext('2d');
+            
+            setupGameControls();
+        }
+
+        function backToGames() {
+            document.getElementById('gamePlayer').classList.add('hidden');
+            document.getElementById('gamesSection').classList.remove('hidden');
+            
+            if (gameInterval) {
+                clearInterval(gameInterval);
+                gameInterval = null;
+            }
+            
+            currentGame = null;
+        }
+
+        function startCurrentGame() {
+            if (!currentGame) return;
+            
+            document.getElementById('startGameBtn').textContent = '🔄 ری‌استارت';
+            
+            if (gameInterval) {
+                clearInterval(gameInterval);
+            }
+            
+            gameScore = 0;
+            document.getElementById('gameScore').textContent = '0';
+            
+            switch(currentGame) {
+                case 'snake':
+                    startSnakeGame();
+                    break;
+                case 'sudoku':
+                    startSudokuGame();
+                    break;
+                case 'memory':
+                    startMemoryGame();
+                    break;
+                case 'puzzle':
+                    startPuzzleGame();
+                    break;
+                case 'wordguess':
+                    startWordGuessGame();
+                    break;
+                case 'mathquiz':
+                    startMathQuizGame();
+                    break;
+            }
+        }
+
+        function setupGameControls() {
+            document.addEventListener('keydown', handleGameInput);
+        }
+
+        function handleGameInput(e) {
+            if (!currentGame) return;
+            
+            const key = e.key.toLowerCase();
+            
+            switch(currentGame) {
+                case 'snake':
+                    handleSnakeInput(key);
+                    break;
+                case 'sudoku':
+                    handleSudokuInput(key);
+                    break;
+                case 'memory':
+                    handleMemoryInput(key);
+                    break;
+                case 'puzzle':
+                    handlePuzzleInput(key);
+                    break;
+                case 'wordguess':
+                    handleWordGuessInput(key);
+                    break;
+                case 'mathquiz':
+                    handleMathQuizInput(key);
+                    break;
+            }
+        }
+
+        function updateGameScore(points) {
+            gameScore += points;
+            document.getElementById('gameScore').textContent = gameScore;
+        }
+
+        function endGame(finalScore) {
+            if (gameInterval) {
+                clearInterval(gameInterval);
+                gameInterval = null;
+            }
+            
+            const gamePoints = {
+                'snake': 10,
+                'sudoku': 25,
+                'memory': 15,
+                'puzzle': 20,
+                'wordguess': 18,
+                'mathquiz': 22
+            };
+            
+            const gameNames = {
+                'snake': '🐍 Snake',
+                'sudoku': '🔢 Sudoku',
+                'memory': '🧠 Memory Game',
+                'puzzle': '🧩 Sliding Puzzle',
+                'wordguess': '📝 Word Guess',
+                'mathquiz': '➕ Math Quiz'
+            };
+            
+            const earnedPoints = Math.max(1, Math.floor(finalScore / 10)) * gamePoints[currentGame];
+            
+            // Update user score
+            currentUser.totalScore += earnedPoints;
+            const userIndex = users.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('gameUsers', JSON.stringify(users));
+                localStorage.setItem('currentGameUser', JSON.stringify(currentUser));
+            }
+            
+            // Add to game history
+            const gameRecord = {
+                userId: currentUser.id,
+                gameName: gameNames[currentGame],
+                score: earnedPoints,
+                date: new Date().toISOString()
+            };
+            
+            gameHistory.push(gameRecord);
+            localStorage.setItem('gameHistory', JSON.stringify(gameHistory));
+            
+            // Update display
+            document.getElementById('userTotalScore').textContent = currentUser.totalScore;
+            
+            showNotification(`🎉 بازی تمام شد! امتیاز کسب شده: ${earnedPoints}`);
+        }
+
+        // Snake Game
+        let snake = [{x: 200, y: 200}];
+        let food = {x: 0, y: 0};
+        let direction = {x: 0, y: 0};
+
+        function startSnakeGame() {
+            snake = [{x: 200, y: 200}];
+            direction = {x: 0, y: 0};
+            generateFood();
+            
+            gameInterval = setInterval(() => {
+                updateSnake();
+                drawSnake();
+            }, 150);
+        }
+
+        function generateFood() {
+            food.x = Math.floor(Math.random() * 20) * 20;
+            food.y = Math.floor(Math.random() * 20) * 20;
+        }
+
+        function updateSnake() {
+            const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+            
+            if (head.x < 0 || head.x >= 400 || head.y < 0 || head.y >= 400 || 
+                snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+                endGame(gameScore);
+                return;
+            }
+            
+            snake.unshift(head);
+            
+            if (head.x === food.x && head.y === food.y) {
+                updateGameScore(10);
+                generateFood();
+            } else {
+                snake.pop();
+            }
+        }
+
+        function drawSnake() {
+            ctx.clearRect(0, 0, 400, 400);
+            
+            // Draw snake
+            ctx.fillStyle = '#27ae60';
+            snake.forEach(segment => {
+                ctx.fillRect(segment.x, segment.y, 18, 18);
+            });
+            
+            // Draw food
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(food.x, food.y, 18, 18);
+        }
+
+        function handleSnakeInput(key) {
+            switch(key) {
+                case 'arrowup':
+                case 'w':
+                    if (direction.y === 0) direction = {x: 0, y: -20};
+                    break;
+                case 'arrowdown':
+                case 's':
+                    if (direction.y === 0) direction = {x: 0, y: 20};
+                    break;
+                case 'arrowleft':
+                case 'a':
+                    if (direction.x === 0) direction = {x: -20, y: 0};
+                    break;
+                case 'arrowright':
+                case 'd':
+                    if (direction.x === 0) direction = {x: 20, y: 0};
+                    break;
+            }
+        }
+
+
+
+        // Sudoku Game
+        let sudokuBoard = [];
+        let sudokuSolution = [];
+        
+        function startSudokuGame() {
+            generateSudoku();
+            drawSudoku();
+            
+            gameInterval = setInterval(() => {
+                if (checkSudokuComplete()) {
+                    updateGameScore(100);
+                    endGame(gameScore);
+                }
+            }, 1000);
+        }
+        
+        function generateSudoku() {
+            // Simple 4x4 Sudoku for demo
+            sudokuSolution = [
+                [1, 2, 3, 4],
+                [3, 4, 1, 2],
+                [2, 1, 4, 3],
+                [4, 3, 2, 1]
+            ];
+            
+            sudokuBoard = [
+                [1, 0, 3, 0],
+                [0, 4, 0, 2],
+                [2, 0, 4, 0],
+                [0, 3, 0, 1]
+            ];
+        }
+        
+        function drawSudoku() {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, 0, 400, 400);
+            
+            ctx.strokeStyle = '#ecf0f1';
+            ctx.lineWidth = 2;
+            
+            // Draw grid
+            for (let i = 0; i <= 4; i++) {
+                ctx.beginPath();
+                ctx.moveTo(50 + i * 75, 50);
+                ctx.lineTo(50 + i * 75, 350);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(50, 50 + i * 75);
+                ctx.lineTo(350, 50 + i * 75);
+                ctx.stroke();
+            }
+            
+            // Draw numbers
+            ctx.fillStyle = '#ecf0f1';
+            ctx.font = '30px Arial';
+            ctx.textAlign = 'center';
+            
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    if (sudokuBoard[row][col] !== 0) {
+                        ctx.fillText(
+                            sudokuBoard[row][col].toString(),
+                            87.5 + col * 75,
+                            87.5 + row * 75
+                        );
+                    }
+                }
+            }
+        }
+        
+        function checkSudokuComplete() {
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    if (sudokuBoard[row][col] !== sudokuSolution[row][col]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        
+        function handleSudokuInput(key) {
+            // Sudoku input handling would be implemented here
+        }
+
+        // Memory Game
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        
+        function startMemoryGame() {
+            memoryCards = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
+            memoryCards = memoryCards.sort(() => Math.random() - 0.5);
+            flippedCards = [];
+            matchedPairs = 0;
+            
+            drawMemoryGame();
+            
+            gameInterval = setInterval(() => {
+                if (matchedPairs === 8) {
+                    updateGameScore(80);
+                    endGame(gameScore);
+                }
+            }, 100);
+        }
+        
+        function drawMemoryGame() {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, 0, 400, 400);
+            
+            for (let i = 0; i < 16; i++) {
+                const row = Math.floor(i / 4);
+                const col = i % 4;
+                const x = 25 + col * 87.5;
+                const y = 25 + row * 87.5;
+                
+                ctx.fillStyle = '#3498db';
+                ctx.fillRect(x, y, 75, 75);
+                
+                ctx.fillStyle = '#ecf0f1';
+                ctx.font = '20px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('?', x + 37.5, y + 45);
+            }
+        }
+        
+        function handleMemoryInput(key) {
+            // Memory game input handling
+        }
+
+        // Sliding Puzzle Game
+        let puzzleBoard = [];
+        let emptyPos = { row: 3, col: 3 };
+        
+        function startPuzzleGame() {
+            puzzleBoard = [
+                [1, 2, 3, 4],
+                [5, 6, 7, 8],
+                [9, 10, 11, 12],
+                [13, 14, 15, 0]
+            ];
+            
+            // Shuffle the puzzle
+            for (let i = 0; i < 100; i++) {
+                const moves = ['up', 'down', 'left', 'right'];
+                const move = moves[Math.floor(Math.random() * 4)];
+                movePuzzleTile(move, false);
+            }
+            
+            drawPuzzle();
+            
+            gameInterval = setInterval(() => {
+                if (checkPuzzleComplete()) {
+                    updateGameScore(60);
+                    endGame(gameScore);
+                }
+            }, 100);
+        }
+        
+        function drawPuzzle() {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, 0, 400, 400);
+            
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    const x = 25 + col * 87.5;
+                    const y = 25 + row * 87.5;
+                    
+                    if (puzzleBoard[row][col] !== 0) {
+                        ctx.fillStyle = '#3498db';
+                        ctx.fillRect(x, y, 75, 75);
+                        
+                        ctx.fillStyle = '#ecf0f1';
+                        ctx.font = '20px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(puzzleBoard[row][col].toString(), x + 37.5, y + 45);
+                    }
+                }
+            }
+        }
+        
+        function movePuzzleTile(direction, updateScore = true) {
+            let newRow = emptyPos.row;
+            let newCol = emptyPos.col;
+            
+            switch(direction) {
+                case 'up': newRow--; break;
+                case 'down': newRow++; break;
+                case 'left': newCol--; break;
+                case 'right': newCol++; break;
+            }
+            
+            if (newRow >= 0 && newRow < 4 && newCol >= 0 && newCol < 4) {
+                puzzleBoard[emptyPos.row][emptyPos.col] = puzzleBoard[newRow][newCol];
+                puzzleBoard[newRow][newCol] = 0;
+                emptyPos = { row: newRow, col: newCol };
+                
+                if (updateScore) {
+                    updateGameScore(1);
+                    drawPuzzle();
+                }
+            }
+        }
+        
+        function checkPuzzleComplete() {
+            const target = [
+                [1, 2, 3, 4],
+                [5, 6, 7, 8],
+                [9, 10, 11, 12],
+                [13, 14, 15, 0]
+            ];
+            
+            for (let row = 0; row < 4; row++) {
+                for (let col = 0; col < 4; col++) {
+                    if (puzzleBoard[row][col] !== target[row][col]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        
+        function handlePuzzleInput(key) {
+            switch(key) {
+                case 'arrowup':
+                case 'w':
+                    movePuzzleTile('up');
+                    break;
+                case 'arrowdown':
+                case 's':
+                    movePuzzleTile('down');
+                    break;
+                case 'arrowleft':
+                case 'a':
+                    movePuzzleTile('left');
+                    break;
+                case 'arrowright':
+                case 'd':
+                    movePuzzleTile('right');
+                    break;
+            }
+        }
+
+        // Word Guess Game
+        let currentWord = '';
+        let guessedWord = '';
+        let wrongGuesses = 0;
+        const words = ['برنامه', 'کامپیوتر', 'اینترنت', 'تکنولوژی', 'هوش', 'مصنوعی'];
+        
+        function startWordGuessGame() {
+            currentWord = words[Math.floor(Math.random() * words.length)];
+            guessedWord = '_'.repeat(currentWord.length);
+            wrongGuesses = 0;
+            
+            drawWordGuess();
+            
+            gameInterval = setInterval(() => {
+                if (guessedWord === currentWord) {
+                    updateGameScore(50);
+                    endGame(gameScore);
+                } else if (wrongGuesses >= 6) {
+                    endGame(gameScore);
+                }
+            }, 100);
+        }
+        
+        function drawWordGuess() {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, 0, 400, 400);
+            
+            ctx.fillStyle = '#ecf0f1';
+            ctx.font = '30px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(guessedWord.split('').join(' '), 200, 200);
+            
+            ctx.font = '20px Arial';
+            ctx.fillText(`اشتباه: ${wrongGuesses}/6`, 200, 250);
+            ctx.fillText('حروف را تایپ کنید', 200, 300);
+        }
+        
+        function handleWordGuessInput(key) {
+            // Word guess input handling would be implemented here
+        }
+
+        // Math Quiz Game
+        let mathQuestion = '';
+        let mathAnswer = 0;
+        let userAnswer = '';
+        
+        function startMathQuizGame() {
+            generateMathQuestion();
+            drawMathQuiz();
+            
+            gameInterval = setInterval(() => {
+                if (parseInt(userAnswer) === mathAnswer) {
+                    updateGameScore(10);
+                    generateMathQuestion();
+                    userAnswer = '';
+                    drawMathQuiz();
+                }
+                
+                if (gameScore >= 100) {
+                    endGame(gameScore);
+                }
+            }, 100);
+        }
+        
+        function generateMathQuestion() {
+            const a = Math.floor(Math.random() * 20) + 1;
+            const b = Math.floor(Math.random() * 20) + 1;
+            const operations = ['+', '-', '*'];
+            const op = operations[Math.floor(Math.random() * 3)];
+            
+            mathQuestion = `${a} ${op} ${b}`;
+            
+            switch(op) {
+                case '+': mathAnswer = a + b; break;
+                case '-': mathAnswer = a - b; break;
+                case '*': mathAnswer = a * b; break;
+            }
+        }
+        
+        function drawMathQuiz() {
+            ctx.clearRect(0, 0, 400, 400);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(0, 0, 400, 400);
+            
+            ctx.fillStyle = '#ecf0f1';
+            ctx.font = '30px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(mathQuestion + ' = ?', 200, 150);
+            
+            ctx.font = '25px Arial';
+            ctx.fillText(userAnswer || '_', 200, 200);
+            
+            ctx.font = '18px Arial';
+            ctx.fillText('اعداد را تایپ کنید و Enter بزنید', 200, 300);
+        }
+        
+        function handleMathQuizInput(key) {
+            if (key >= '0' && key <= '9') {
+                userAnswer += key;
+                drawMathQuiz();
+            } else if (key === 'backspace') {
+                userAnswer = userAnswer.slice(0, -1);
+                drawMathQuiz();
+            } else if (key === 'enter') {
+                // Answer will be checked in the game interval
+            }
+        }
+
+
+
+        // Gaming functionality
+        function updateGamingGames() {
+            const deviceSelect = document.getElementById('gamingDeviceSelect');
+            const gameSelect = document.getElementById('gamingGameSelect');
+            const device = deviceSelect.value;
+            
+            gameSelect.innerHTML = '<option value="">انتخاب کنید...</option>';
+            
+            if (device && games[device]) {
+                games[device].forEach(game => {
                     const option = document.createElement('option');
                     option.value = game;
                     option.textContent = game;
                     gameSelect.appendChild(option);
                 });
-                gameSelect.disabled = false;
-            } else {
-                gameSelect.innerHTML = '<option value="">ابتدا دستگاه را انتخاب کنید...</option>';
-                gameSelect.disabled = true;
             }
-            
-            document.getElementById('dnsCountGroup').style.display = 'none';
         }
 
-        function enableDNSCount() {
-            const gameSelect = document.getElementById('gameSelect');
-            const dnsCountGroup = document.getElementById('dnsCountGroup');
+        function enableGamingDNSCount() {
+            const gameSelect = document.getElementById('gamingGameSelect');
+            const dnsCountGroup = document.getElementById('gamingDnsCountGroup');
             
             if (gameSelect.value) {
                 dnsCountGroup.style.display = 'block';
@@ -1157,311 +3332,128 @@
             }
         }
 
-        function generateRandomDNS() {
-            const dns1 = Math.floor(Math.random() * 255) + 1;
-            const dns2 = Math.floor(Math.random() * 255) + 1;
-            const dns3 = Math.floor(Math.random() * 255) + 1;
-            const dns4 = Math.floor(Math.random() * 255) + 1;
-            return `${dns1}.${dns2}.${dns3}.${dns4}`;
-        }
-
-        function getGlobalDNS(count = 20) {
-            const baseDNSList = [
-                '8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1', '9.9.9.9', '149.112.112.112',
-                '208.67.222.222', '208.67.220.220', '185.228.168.9', '185.228.169.9',
-                '76.76.19.19', '76.223.100.101', '94.140.14.14', '94.140.15.15',
-                '77.88.8.8', '77.88.8.1', '156.154.70.1', '156.154.71.1'
-            ];
-            
-            const allDNS = [...baseDNSList];
-            while (allDNS.length < count) {
-                const newDNS = generateRandomDNS();
-                if (!allDNS.includes(newDNS)) {
-                    allDNS.push(newDNS);
-                }
-            }
-            
-            return allDNS.slice(0, count);
-        }
-
-        function simulatePing() {
-            return Math.floor(Math.random() * 200) + 10;
-        }
-
-        function getPingClass(ping) {
-            if (ping < 40) return 'ping-excellent';
-            if (ping < 80) return 'ping-good';
-            if (ping < 150) return 'ping-medium';
-            return 'ping-bad';
-        }
-
-        function getPingText(ping) {
-            if (ping < 40) return `${ping}ms عالی`;
-            if (ping < 80) return `${ping}ms خوب`;
-            if (ping < 150) return `${ping}ms متوسط`;
-            return `${ping}ms ضعیف`;
-        }
-
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const button = event.target;
-                const originalText = button.textContent;
-                
-                button.textContent = '✅ کپی شد!';
-                button.style.background = 'linear-gradient(135deg, #00b894, #00a085)';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = '';
-                }, 2000);
-            });
-        }
-
         function showGameDNS() {
-            const deviceType = document.getElementById('deviceSelect').value;
-            const gameType = document.getElementById('gameSelect').value;
-            const dnsCount = parseInt(document.getElementById('dnsCount').value);
-            const resultDiv = document.getElementById('gameDNSResult');
-            const listDiv = document.getElementById('gameDNSList');
+            const deviceSelect = document.getElementById('gamingDeviceSelect');
+            const gameSelect = document.getElementById('gamingGameSelect');
+            const dnsCountSelect = document.getElementById('gamingDnsCount');
+            const dnsTypeRadios = document.querySelectorAll('input[name="gamingDnsType"]');
+            const resultDiv = document.getElementById('gamingDNSResult');
+            const listDiv = document.getElementById('gamingDNSList');
             
-            if (!selectedDNSType || !deviceType || !gameType) {
-                alert('⚠️ لطفاً تمام گزینه‌ها را انتخاب کنید');
+            // Check if all fields are filled
+            if (!deviceSelect.value || !gameSelect.value) {
+                alert('⚠️ لطفاً تمام فیلدها را پر کنید');
                 return;
             }
             
-            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال بارگذاری DNS ها...</div>';
-            resultDiv.classList.remove('hidden');
+            let dnsType = '';
+            dnsTypeRadios.forEach(radio => {
+                if (radio.checked) dnsType = radio.value;
+            });
             
-            setTimeout(() => {
-                let dnsList = [];
-                
-                if (selectedDNSType === 'global') {
-                    dnsList = getGlobalDNS(dnsCount);
-                } else if (selectedDNSType === 'generate') {
-                    for (let i = 0; i < dnsCount; i++) {
-                        dnsList.push(generateRandomDNS());
-                    }
-                }
-                
-                let html = '';
-                dnsList.forEach((dns, index) => {
-                    const ping = simulatePing();
-                    const pingClass = getPingClass(ping);
-                    const pingText = getPingText(ping);
-                    
-                    const secondaryDNS = (selectedDNSType === 'global') ? getGlobalDNS(1)[0] : generateRandomDNS();
-                    html += `
-                        <div class="dns-item">
-                            <div>
-                                <strong>🌐 DNS ${index + 1}:</strong><br>
-                                <div style="margin: 8px 0;">
-                                    <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">اولیه:</span> 
-                                    <span class="dns-address">${dns}</span>
-                                    <button class="copy-btn" onclick="copyToClipboard('${dns}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                </div>
-                                <div style="margin: 8px 0;">
-                                    <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">ثانویه:</span> 
-                                    <span class="dns-address">${secondaryDNS}</span>
-                                    <button class="copy-btn" onclick="copyToClipboard('${secondaryDNS}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                </div>
-                                <small style="color: rgba(255,255,255,0.7);">${deviceType} - ${gameType}</small>
-                            </div>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <span class="ping-indicator ${pingClass}">${pingText}</span>
-                                <button class="copy-btn" onclick="copyToClipboard('${dns}, ${secondaryDNS}')">کپی هردو</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                listDiv.innerHTML = html;
-            }, 1500);
-        }
-
-        function showDownloadDNS() {
-            const deviceType = document.getElementById('downloadDeviceSelect').value;
-            const dnsCount = parseInt(document.getElementById('downloadDnsCount').value);
-            const resultDiv = document.getElementById('downloadDNSResult');
-            const listDiv = document.getElementById('downloadDNSList');
-            
-            const selectedType = document.querySelector('input[name="downloadDnsType"]:checked');
-            if (!selectedType || !deviceType) {
-                alert('⚠️ لطفاً تمام گزینه‌ها را انتخاب کنید');
-                return;
-            }
-            
-            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال بارگذاری DNS ها...</div>';
-            resultDiv.classList.remove('hidden');
-            
-            setTimeout(() => {
-                let dnsList = [];
-                
-                if (selectedType.value === 'global') {
-                    dnsList = getGlobalDNS(dnsCount);
-                } else if (selectedType.value === 'generate') {
-                    for (let i = 0; i < dnsCount; i++) {
-                        dnsList.push(generateRandomDNS());
-                    }
-                }
-                
-                let html = '';
-                dnsList.forEach((dns, index) => {
-                    const ping = simulatePing();
-                    const pingClass = getPingClass(ping);
-                    const pingText = getPingText(ping);
-                    
-                    const secondaryDNS = (selectedType.value === 'global') ? getGlobalDNS(1)[0] : generateRandomDNS();
-                    html += `
-                        <div class="dns-item">
-                            <div>
-                                <strong>🌐 DNS ${index + 1}:</strong><br>
-                                <div style="margin: 8px 0;">
-                                    <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">اولیه:</span> 
-                                    <span class="dns-address">${dns}</span>
-                                    <button class="copy-btn" onclick="copyToClipboard('${dns}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                </div>
-                                <div style="margin: 8px 0;">
-                                    <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">ثانویه:</span> 
-                                    <span class="dns-address">${secondaryDNS}</span>
-                                    <button class="copy-btn" onclick="copyToClipboard('${secondaryDNS}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                </div>
-                                <small style="color: rgba(255,255,255,0.7);">${deviceType} - دانلود</small>
-                            </div>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <span class="ping-indicator ${pingClass}">${pingText}</span>
-                                <button class="copy-btn" onclick="copyToClipboard('${dns}, ${secondaryDNS}')">کپی هردو</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                listDiv.innerHTML = html;
-            }, 1500);
-        }
-
-        function showUniversalDNS() {
-            const dnsCount = parseInt(document.getElementById('universalDnsCount').value);
-            const resultDiv = document.getElementById('universalDNSResult');
-            const listDiv = document.getElementById('universalDNSList');
-            
-            const selectedType = document.querySelector('input[name="universalDnsType"]:checked');
-            if (!selectedType) {
+            if (!dnsType) {
                 alert('⚠️ لطفاً نوع DNS را انتخاب کنید');
                 return;
             }
             
-            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال بارگذاری DNS ها...</div>';
+            const count = parseInt(dnsCountSelect.value);
+            
+            // Show loading
+            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تولید DNS های گیمینگ...</div>';
             resultDiv.classList.remove('hidden');
             
             setTimeout(() => {
-                let dnsList = [];
-                
-                if (selectedType.value === 'global') {
-                    dnsList = getGlobalDNS(dnsCount);
-                } else if (selectedType.value === 'generate') {
-                    for (let i = 0; i < dnsCount; i++) {
-                        dnsList.push(generateRandomDNS());
-                    }
-                }
-                
-                let html = '';
-                dnsList.forEach((dns, index) => {
-                    const ping = simulatePing();
-                    const pingClass = getPingClass(ping);
-                    const pingText = getPingText(ping);
-                    
-                    const secondaryDNS = (selectedType.value === 'global') ? getGlobalDNS(1)[0] : generateRandomDNS();
-                    html += `
-                        <div class="dns-item">
-                            <div>
-                                <strong>🌐 DNS ${index + 1}:</strong><br>
-                                <div style="margin: 8px 0;">
-                                    <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">اولیه:</span> 
-                                    <span class="dns-address">${dns}</span>
-                                    <button class="copy-btn" onclick="copyToClipboard('${dns}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                </div>
-                                <div style="margin: 8px 0;">
-                                    <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">ثانویه:</span> 
-                                    <span class="dns-address">${secondaryDNS}</span>
-                                    <button class="copy-btn" onclick="copyToClipboard('${secondaryDNS}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                </div>
-                                <small style="color: rgba(255,255,255,0.7);">همه کاره</small>
-                            </div>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <span class="ping-indicator ${pingClass}">${pingText}</span>
-                                <button class="copy-btn" onclick="copyToClipboard('${dns}, ${secondaryDNS}')">کپی هردو</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                listDiv.innerHTML = html;
-            }, 1500);
+                const dnsList = generateDNSList(dnsType, count);
+                displayDNSList(listDiv, dnsList);
+            }, 2000);
+        }
+
+        function showDownloadDNS() {
+            const deviceSelect = document.getElementById('downloadDeviceSelect');
+            const dnsCountSelect = document.getElementById('downloadDnsCount');
+            const dnsTypeRadios = document.querySelectorAll('input[name="downloadDnsType"]');
+            const resultDiv = document.getElementById('downloadDNSResult');
+            const listDiv = document.getElementById('downloadDNSList');
+            
+            if (!deviceSelect.value) {
+                alert('⚠️ لطفاً نوع دستگاه را انتخاب کنید');
+                return;
+            }
+            
+            let dnsType = '';
+            dnsTypeRadios.forEach(radio => {
+                if (radio.checked) dnsType = radio.value;
+            });
+            
+            if (!dnsType) {
+                alert('⚠️ لطفاً نوع DNS را انتخاب کنید');
+                return;
+            }
+            
+            const count = parseInt(dnsCountSelect.value);
+            
+            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تولید DNS های دانلود...</div>';
+            resultDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                const dnsList = generateDNSList(dnsType, count);
+                displayDNSList(listDiv, dnsList);
+            }, 2000);
+        }
+
+        function showUniversalDNS() {
+            const dnsCountSelect = document.getElementById('universalDnsCount');
+            const dnsTypeRadios = document.querySelectorAll('input[name="universalDnsType"]');
+            const resultDiv = document.getElementById('universalDNSResult');
+            const listDiv = document.getElementById('universalDNSList');
+            
+            let dnsType = '';
+            dnsTypeRadios.forEach(radio => {
+                if (radio.checked) dnsType = radio.value;
+            });
+            
+            if (!dnsType) {
+                alert('⚠️ لطفاً نوع DNS را انتخاب کنید');
+                return;
+            }
+            
+            const count = parseInt(dnsCountSelect.value);
+            
+            listDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تولید DNS های همه کاره...</div>';
+            resultDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                const dnsList = generateDNSList(dnsType, count);
+                displayDNSList(listDiv, dnsList);
+            }, 2000);
         }
 
         function testSelectedDNS() {
-            const deviceType = document.getElementById('pingDeviceSelect').value;
+            const deviceSelect = document.getElementById('pingDeviceSelect');
+            const dnsTypeRadios = document.querySelectorAll('input[name="pingDnsType"]');
             const resultsDiv = document.getElementById('pingResults');
             
-            const selectedType = document.querySelector('input[name="pingDnsType"]:checked');
-            if (!selectedType || !deviceType) {
-                alert('⚠️ لطفاً تمام گزینه‌ها را انتخاب کنید');
+            if (!deviceSelect.value) {
+                alert('⚠️ لطفاً نوع دستگاه را انتخاب کنید');
+                return;
+            }
+            
+            let dnsType = '';
+            dnsTypeRadios.forEach(radio => {
+                if (radio.checked) dnsType = radio.value;
+            });
+            
+            if (!dnsType) {
+                alert('⚠️ لطفاً نوع DNS را انتخاب کنید');
                 return;
             }
             
             resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تست DNS ها...</div>';
             
             setTimeout(() => {
-                let dnsList = [];
-                
-                if (selectedType.value === 'global') {
-                    dnsList = getGlobalDNS(6);
-                } else if (selectedType.value === 'generate') {
-                    for (let i = 0; i < 6; i++) {
-                        dnsList.push(generateRandomDNS());
-                    }
-                }
-                
-                let html = '';
-                dnsList.forEach((dns, index) => {
-                    const ping = simulatePing();
-                    const pingClass = getPingClass(ping);
-                    const pingText = getPingText(ping);
-                    
-                    const secondaryDNS = (selectedType.value === 'global') ? getGlobalDNS(1)[0] : generateRandomDNS();
-                    const secondaryPing = simulatePing();
-                    const secondaryPingClass = getPingClass(secondaryPing);
-                    const secondaryPingText = getPingText(secondaryPing);
-                    
-                    html += `
-                        <div class="dns-result" style="margin-bottom: 15px;">
-                            <div class="dns-item">
-                                <div>
-                                    <strong>🌐 DNS ${index + 1}:</strong><br>
-                                    <div style="margin: 8px 0;">
-                                        <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">اولیه:</span> 
-                                        <span class="dns-address">${dns}</span>
-                                        <span class="ping-indicator ${pingClass}" style="margin-left: 10px; font-size: 10px; padding: 2px 6px;">${pingText}</span>
-                                        <button class="copy-btn" onclick="copyToClipboard('${dns}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                    </div>
-                                    <div style="margin: 8px 0;">
-                                        <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">ثانویه:</span> 
-                                        <span class="dns-address">${secondaryDNS}</span>
-                                        <span class="ping-indicator ${secondaryPingClass}" style="margin-left: 10px; font-size: 10px; padding: 2px 6px;">${secondaryPingText}</span>
-                                        <button class="copy-btn" onclick="copyToClipboard('${secondaryDNS}')" style="margin-left: 8px; font-size: 10px; padding: 4px 8px;">کپی</button>
-                                    </div>
-                                    <small style="color: rgba(255,255,255,0.7);">${deviceType} - تست شده</small>
-                                </div>
-                                <div style="display: flex; gap: 10px; align-items: center;">
-                                    <button class="copy-btn" onclick="copyToClipboard('${dns}, ${secondaryDNS}')">کپی هردو</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                resultsDiv.innerHTML = html;
-            }, 2000);
+                const testResults = generatePingResults(dnsType, 8);
+                displayPingResults(resultsDiv, testResults);
+            }, 3000);
         }
 
         function testCustomDNS() {
@@ -1473,290 +3465,154 @@
                 return;
             }
             
-            const dnsPattern = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/;
-            if (!dnsPattern.test(customDNS)) {
-                alert('⚠️ لطفاً آدرس DNS معتبر وارد کنید (مثال: 8.8.8.8)');
+            if (!isValidDNS(customDNS)) {
+                alert('⚠️ آدرس DNS معتبر نیست');
                 return;
             }
             
-            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تست...</div>';
+            resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div>در حال تست DNS شما...</div>';
             
             setTimeout(() => {
-                const ping = simulatePing();
-                const pingClass = getPingClass(ping);
-                const pingText = getPingText(ping);
+                const ping = Math.floor(Math.random() * 200) + 10;
+                const pingClass = ping < 50 ? 'ping-excellent' : ping < 100 ? 'ping-good' : ping < 150 ? 'ping-medium' : 'ping-bad';
+                const pingText = ping < 50 ? 'عالی' : ping < 100 ? 'خوب' : ping < 150 ? 'متوسط' : 'ضعیف';
                 
-                const html = `
+                resultsDiv.innerHTML = `
                     <div class="dns-result">
-                        <h3 style="color: white; margin-bottom: 15px; font-size: 1.2rem; font-weight: 700;">🎯 نتیجه تست:</h3>
+                        <h3 style="color: white; margin-bottom: 20px;">📡 نتیجه تست:</h3>
                         <div class="dns-item">
                             <div>
-                                <strong>🌐 DNS:</strong> 
+                                <strong>DNS:</strong>
                                 <span class="dns-address">${customDNS}</span>
-                                <br>
-                                <small style="color: rgba(255,255,255,0.7);">تست شده در ${new Date().toLocaleTimeString('fa-IR')}</small>
                             </div>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <span class="ping-indicator ${pingClass}">${pingText}</span>
+                            <div>
+                                <span class="ping-indicator ${pingClass}">${ping}ms - ${pingText}</span>
                                 <button class="copy-btn" onclick="copyToClipboard('${customDNS}')">کپی</button>
                             </div>
                         </div>
                     </div>
                 `;
+            }, 2000);
+        }
+
+        // DNS Generation Functions
+        function generateDNSList(type, count) {
+            const globalDNS = [
+                '8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1', '9.9.9.9', '149.112.112.112',
+                '208.67.222.222', '208.67.220.220', '64.6.64.6', '64.6.65.6', '77.88.8.8',
+                '77.88.8.1', '156.154.70.1', '156.154.71.1', '198.101.242.72', '23.253.163.53',
+                '8.26.56.26', '8.20.247.20', '199.85.126.10', '199.85.127.10'
+            ];
+            
+            const iranianDNS = [
+                '178.22.122.100', '185.51.200.2', '78.157.42.101', '78.157.42.100',
+                '10.202.10.202', '10.202.10.102', '172.29.2.100', '172.29.0.100',
+                '78.109.129.100', '195.146.0.1', '81.12.42.100', '5.202.100.100',
+                '185.228.238.38', '185.228.239.38', '94.232.175.78', '5.200.200.200'
+            ];
+            
+            const sourceList = type === 'global' ? globalDNS : iranianDNS;
+            const shuffled = [...sourceList].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function generatePingResults(type, count) {
+            const dnsList = generateDNSList(type, count);
+            return dnsList.map(dns => ({
+                address: dns,
+                ping: Math.floor(Math.random() * 200) + 10
+            }));
+        }
+
+        function displayDNSList(container, dnsList) {
+            let html = '';
+            dnsList.forEach(dns => {
+                const ping = Math.floor(Math.random() * 200) + 10;
+                const pingClass = ping < 50 ? 'ping-excellent' : ping < 100 ? 'ping-good' : ping < 150 ? 'ping-medium' : 'ping-bad';
+                const pingText = ping < 50 ? 'عالی' : ping < 100 ? 'خوب' : ping < 150 ? 'متوسط' : 'ضعیف';
                 
-                resultsDiv.innerHTML = html;
-            }, 1500);
-        }
-
-        // Hamburger Menu Functions
-        function toggleMenu() {
-            const overlay = document.getElementById('menuOverlay');
-            overlay.classList.toggle('active');
-        }
-
-        function playGame(gameType) {
-            toggleMenu();
-            
-            const gameContainer = document.createElement('div');
-            gameContainer.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.95);
-                z-index: 2000;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-            `;
-            
-            const gameTitle = document.createElement('h2');
-            gameTitle.style.cssText = 'color: white; margin-bottom: 20px; font-size: 2rem;';
-            
-            const gameCanvas = document.createElement('canvas');
-            gameCanvas.width = 400;
-            gameCanvas.height = 400;
-            gameCanvas.style.cssText = 'border: 2px solid white; background: #000;';
-            
-            const closeBtn = document.createElement('button');
-            closeBtn.textContent = '✕ بستن';
-            closeBtn.style.cssText = `
-                margin-top: 20px;
-                padding: 10px 20px;
-                background: #ff4757;
-                color: white;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                font-size: 16px;
-            `;
-            closeBtn.onclick = () => document.body.removeChild(gameContainer);
-            
-            switch(gameType) {
-                case 'snake':
-                    gameTitle.textContent = '🐍 Snake Classic';
-                    startSnakeGame(gameCanvas);
-                    break;
-                case 'tetris':
-                    gameTitle.textContent = '🧩 Tetris';
-                    startTetrisGame(gameCanvas);
-                    break;
-                case 'pong':
-                    gameTitle.textContent = '🏓 Pong';
-                    startPongGame(gameCanvas);
-                    break;
-                case 'memory':
-                    gameTitle.textContent = '🧠 Memory Game';
-                    startMemoryGame(gameCanvas);
-                    break;
-                case 'flappy':
-                    gameTitle.textContent = '🐦 Flappy Bird';
-                    startFlappyGame(gameCanvas);
-                    break;
-                case 'racing':
-                    gameTitle.textContent = '🏎️ Racing';
-                    startRacingGame(gameCanvas);
-                    break;
-            }
-            
-            gameContainer.appendChild(gameTitle);
-            gameContainer.appendChild(gameCanvas);
-            gameContainer.appendChild(closeBtn);
-            document.body.appendChild(gameContainer);
-        }
-
-        // Simple Snake Game
-        function startSnakeGame(canvas) {
-            const ctx = canvas.getContext('2d');
-            const box = 20;
-            let snake = [{x: 9 * box, y: 10 * box}];
-            let food = {x: Math.floor(Math.random() * 19 + 1) * box, y: Math.floor(Math.random() * 19 + 1) * box};
-            let score = 0;
-            let d;
-
-            document.addEventListener('keydown', direction);
-
-            function direction(event) {
-                let key = event.keyCode;
-                if(key == 37 && d != 'RIGHT') d = 'LEFT';
-                else if(key == 38 && d != 'DOWN') d = 'UP';
-                else if(key == 39 && d != 'LEFT') d = 'RIGHT';
-                else if(key == 40 && d != 'UP') d = 'DOWN';
-            }
-
-            function collision(head, array) {
-                for(let i = 0; i < array.length; i++) {
-                    if(head.x == array[i].x && head.y == array[i].y) return true;
-                }
-                return false;
-            }
-
-            function draw() {
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                for(let i = 0; i < snake.length; i++) {
-                    ctx.fillStyle = (i == 0) ? '#0f0' : '#fff';
-                    ctx.fillRect(snake[i].x, snake[i].y, box, box);
-                    ctx.strokeStyle = '#000';
-                    ctx.strokeRect(snake[i].x, snake[i].y, box, box);
-                }
-
-                ctx.fillStyle = '#f00';
-                ctx.fillRect(food.x, food.y, box, box);
-
-                let snakeX = snake[0].x;
-                let snakeY = snake[0].y;
-
-                if(d == 'LEFT') snakeX -= box;
-                if(d == 'UP') snakeY -= box;
-                if(d == 'RIGHT') snakeX += box;
-                if(d == 'DOWN') snakeY += box;
-
-                if(snakeX == food.x && snakeY == food.y) {
-                    score++;
-                    food = {x: Math.floor(Math.random() * 19 + 1) * box, y: Math.floor(Math.random() * 19 + 1) * box};
-                } else {
-                    snake.pop();
-                }
-
-                let newHead = {x: snakeX, y: snakeY};
-
-                if(snakeX < 0 || snakeY < 0 || snakeX >= canvas.width || snakeY >= canvas.height || collision(newHead, snake)) {
-                    clearInterval(game);
-                    ctx.fillStyle = '#fff';
-                    ctx.font = '30px Arial';
-                    ctx.fillText('Game Over!', 100, 200);
-                    ctx.fillText('Score: ' + score, 130, 240);
-                    return;
-                }
-
-                snake.unshift(newHead);
-
-                ctx.fillStyle = '#fff';
-                ctx.font = '20px Arial';
-                ctx.fillText('Score: ' + score, 10, 30);
-            }
-
-            let game = setInterval(draw, 100);
-        }
-
-        // Simple Tetris placeholder
-        function startTetrisGame(canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#fff';
-            ctx.font = '20px Arial';
-            ctx.fillText('Tetris Game', 150, 200);
-            ctx.fillText('Coming Soon!', 150, 230);
-        }
-
-        // Simple Pong Game
-        function startPongGame(canvas) {
-            const ctx = canvas.getContext('2d');
-            let ballX = canvas.width / 2;
-            let ballY = canvas.height / 2;
-            let ballSpeedX = 5;
-            let ballSpeedY = 3;
-            let paddle1Y = canvas.height / 2 - 50;
-            let paddle2Y = canvas.height / 2 - 50;
-            const paddleHeight = 100;
-            const paddleWidth = 10;
-
-            function draw() {
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                // Ball
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(ballX, ballY, 10, 10);
-
-                // Paddles
-                ctx.fillRect(0, paddle1Y, paddleWidth, paddleHeight);
-                ctx.fillRect(canvas.width - paddleWidth, paddle2Y, paddleWidth, paddleHeight);
-
-                // Ball movement
-                ballX += ballSpeedX;
-                ballY += ballSpeedY;
-
-                // Ball collision with top/bottom
-                if(ballY <= 0 || ballY >= canvas.height - 10) {
-                    ballSpeedY = -ballSpeedY;
-                }
-
-                // Ball collision with paddles
-                if(ballX <= paddleWidth && ballY >= paddle1Y && ballY <= paddle1Y + paddleHeight) {
-                    ballSpeedX = -ballSpeedX;
-                }
-                if(ballX >= canvas.width - paddleWidth - 10 && ballY >= paddle2Y && ballY <= paddle2Y + paddleHeight) {
-                    ballSpeedX = -ballSpeedX;
-                }
-
-                // Reset ball if it goes off screen
-                if(ballX < 0 || ballX > canvas.width) {
-                    ballX = canvas.width / 2;
-                    ballY = canvas.height / 2;
-                }
-
-                // Simple AI for paddle2
-                if(paddle2Y + paddleHeight/2 < ballY) paddle2Y += 3;
-                if(paddle2Y + paddleHeight/2 > ballY) paddle2Y -= 3;
-            }
-
-            // Mouse control for paddle1
-            canvas.addEventListener('mousemove', function(e) {
-                const rect = canvas.getBoundingClientRect();
-                paddle1Y = e.clientY - rect.top - paddleHeight/2;
+                html += `
+                    <div class="dns-item">
+                        <div>
+                            <span class="dns-address">${dns}</span>
+                        </div>
+                        <div>
+                            <span class="ping-indicator ${pingClass}">${ping}ms - ${pingText}</span>
+                            <button class="copy-btn" onclick="copyToClipboard('${dns}')">کپی</button>
+                        </div>
+                    </div>
+                `;
             });
-
-            setInterval(draw, 16);
+            container.innerHTML = html;
         }
 
-        // Placeholder functions for other games
-        function startMemoryGame(canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#fff';
-            ctx.font = '20px Arial';
-            ctx.fillText('Memory Game', 140, 200);
-            ctx.fillText('Coming Soon!', 150, 230);
+        function displayPingResults(container, results) {
+            let html = '<div class="dns-result"><h3 style="color: white; margin-bottom: 20px;">📡 نتایج تست پینگ:</h3>';
+            
+            results.sort((a, b) => a.ping - b.ping).forEach(result => {
+                const pingClass = result.ping < 50 ? 'ping-excellent' : result.ping < 100 ? 'ping-good' : result.ping < 150 ? 'ping-medium' : 'ping-bad';
+                const pingText = result.ping < 50 ? 'عالی' : result.ping < 100 ? 'خوب' : result.ping < 150 ? 'متوسط' : 'ضعیف';
+                
+                html += `
+                    <div class="dns-item">
+                        <div>
+                            <span class="dns-address">${result.address}</span>
+                        </div>
+                        <div>
+                            <span class="ping-indicator ${pingClass}">${result.ping}ms - ${pingText}</span>
+                            <button class="copy-btn" onclick="copyToClipboard('${result.address}')">کپی</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
         }
 
-        function startFlappyGame(canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#fff';
-            ctx.font = '20px Arial';
-            ctx.fillText('Flappy Bird', 150, 200);
-            ctx.fillText('Coming Soon!', 150, 230);
+        // Utility Functions
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('✅ کپی شد: ' + text);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('✅ کپی شد: ' + text);
+            });
         }
 
-        function startRacingGame(canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#fff';
-            ctx.font = '20px Arial';
-            ctx.fillText('Racing Game', 140, 200);
-            ctx.fillText('Coming Soon!', 150, 230);
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 10000;
+                background: linear-gradient(135deg, #27ae60, #2ecc71);
+                color: white; padding: 15px 20px; border-radius: 15px;
+                font-weight: 600; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                animation: slideInRight 0.5s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
+
+        function isValidDNS(dns) {
+            const dnsRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+            return dnsRegex.test(dns);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9862c414e1914d5a',t:'MTc1OTA1NzUyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'986358d8d510e98a',t:'MTc1OTA2MzYyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
