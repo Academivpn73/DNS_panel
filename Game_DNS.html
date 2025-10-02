@@ -93,25 +93,25 @@
 
 
     <!-- Header -->
-    <header class="gradient-bg text-white py-6 shadow-2xl">
+    <header class="gradient-bg text-white py-4 md:py-6 shadow-2xl">
         <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between animate-fade-in">
-                <div class="flex items-center space-x-4 space-x-reverse">
+            <div class="flex flex-col md:flex-row items-center justify-between animate-fade-in">
+                <div class="flex items-center space-x-3 space-x-reverse mb-4 md:mb-0">
                     <img src="https://github.com/Academivpn73/DNS_panel/blob/main/Academi_logo.png?raw=true" 
                          alt="Academi DNS Manager" 
-                         class="w-16 h-16 rounded-full shadow-lg animate-bounce-in"
+                         class="w-12 h-12 md:w-16 md:h-16 rounded-full shadow-lg animate-bounce-in"
                          onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzIiIGN5PSIzMiIgcj0iMzIiIGZpbGw9IiM2NjdlZWEiLz4KPHN2ZyB4PSIxNiIgeT0iMTYiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+CjxwYXRoIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0tMiAxNWwtNS01aDNWOGg0djRoM2wtNSA1eiIvPgo8L3N2Zz4KPC9zdmc+'; this.alt='DNS Manager Logo';">
-                    <div>
-                        <h1 class="text-3xl font-bold">Academi DNS Manager</h1>
-                        <p class="text-blue-100">مدیریت حرفه‌ای DNS برای گیمینگ و دانلود</p>
+                    <div class="text-center md:text-right">
+                        <h1 class="text-xl md:text-3xl font-bold">Academi DNS Manager</h1>
+                        <p class="text-blue-100 text-sm md:text-base">مدیریت حرفه‌ای DNS برای گیمینگ و دانلود</p>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4 space-x-reverse">
-                    <button id="themeToggle" class="p-3 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-300 animate-pulse-glow">
-                        <svg id="sunIcon" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <div class="flex items-center">
+                    <button id="themeToggle" class="p-2 md:p-3 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-300 animate-pulse-glow">
+                        <svg id="sunIcon" class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
                         </svg>
-                        <svg id="moonIcon" class="w-6 h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
+                        <svg id="moonIcon" class="w-5 h-5 md:w-6 md:h-6 hidden" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
                         </svg>
                     </button>
@@ -119,17 +119,17 @@
             </div>
             
             <!-- Channel Info -->
-            <div class="mt-6 flex flex-wrap items-center justify-center space-x-6 space-x-reverse text-sm animate-slide-up">
+            <div class="mt-4 md:mt-6 flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-6 md:space-x-reverse text-xs md:text-sm animate-slide-up">
                 <a href="https://t.me/Academi_vpn" target="_blank" rel="noopener noreferrer" 
-                   class="flex items-center space-x-2 space-x-reverse bg-white/20 px-4 py-2 rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   class="flex items-center space-x-2 space-x-reverse bg-white/20 px-3 py-2 rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 w-full md:w-auto justify-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 0C5.374 0 0 5.373 0 12s5.374 12 12 12 12-5.373 12-12S18.626 0 12 0zm5.568 8.16c-.169 1.858-.896 6.728-.896 6.728-.302 1.507-1.123 1.507-1.123 1.507s-.302 0-.604-.302L12 13.5l-2.945 2.593s-.302.302-.604.302-1.123 0-1.123-1.507c0 0-.727-4.87-.896-6.728-.169-1.858.604-2.16.604-2.16s.906-.302 1.81 0c.905.302 4.188 1.507 4.188 1.507s3.283-1.205 4.188-1.507c.904-.302 1.81 0 1.81 0s.773.302.604 2.16z"/>
                     </svg>
                     <span>کانال تلگرام: @Academi_vpn</span>
                 </a>
                 <a href="https://t.me/MahdiAGM0" target="_blank" rel="noopener noreferrer"
-                   class="flex items-center space-x-2 space-x-reverse bg-white/20 px-4 py-2 rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   class="flex items-center space-x-2 space-x-reverse bg-white/20 px-3 py-2 rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 w-full md:w-auto justify-center">
+                    <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5h3V8h4v4h3l-5 5z"/>
                     </svg>
                     <span>پشتیبانی: @MahdiAGM0</span>
@@ -140,18 +140,18 @@
 
     <!-- Navigation -->
     <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-center space-x-8 space-x-reverse py-4">
-                <button onclick="showSection('home')" class="nav-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 bg-blue-500 text-white">
+        <div class="container mx-auto px-2 md:px-4">
+            <div class="flex justify-center space-x-1 md:space-x-8 space-x-reverse py-2 md:py-4 overflow-x-auto">
+                <button onclick="showSection('home')" class="nav-btn px-3 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all duration-300 bg-blue-500 text-white text-sm md:text-base whitespace-nowrap">
                     🏠 خانه
                 </button>
-                <button onclick="showSection('gaming')" class="nav-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white">
+                <button onclick="showSection('gaming')" class="nav-btn px-3 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white text-sm md:text-base whitespace-nowrap">
                     🎮 DNS گیمینگ
                 </button>
-                <button onclick="showSection('download')" class="nav-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white">
+                <button onclick="showSection('download')" class="nav-btn px-3 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white text-sm md:text-base whitespace-nowrap">
                     📥 DNS دانلود
                 </button>
-                <button onclick="showSection('ping')" class="nav-btn px-6 py-3 rounded-lg font-semibold transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white">
+                <button onclick="showSection('ping')" class="nav-btn px-3 md:px-6 py-2 md:py-3 rounded-lg font-semibold transition-all duration-300 text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white text-sm md:text-base whitespace-nowrap">
                     📡 پینگ DNS
                 </button>
             </div>
@@ -188,14 +188,14 @@
                 </div>
 
                 <!-- Features Grid -->
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    <div class="glass-effect rounded-2xl p-6 animate-slide-up hover:transform hover:scale-105 transition-all duration-300">
-                        <div class="text-4xl mb-4">🎮</div>
-                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">DNS گیمینگ هوشمند</h3>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8">
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up hover:transform hover:scale-105 transition-all duration-300">
+                        <div class="text-3xl md:text-4xl mb-3 md:mb-4">🎮</div>
+                        <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-800 dark:text-white">DNS گیمینگ هوشمند</h3>
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-3 md:mb-4">
                             بیش از 500 بازی برای PC، موبایل و کنسول با DNS های مخصوص هر بازی
                         </p>
-                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+                        <ul class="text-xs md:text-sm text-gray-500 dark:text-gray-400 space-y-1 md:space-y-2">
                             <li>• 🖥️ PC: Counter-Strike، Valorant، League of Legends</li>
                             <li>• 📱 Mobile: PUBG Mobile، Free Fire، Call of Duty</li>
                             <li>• 🎮 Console: FIFA، Fortnite، Apex Legends</li>
@@ -204,13 +204,13 @@
                         </ul>
                     </div>
 
-                    <div class="glass-effect rounded-2xl p-6 animate-slide-up hover:transform hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s">
-                        <div class="text-4xl mb-4">📥</div>
-                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">DNS دانلود و رفع تحریم</h3>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up hover:transform hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s">
+                        <div class="text-3xl md:text-4xl mb-3 md:mb-4">📥</div>
+                        <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-800 dark:text-white">DNS دانلود و رفع تحریم</h3>
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-3 md:mb-4">
                             دسترسی آزاد به تمام سایت‌های دانلود و پلتفرم‌های بین‌المللی
                         </p>
-                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+                        <ul class="text-xs md:text-sm text-gray-500 dark:text-gray-400 space-y-1 md:space-y-2">
                             <li>• 🌐 Steam، Epic Games، Origin</li>
                             <li>• 📺 YouTube، Netflix، Spotify</li>
                             <li>• 💾 Mega، Google Drive، Dropbox</li>
@@ -219,13 +219,13 @@
                         </ul>
                     </div>
 
-                    <div class="glass-effect rounded-2xl p-6 animate-slide-up hover:transform hover:scale-105 transition-all duration-300" style="animation-delay: 0.2s">
-                        <div class="text-4xl mb-4">📡</div>
-                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">تست پینگ واقعی</h3>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up hover:transform hover:scale-105 transition-all duration-300" style="animation-delay: 0.2s">
+                        <div class="text-3xl md:text-4xl mb-3 md:mb-4">📡</div>
+                        <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3 text-gray-800 dark:text-white">تست پینگ واقعی</h3>
+                        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-3 md:mb-4">
                             تست و انتخاب بهترین DNS های جهانی براساس اینترنت شما
                         </p>
-                        <ul class="text-sm text-gray-500 dark:text-gray-400 space-y-2">
+                        <ul class="text-xs md:text-sm text-gray-500 dark:text-gray-400 space-y-1 md:space-y-2">
                             <li>• 🔍 12 بهترین DNS جهانی</li>
                             <li>• ⏱️ تست پینگ لحظه‌ای</li>
                             <li>• 📊 مرتب‌سازی براساس سرعت</li>
@@ -490,43 +490,43 @@
                 </div>
 
                 <!-- Statistics -->
-                <div class="grid md:grid-cols-4 gap-4 mb-8">
-                    <div class="glass-effect rounded-xl p-4 text-center animate-slide-up">
-                        <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">500+</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">بازی پشتیبانی شده</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8">
+                    <div class="glass-effect rounded-xl p-3 md:p-4 text-center animate-slide-up">
+                        <div class="text-xl md:text-2xl font-bold text-blue-600 dark:text-blue-400">500+</div>
+                        <div class="text-xs md:text-sm text-gray-600 dark:text-gray-400">بازی پشتیبانی شده</div>
                     </div>
-                    <div class="glass-effect rounded-xl p-4 text-center animate-slide-up" style="animation-delay: 0.1s">
-                        <div class="text-2xl font-bold text-green-600 dark:text-green-400">50+</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">DNS سرور جهانی</div>
+                    <div class="glass-effect rounded-xl p-3 md:p-4 text-center animate-slide-up" style="animation-delay: 0.1s">
+                        <div class="text-xl md:text-2xl font-bold text-green-600 dark:text-green-400">50+</div>
+                        <div class="text-xs md:text-sm text-gray-600 dark:text-gray-400">DNS سرور جهانی</div>
                     </div>
-                    <div class="glass-effect rounded-xl p-4 text-center animate-slide-up" style="animation-delay: 0.2s">
-                        <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">99.9%</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">آپتایم سرورها</div>
+                    <div class="glass-effect rounded-xl p-3 md:p-4 text-center animate-slide-up" style="animation-delay: 0.2s">
+                        <div class="text-xl md:text-2xl font-bold text-purple-600 dark:text-purple-400">99.9%</div>
+                        <div class="text-xs md:text-sm text-gray-600 dark:text-gray-400">آپتایم سرورها</div>
                     </div>
-                    <div class="glass-effect rounded-xl p-4 text-center animate-slide-up" style="animation-delay: 0.3s">
-                        <div class="text-2xl font-bold text-orange-600 dark:text-orange-400">&lt;20ms</div>
-                        <div class="text-sm text-gray-600 dark:text-gray-400">میانگین پینگ</div>
+                    <div class="glass-effect rounded-xl p-3 md:p-4 text-center animate-slide-up" style="animation-delay: 0.3s">
+                        <div class="text-xl md:text-2xl font-bold text-orange-600 dark:text-orange-400">&lt;20ms</div>
+                        <div class="text-xs md:text-sm text-gray-600 dark:text-gray-400">میانگین پینگ</div>
                     </div>
                 </div>
 
                 <!-- Quick Start -->
-                <div class="glass-effect rounded-2xl p-6 animate-fade-in">
-                    <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white text-center">🚀 شروع سریع</h3>
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <button onclick="showSection('gaming')" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
-                            <div class="text-2xl mb-2">🎮</div>
-                            <div class="font-semibold">DNS گیمینگ</div>
-                            <div class="text-sm opacity-90">برای بازی آنلاین</div>
+                <div class="glass-effect rounded-2xl p-4 md:p-6 animate-fade-in">
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 text-gray-800 dark:text-white text-center">🚀 شروع سریع</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                        <button onclick="showSection('gaming')" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 md:p-4 rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                            <div class="text-xl md:text-2xl mb-2">🎮</div>
+                            <div class="font-semibold text-sm md:text-base">DNS گیمینگ</div>
+                            <div class="text-xs md:text-sm opacity-90">برای بازی آنلاین</div>
                         </button>
-                        <button onclick="showSection('download')" class="bg-gradient-to-r from-green-500 to-blue-600 text-white p-4 rounded-xl hover:from-green-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
-                            <div class="text-2xl mb-2">📥</div>
-                            <div class="font-semibold">DNS دانلود</div>
-                            <div class="text-sm opacity-90">رفع تحریم</div>
+                        <button onclick="showSection('download')" class="bg-gradient-to-r from-green-500 to-blue-600 text-white p-3 md:p-4 rounded-xl hover:from-green-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105">
+                            <div class="text-xl md:text-2xl mb-2">📥</div>
+                            <div class="font-semibold text-sm md:text-base">DNS دانلود</div>
+                            <div class="text-xs md:text-sm opacity-90">رفع تحریم</div>
                         </button>
-                        <button onclick="showSection('ping')" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-4 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105">
-                            <div class="text-2xl mb-2">📡</div>
-                            <div class="font-semibold">تست پینگ</div>
-                            <div class="text-sm opacity-90">بهترین DNS</div>
+                        <button onclick="showSection('ping')" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-3 md:p-4 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105">
+                            <div class="text-xl md:text-2xl mb-2">📡</div>
+                            <div class="font-semibold text-sm md:text-base">تست پینگ</div>
+                            <div class="text-xs md:text-sm opacity-90">بهترین DNS</div>
                         </button>
                     </div>
                 </div>
@@ -547,43 +547,43 @@
 
                 <div class="space-y-6">
                     <!-- Device Selection -->
-                    <div class="glass-effect rounded-2xl p-6 animate-slide-up">
-                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">انتخاب دستگاه</h3>
-                        <div class="grid grid-cols-3 gap-4">
-                            <button onclick="selectDevice('pc')" class="device-btn p-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105">
-                                <div class="text-3xl mb-2">💻</div>
-                                <div class="font-semibold text-gray-700 dark:text-gray-300">PC</div>
+                    <div class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up">
+                        <h3 class="text-lg md:text-xl font-bold mb-4 text-gray-800 dark:text-white">انتخاب دستگاه</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
+                            <button onclick="selectDevice('pc')" class="device-btn p-3 md:p-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105">
+                                <div class="text-2xl md:text-3xl mb-2">💻</div>
+                                <div class="font-semibold text-sm md:text-base text-gray-700 dark:text-gray-300">کامپیوتر (PC)</div>
                             </button>
-                            <button onclick="selectDevice('mobile')" class="device-btn p-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105">
-                                <div class="text-3xl mb-2">📱</div>
-                                <div class="font-semibold text-gray-700 dark:text-gray-300">Mobile</div>
+                            <button onclick="selectDevice('mobile')" class="device-btn p-3 md:p-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105">
+                                <div class="text-2xl md:text-3xl mb-2">📱</div>
+                                <div class="font-semibold text-sm md:text-base text-gray-700 dark:text-gray-300">موبایل (Mobile)</div>
                             </button>
-                            <button onclick="selectDevice('console')" class="device-btn p-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105">
-                                <div class="text-3xl mb-2">🎮</div>
-                                <div class="font-semibold text-gray-700 dark:text-gray-300">Console</div>
+                            <button onclick="selectDevice('console')" class="device-btn p-3 md:p-4 rounded-xl border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 transition-all duration-300 transform hover:scale-105">
+                                <div class="text-2xl md:text-3xl mb-2">🎮</div>
+                                <div class="font-semibold text-sm md:text-base text-gray-700 dark:text-gray-300">کنسول (Console)</div>
                             </button>
                         </div>
                     </div>
 
                     <!-- Game Selection -->
-                    <div id="gameSelection" class="glass-effect rounded-2xl p-6 animate-slide-up hidden">
-                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">انتخاب بازی</h3>
+                    <div id="gameSelection" class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up hidden">
+                        <h3 class="text-lg md:text-xl font-bold mb-4 text-gray-800 dark:text-white">انتخاب بازی</h3>
                         <div class="mb-4">
                             <input type="text" id="gameSearch" placeholder="جستجوی بازی..." 
-                                   class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                                   class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm md:text-base">
                         </div>
-                        <div id="gameList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-60 overflow-y-auto">
+                        <div id="gameList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3 max-h-60 md:max-h-80 overflow-y-auto">
                             <!-- Games will be populated here -->
                         </div>
                     </div>
 
                     <!-- DNS Configuration -->
-                    <div id="dnsConfig" class="glass-effect rounded-2xl p-6 animate-slide-up hidden">
-                        <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">تنظیمات DNS</h3>
-                        <div class="grid md:grid-cols-2 gap-6">
+                    <div id="dnsConfig" class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up hidden">
+                        <h3 class="text-lg md:text-xl font-bold mb-4 text-gray-800 dark:text-white">تنظیمات DNS</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                             <div>
                                 <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">تعداد DNS</label>
-                                <select id="dnsCount" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                                <select id="dnsCount" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm md:text-base">
                                     <option value="2">2 DNS</option>
                                     <option value="4">4 DNS</option>
                                     <option value="6">6 DNS</option>
@@ -592,13 +592,13 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">نوع IP</label>
-                                <select id="ipType" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                                <select id="ipType" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm md:text-base">
                                     <option value="ipv4">IPv4</option>
                                     <option value="ipv6">IPv6</option>
                                 </select>
                             </div>
                         </div>
-                        <button onclick="generateGamingDNS()" class="w-full mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 animate-pulse-glow">
+                        <button onclick="generateGamingDNS()" class="w-full mt-4 md:mt-6 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 animate-pulse-glow text-sm md:text-base">
                             🚀 تولید DNS گیمینگ
                         </button>
                     </div>
@@ -623,19 +623,19 @@
                     </p>
                 </div>
 
-                <div class="glass-effect rounded-2xl p-6 animate-slide-up">
-                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">تنظیمات DNS دانلود</h3>
-                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 text-gray-800 dark:text-white">تنظیمات DNS دانلود</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                         <div>
                             <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">نوع IP</label>
-                            <select id="downloadIpType" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                            <select id="downloadIpType" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm md:text-base">
                                 <option value="ipv4">IPv4</option>
                                 <option value="ipv6">IPv6</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">تعداد DNS</label>
-                            <select id="downloadDnsCount" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+                            <select id="downloadDnsCount" class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white text-sm md:text-base">
                                 <option value="2">2 DNS</option>
                                 <option value="4">4 DNS</option>
                                 <option value="6">6 DNS</option>
@@ -643,7 +643,7 @@
                             </select>
                         </div>
                     </div>
-                    <button onclick="generateDownloadDNS()" class="w-full bg-gradient-to-r from-green-500 to-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 animate-pulse-glow">
+                    <button onclick="generateDownloadDNS()" class="w-full bg-gradient-to-r from-green-500 to-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 animate-pulse-glow text-sm md:text-base">
                         🔓 تولید DNS دانلود
                     </button>
                 </div>
@@ -666,15 +666,15 @@
                     </p>
                 </div>
 
-                <div class="glass-effect rounded-2xl p-6 animate-slide-up">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-xl font-bold text-gray-800 dark:text-white">12 بهترین DNS جهانی</h3>
-                        <button onclick="testAllDNS()" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105">
+                <div class="glass-effect rounded-2xl p-4 md:p-6 animate-slide-up">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-4 md:mb-6 space-y-3 md:space-y-0">
+                        <h3 class="text-lg md:text-xl font-bold text-gray-800 dark:text-white">12 بهترین DNS جهانی</h3>
+                        <button onclick="testAllDNS()" class="bg-gradient-to-r from-purple-500 to-pink-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 text-sm md:text-base">
                             🔄 تست واقعی پینگ
                         </button>
                     </div>
                     <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-700">
-                        <p class="text-sm text-blue-700 dark:text-blue-300">
+                        <p class="text-xs md:text-sm text-blue-700 dark:text-blue-300">
                             💡 این تست پینگ واقعی است و براساس سرعت اینترنت شما محاسبه می‌شود
                         </p>
                     </div>
@@ -1034,7 +1034,7 @@
                 gameList.innerHTML = '';
                 gamesToShow.forEach(game => {
                     const gameBtn = document.createElement('button');
-                    gameBtn.className = 'p-3 text-sm rounded-lg border border-gray-300 dark:border-gray-600 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 transition-all duration-300 text-gray-700 dark:text-gray-300';
+                    gameBtn.className = 'p-2 md:p-3 text-xs md:text-sm rounded-lg border border-gray-300 dark:border-gray-600 hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 transition-all duration-300 text-gray-700 dark:text-gray-300 text-right';
                     gameBtn.textContent = game;
                     gameBtn.onclick = () => selectGame(game, gameBtn);
                     gameList.appendChild(gameBtn);
@@ -1311,9 +1311,9 @@
                 const pingText = dns.ping < 30 ? 'عالی' : dns.ping < 60 ? 'خوب' : 'متوسط';
                 
                 dnsCard.innerHTML = `
-                    <div class="flex justify-between items-center mb-3">
-                        <div>
-                            <h4 class="font-bold text-lg text-gray-800 dark:text-white">${dns.name}</h4>
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 space-y-2 md:space-y-0">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-base md:text-lg text-gray-800 dark:text-white">${dns.name}</h4>
                             <p class="text-xs text-blue-600 dark:text-blue-400">${dns.specialty}</p>
                         </div>
                         <div class="flex items-center">
@@ -1324,17 +1324,17 @@
                             <div class="ping-indicator ${pingClass}"></div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-4">
                         <div>
                             <label class="text-xs text-gray-500 dark:text-gray-400">DNS اولیه</label>
-                            <div class="font-mono text-sm bg-gray-100 dark:bg-gray-700 p-2 rounded select-all">${dns.primary}</div>
+                            <div class="font-mono text-xs md:text-sm bg-gray-100 dark:bg-gray-700 p-2 rounded select-all break-all">${dns.primary}</div>
                         </div>
                         <div>
                             <label class="text-xs text-gray-500 dark:text-gray-400">DNS ثانویه</label>
-                            <div class="font-mono text-sm bg-gray-100 dark:bg-gray-700 p-2 rounded select-all">${dns.secondary}</div>
+                            <div class="font-mono text-xs md:text-sm bg-gray-100 dark:bg-gray-700 p-2 rounded select-all break-all">${dns.secondary}</div>
                         </div>
                     </div>
-                    <div class="flex justify-between items-center text-sm">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center text-xs md:text-sm space-y-1 md:space-y-0">
                         <span class="text-gray-500 dark:text-gray-400">
                             رتبه ${index + 1} از ${dnsList.length}
                         </span>
@@ -1398,5 +1398,5 @@
             showSection('home');
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988482d0a0465c98',t:'MTc1OTQxMTM3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98849c965175348f',t:'MTc1OTQxMjQyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
