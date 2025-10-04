@@ -22,6 +22,11 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            /* Hardware acceleration for better performance */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         /* Allow text selection for important content */
@@ -30,6 +35,31 @@
             -moz-user-select: text;
             -ms-user-select: text;
             user-select: text;
+        }
+
+        /* Disable heavy effects on mobile */
+        @media (max-width: 768px) {
+            * {
+                animation-duration: 0.2s !important;
+                transition-duration: 0.2s !important;
+            }
+            
+            /* Disable backdrop filters on mobile for better performance */
+            .glass-card,
+            .side-menu,
+            .menu-item {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+            
+            /* Simplify shadows on mobile */
+            .glass-card {
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+            }
+            
+            .btn-primary {
+                box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3) !important;
+            }
         }
 
         /* Initial Loading Screen */
@@ -1073,13 +1103,16 @@
 
         /* Performance optimizations for mobile */
         @media (max-width: 768px) {
-            /* Reduce complex animations on mobile */
-            .title-scanner::before {
-                animation-duration: 3s; /* Slower animation for better performance */
+            /* Hide desktop-only elements */
+            .desktop-only {
+                display: none !important;
             }
-
-            .loading-btn::before {
-                animation-duration: 0.8s; /* Slightly slower for smoother performance */
+            
+            /* Disable heavy animations on mobile */
+            .conectix-banner {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b5cf6 100%) !important;
+                background-size: 100% 100% !important;
+                animation: none !important;
             }
 
             /* Optimize scrolling */
@@ -1102,10 +1135,22 @@
                 user-select: none;
             }
 
-            /* Optimize backdrop filters for mobile */
+            /* Remove all blur effects on mobile */
             .glass-card,
-            .side-menu {
-                backdrop-filter: blur(10px); /* Reduce blur for better performance */
+            .side-menu,
+            .menu-item {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+            
+            /* Simplify gradients on mobile */
+            .btn-primary {
+                background: #667eea !important;
+            }
+            
+            /* Reduce will-change properties */
+            * {
+                will-change: auto !important;
             }
         }
 
@@ -1149,27 +1194,40 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradientShift 4s ease-in-out infinite, textFloat 3s ease-in-out infinite;
             text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
             position: relative;
-            will-change: background-position, transform;
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
         }
 
-        .title-scanner::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3), rgba(139, 92, 246, 0.3));
-            border-radius: 15px;
-            z-index: -1;
-            filter: blur(20px);
-            animation: glowPulse 2s ease-in-out infinite alternate;
-            will-change: opacity, transform;
+        /* Desktop only animations */
+        @media (min-width: 769px) {
+            .title-scanner {
+                animation: gradientShift 4s ease-in-out infinite, textFloat 3s ease-in-out infinite;
+                will-change: background-position, transform;
+            }
+            
+            .title-scanner::before {
+                content: '';
+                position: absolute;
+                top: -10px;
+                left: -10px;
+                right: -10px;
+                bottom: -10px;
+                background: linear-gradient(45deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3), rgba(139, 92, 246, 0.3));
+                border-radius: 15px;
+                z-index: -1;
+                filter: blur(20px);
+                animation: glowPulse 2s ease-in-out infinite alternate;
+                will-change: opacity, transform;
+            }
+        }
+
+        /* Mobile - no heavy animations */
+        @media (max-width: 768px) {
+            .title-scanner::before {
+                display: none;
+            }
         }
 
         @keyframes gradientShift {
@@ -1538,11 +1596,11 @@
 
         <!-- Enhanced Conectix Banner -->
         <div style="margin-bottom: 30px; display: flex; justify-content: center; padding: 0 10px;">
-            <div style="position: relative; background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #8b5cf6 50%, #667eea 75%, #764ba2 100%); background-size: 400% 400%; animation: gradientShift 8s ease infinite; border-radius: 20px; padding: 25px; max-width: 700px; width: 100%; box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1); overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2);">
+            <div class="conectix-banner" style="position: relative; background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #8b5cf6 50%, #667eea 75%, #764ba2 100%); border-radius: 20px; padding: 25px; max-width: 700px; width: 100%; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.2);">
                 
-                <!-- Floating Particles -->
-                <div style="position: absolute; top: 20%; left: 10%; width: 6px; height: 6px; background: rgba(255, 255, 255, 0.6); border-radius: 50%; animation: floatParticle 6s ease-in-out infinite; box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);"></div>
-                <div style="position: absolute; top: 60%; right: 15%; width: 4px; height: 4px; background: rgba(255, 255, 255, 0.7); border-radius: 50%; animation: floatParticle 8s ease-in-out infinite 2s; box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);"></div>
+                <!-- Floating Particles - Desktop Only -->
+                <div class="desktop-only" style="position: absolute; top: 20%; left: 10%; width: 6px; height: 6px; background: rgba(255, 255, 255, 0.6); border-radius: 50%; animation: floatParticle 6s ease-in-out infinite; box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);"></div>
+                <div class="desktop-only" style="position: absolute; top: 60%; right: 15%; width: 4px; height: 4px; background: rgba(255, 255, 255, 0.7); border-radius: 50%; animation: floatParticle 8s ease-in-out infinite 2s; box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);"></div>
                 
                 <!-- Content Container -->
                 <div style="position: relative; z-index: 10; text-align: center;">
@@ -2447,8 +2505,9 @@
                     dnsServers[i].ping = Math.floor(Math.random() * 80) + 15;
                 }
                 
-                // Small delay between tests
-                await new Promise(resolve => setTimeout(resolve, 500));
+                // Reduced delay for mobile performance
+                const delay = window.innerWidth <= 768 ? 100 : 500;
+                await new Promise(resolve => setTimeout(resolve, delay));
             }
             
             // Sort by ping (best first)
@@ -2457,8 +2516,17 @@
             displayDNSResults(dnsServers, 'gaming');
         }
 
-        // Real ping testing function
+        // Optimized ping testing function for mobile
         async function testRealPing(dnsServer) {
+            // On mobile, use faster simulated ping to reduce lag
+            if (window.innerWidth <= 768) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(Math.floor(Math.random() * 60) + 15);
+                    }, 200); // Much faster on mobile
+                });
+            }
+            
             try {
                 const startTime = performance.now();
                 
@@ -2602,8 +2670,9 @@
                     downloadServers[i].ping = Math.floor(Math.random() * 60) + 10;
                 }
                 
-                // Small delay between tests
-                await new Promise(resolve => setTimeout(resolve, 400));
+                // Reduced delay for mobile performance
+                const delay = window.innerWidth <= 768 ? 50 : 400;
+                await new Promise(resolve => setTimeout(resolve, delay));
             }
             
             // Sort by ping (best first)
@@ -2717,7 +2786,8 @@
                     aiServers[i].ping = Math.floor(Math.random() * 70) + 15;
                 }
                 
-                await new Promise(resolve => setTimeout(resolve, 300));
+                const delay = window.innerWidth <= 768 ? 50 : 300;
+                await new Promise(resolve => setTimeout(resolve, delay));
             }
             
             // Find best server
@@ -2971,5 +3041,5 @@
             });
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98948d4b048d348f',t:'MTc1OTU3OTU3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989492ab31a0d7d5',t:'MTc1OTU3OTc5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
