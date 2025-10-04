@@ -524,28 +524,12 @@
             will-change: transform;
             -webkit-transform: translateZ(0);
             transform: translateZ(0);
-        }
-
-        /* Desktop effects */
-        @media (max-width: 768px){
-  /* انیمیشن‌ها فعال باشن ولی سبک‌تر */
-  * {
-    animation-duration: 0.6s !important;
-    transition-duration: 0.3s !important;
-  }
-
-  /* افکت‌های سنگین مثل blur روی موبایل خاموش بشه */
-  .background-blur, .heavy-effect {
-    animation: none !important;
-    filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  .desktop-only {
-    display: none !important;
+        @media (max-width: 768px) {
+  .animated-element {
+    animation: slide 3s infinite;
+    /* یا هر تنظیم دلخواه برای موبایل */
   }
 }
-
             .glass-card::before {
                 content: '';
                 position: absolute;
