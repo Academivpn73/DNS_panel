@@ -527,15 +527,24 @@
         }
 
         /* Desktop effects */
-        @media (min-width: 769px) and (hover: hover) {
-            .glass-card {
-                backdrop-filter: blur(25px);
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 
-                            0 0 0 1px rgba(255, 255, 255, 0.05),
-                            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                position: relative;
-                overflow: hidden;
-            }
+        @media (max-width: 768px){
+  /* انیمیشن‌ها فعال باشن ولی سبک‌تر */
+  * {
+    animation-duration: 0.6s !important;
+    transition-duration: 0.3s !important;
+  }
+
+  /* افکت‌های سنگین مثل blur روی موبایل خاموش بشه */
+  .background-blur, .heavy-effect {
+    animation: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
+}
 
             .glass-card::before {
                 content: '';
