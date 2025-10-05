@@ -2555,33 +2555,67 @@
 
                     <!-- User Activity Monitor -->
                     <div class="theme-bg-tertiary rounded-lg p-6 card-hover">
-                        <h3 class="text-lg font-bold theme-text-primary mb-4">👥 مانیتور فعالیت کاربران</h3>
-                        <div class="space-y-3 max-h-64 overflow-y-auto" id="userActivityList">
-                            <div class="flex items-center justify-between p-2 theme-bg-secondary rounded-lg">
-                                <div class="flex items-center space-x-2 space-x-reverse">
-                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
-                                    <span class="text-sm theme-text-primary">کاربر123</span>
-                                </div>
-                                <span class="text-xs theme-text-secondary">تست DNS - 2 دقیقه پیش</span>
-                            </div>
-                            <div class="flex items-center justify-between p-2 theme-bg-secondary rounded-lg">
-                                <div class="flex items-center space-x-2 space-x-reverse">
-                                    <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
-                                    <span class="text-sm theme-text-primary">گیمر456</span>
-                                </div>
-                                <span class="text-xs theme-text-secondary">DNS گیمینگ - 5 دقیقه پیش</span>
-                            </div>
-                            <div class="flex items-center justify-between p-2 theme-bg-secondary rounded-lg">
-                                <div class="flex items-center space-x-2 space-x-reverse">
-                                    <div class="w-2 h-2 bg-purple-500 rounded-full"></div>
-                                    <span class="text-sm theme-text-primary">دانلودر789</span>
-                                </div>
-                                <span class="text-xs theme-text-secondary">DNS دانلود - 8 دقیقه پیش</span>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-bold theme-text-primary">👥 مانیتور فعالیت کاربران</h3>
+                            <div class="flex space-x-2 space-x-reverse">
+                                <button onclick="refreshUserActivity()" class="px-2 py-1 theme-accent text-white rounded-lg hover:theme-accent-hover transition-all text-xs">
+                                    🔄
+                                </button>
+                                <button onclick="toggleActivityAutoRefresh()" id="autoRefreshBtn" class="px-2 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all text-xs">
+                                    ⏱️
+                                </button>
                             </div>
                         </div>
-                        <button onclick="viewDetailedActivity()" class="w-full mt-3 p-2 theme-bg-secondary theme-text-primary rounded-lg hover:opacity-80 transition-all text-sm">
-                            📋 مشاهده جزئیات کامل
-                        </button>
+                        
+                        <!-- Activity Stats -->
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <div class="text-center p-2 theme-bg-secondary rounded-lg">
+                                <div class="text-lg font-bold text-green-500" id="onlineUsersCount">0</div>
+                                <div class="text-xs theme-text-secondary">آنلاین</div>
+                            </div>
+                            <div class="text-center p-2 theme-bg-secondary rounded-lg">
+                                <div class="text-lg font-bold text-blue-500" id="activeSessionsCount">0</div>
+                                <div class="text-xs theme-text-secondary">جلسه فعال</div>
+                            </div>
+                            <div class="text-center p-2 theme-bg-secondary rounded-lg">
+                                <div class="text-lg font-bold text-purple-500" id="todayActivitiesCount">0</div>
+                                <div class="text-xs theme-text-secondary">فعالیت امروز</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Filter -->
+                        <div class="mb-3">
+                            <select id="activityFilter" onchange="filterUserActivity()" class="w-full p-2 rounded-lg theme-bg-secondary theme-text-primary text-xs">
+                                <option value="all">همه فعالیت‌ها</option>
+                                <option value="login">ورود/خروج</option>
+                                <option value="dns_test">تست DNS</option>
+                                <option value="gaming">DNS گیمینگ</option>
+                                <option value="download">DNS دانلود</option>
+                                <option value="ping">تست پینگ</option>
+                                <option value="admin">فعالیت ادمین</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Real-time Activity List -->
+                        <div class="space-y-2 max-h-64 overflow-y-auto" id="userActivityList">
+                            <div class="text-center theme-text-secondary py-4">
+                                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto mb-2"></div>
+                                <p class="text-xs">در حال بارگذاری فعالیت‌ها...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Actions -->
+                        <div class="flex space-x-2 space-x-reverse mt-3">
+                            <button onclick="viewDetailedActivity()" class="flex-1 p-2 theme-bg-secondary theme-text-primary rounded-lg hover:opacity-80 transition-all text-xs">
+                                📋 جزئیات کامل
+                            </button>
+                            <button onclick="exportActivityLog()" class="flex-1 p-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all text-xs">
+                                📤 خروجی لاگ
+                            </button>
+                            <button onclick="clearActivityLog()" class="flex-1 p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all text-xs">
+                                🗑️ پاک کردن
+                            </button>
+                        </div>
                     </div>
 
                     <!-- User Management Advanced -->
@@ -3624,6 +3658,17 @@
                 const resultType = selectedGamingDNSSource === 'generate' ? 'generated' : 'gaming';
                 displayDNSResults(results, 'gamingResults', resultType);
                 
+                // Add gaming DNS activity
+                addActivity('gaming', {
+                    description: `DNS گیمینگ برای ${selectedGame} تولید کرد`,
+                    game: selectedGame,
+                    device: selectedDevice,
+                    dnsSource: selectedGamingDNSSource,
+                    dnsCount: count,
+                    bestPing: results[0].ping,
+                    ipVersion: selectedIPVersion
+                });
+                
                 const sourceText = selectedGamingDNSSource === 'generate' ? 'DNS ایرانی تولید و' : 'DNS جهانی';
                 showNotification(`${sourceText} تست شد! بهترین پینگ: ${results[0].ping}ms`, 'success');
             } catch (error) {
@@ -3700,6 +3745,16 @@
                 results.sort((a, b) => a.ping - b.ping);
                 
                 displayDNSResults(results, 'downloadResults', 'download');
+                
+                // Add download DNS activity
+                addActivity('download', {
+                    description: `DNS دانلود ${downloadIPVersion} تولید کرد`,
+                    dnsCount: count,
+                    bestPing: results[0].ping,
+                    ipVersion: downloadIPVersion,
+                    downloadType: selectedDownloadType || 'general'
+                });
+                
                 showNotification(`تست ${count} DNS دانلود کامل شد! بهترین پینگ: ${results[0].ping}ms`, 'success');
             } catch (error) {
                 console.error('Error testing download DNS servers:', error);
@@ -3904,6 +3959,16 @@
                 results.sort((a, b) => a.ping - b.ping);
                 
                 displayDNSResults(results, 'pingResults', 'generated');
+                
+                // Add ping test activity
+                addActivity('ping', {
+                    description: `${count} DNS ایرانی تولید و تست کرد`,
+                    dnsCount: count,
+                    bestPing: results[0].ping,
+                    dnsType: 'generated_iranian',
+                    servers: 'Iranian IP ranges'
+                });
+                
                 showNotification(`${count} DNS ایرانی تولید و تست شد! بهترین پینگ: ${results[0].ping}ms`, 'success');
             } catch (error) {
                 console.error('Error testing generated DNS servers:', error);
@@ -3955,6 +4020,16 @@
                 results.sort((a, b) => a.ping - b.ping);
                 
                 displayDNSResults(results, 'pingResults', 'global');
+                
+                // Add ping test activity
+                addActivity('ping', {
+                    description: '8 DNS جهانی تست کرد',
+                    dnsCount: 8,
+                    bestPing: results[0].ping,
+                    dnsType: 'global_servers',
+                    servers: 'Global DNS providers'
+                });
+                
                 showNotification(`تست 8 DNS جهانی کامل شد! بهترین پینگ: ${results[0].ping}ms`, 'success');
             } catch (error) {
                 console.error('Error testing global DNS servers:', error);
@@ -4368,6 +4443,14 @@
                 isAdmin = true;
                 updateUserInterface();
                 closeModal('loginModal');
+                
+                // Add admin login activity
+                addActivity('login', {
+                    description: 'ورود ادمین به سیستم',
+                    userType: 'admin',
+                    loginMethod: 'admin_credentials'
+                });
+                
                 showNotification('ورود موفقیت‌آمیز به عنوان ادمین', 'success');
                 return;
             }
@@ -4394,6 +4477,15 @@
                 isAdmin = false;
                 updateUserInterface();
                 closeModal('loginModal');
+                
+                // Add user login activity
+                addActivity('login', {
+                    description: 'ورود کاربر به سیستم',
+                    userType: 'user',
+                    loginCount: registeredUsers[username].loginCount,
+                    loginMethod: 'user_credentials'
+                });
+                
                 showNotification('ورود موفقیت‌آمیز', 'success');
                 
                 console.log('User logged in:', username, 'Login count:', registeredUsers[username].loginCount);
@@ -4513,6 +4605,14 @@
                 isAdmin = false;
                 updateUserInterface();
                 closeModal('registerModal');
+                
+                // Add registration activity
+                addActivity('register', {
+                    description: 'حساب کاربری جدید ایجاد کرد',
+                    userType: 'user',
+                    registrationMethod: 'form'
+                });
+                
                 showNotification('ثبت نام موفقیت‌آمیز! خوش آمدید', 'success');
                 
                 // Update admin panel if it's open
@@ -4530,6 +4630,14 @@
         }
 
         function logout() {
+            // Add logout activity before clearing user
+            if (currentUser) {
+                addActivity('logout', {
+                    description: 'از سیستم خارج شد',
+                    userType: isAdmin ? 'admin' : 'user'
+                });
+            }
+            
             currentUser = null;
             isAdmin = false;
             updateUserInterface();
@@ -4585,6 +4693,7 @@
             refreshMessagesList();
             refreshAdminStats();
             updateUserListDisplay();
+            updateActivityDisplay();
         }
 
         // Advanced Message Management Functions
@@ -5377,6 +5486,296 @@
             }, 2500);
         }
 
+        // Activity Monitoring System
+        let userActivities = JSON.parse(localStorage.getItem('userActivities')) || [];
+        let activityAutoRefresh = false;
+        let activityRefreshInterval;
+        
+        // Add activity to log
+        function addActivity(type, details = {}) {
+            const activity = {
+                id: Date.now().toString(),
+                timestamp: new Date().toISOString(),
+                timestampPersian: new Date().toLocaleDateString('fa-IR'),
+                timePersian: new Date().toLocaleTimeString('fa-IR'),
+                user: currentUser || 'مهمان',
+                type: type,
+                details: details,
+                userAgent: navigator.userAgent.substring(0, 50) + '...',
+                sessionId: sessionStorage.getItem('sessionId') || 'unknown'
+            };
+            
+            userActivities.unshift(activity); // Add to beginning
+            
+            // Keep only last 1000 activities
+            if (userActivities.length > 1000) {
+                userActivities = userActivities.slice(0, 1000);
+            }
+            
+            localStorage.setItem('userActivities', JSON.stringify(userActivities));
+            
+            // Update activity display if admin panel is open
+            if (document.getElementById('adminPanel') && !document.getElementById('adminPanel').classList.contains('hidden')) {
+                updateActivityDisplay();
+            }
+        }
+        
+        // Update activity display
+        function updateActivityDisplay() {
+            const activityList = document.getElementById('userActivityList');
+            const filter = document.getElementById('activityFilter')?.value || 'all';
+            
+            if (!activityList) return;
+            
+            // Filter activities
+            let filteredActivities = userActivities;
+            if (filter !== 'all') {
+                filteredActivities = userActivities.filter(activity => activity.type === filter);
+            }
+            
+            // Get recent activities (last 20)
+            const recentActivities = filteredActivities.slice(0, 20);
+            
+            if (recentActivities.length === 0) {
+                activityList.innerHTML = `
+                    <div class="text-center theme-text-secondary py-4">
+                        <svg class="w-8 h-8 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        <p class="text-xs">هیچ فعالیتی یافت نشد</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            activityList.innerHTML = recentActivities.map(activity => {
+                const activityTypes = {
+                    'login': { icon: '🔐', color: 'bg-green-500', name: 'ورود' },
+                    'logout': { icon: '🚪', color: 'bg-gray-500', name: 'خروج' },
+                    'register': { icon: '👤', color: 'bg-blue-500', name: 'ثبت نام' },
+                    'dns_test': { icon: '🧪', color: 'bg-purple-500', name: 'تست DNS' },
+                    'gaming': { icon: '🎮', color: 'bg-green-500', name: 'DNS گیمینگ' },
+                    'download': { icon: '📥', color: 'bg-orange-500', name: 'DNS دانلود' },
+                    'ping': { icon: '📡', color: 'bg-blue-500', name: 'تست پینگ' },
+                    'speed_test': { icon: '⚡', color: 'bg-yellow-500', name: 'تست سرعت' },
+                    'admin': { icon: '👑', color: 'bg-red-500', name: 'فعالیت ادمین' },
+                    'security': { icon: '🛡️', color: 'bg-red-500', name: 'امنیت' },
+                    'system': { icon: '⚙️', color: 'bg-gray-500', name: 'سیستم' }
+                };
+                
+                const activityInfo = activityTypes[activity.type] || { icon: '📋', color: 'bg-gray-500', name: 'نامشخص' };
+                const timeAgo = getTimeAgo(activity.timestamp);
+                
+                return `
+                    <div class="flex items-center justify-between p-2 theme-bg-secondary rounded-lg hover:opacity-80 transition-all">
+                        <div class="flex items-center space-x-2 space-x-reverse flex-1">
+                            <div class="w-2 h-2 ${activityInfo.color} rounded-full animate-pulse"></div>
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <span class="text-xs">${activityInfo.icon}</span>
+                                    <span class="text-sm theme-text-primary font-medium">${activity.user}</span>
+                                    <span class="text-xs px-1 py-0.5 rounded ${activityInfo.color} text-white">${activityInfo.name}</span>
+                                </div>
+                                <div class="text-xs theme-text-secondary mt-1">
+                                    ${activity.details.description || getActivityDescription(activity)}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-xs theme-text-secondary">${timeAgo}</div>
+                            <div class="text-xs theme-text-secondary">${activity.timePersian}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Update activity stats
+            updateActivityStats();
+        }
+        
+        // Get activity description
+        function getActivityDescription(activity) {
+            switch (activity.type) {
+                case 'login':
+                    return 'وارد سیستم شد';
+                case 'logout':
+                    return 'از سیستم خارج شد';
+                case 'register':
+                    return 'حساب کاربری جدید ایجاد کرد';
+                case 'dns_test':
+                    return `${activity.details.count || 'چندین'} DNS تست کرد`;
+                case 'gaming':
+                    return `DNS گیمینگ برای ${activity.details.game || 'بازی'} تولید کرد`;
+                case 'download':
+                    return `DNS دانلود ${activity.details.type || ''} تولید کرد`;
+                case 'ping':
+                    return `پینگ ${activity.details.servers || 'سرورها'} را تست کرد`;
+                case 'speed_test':
+                    return `تست سرعت انجام داد (${activity.details.downloadSpeed || '--'} Mbps)`;
+                case 'admin':
+                    return activity.details.action || 'عملیات ادمین انجام داد';
+                case 'security':
+                    return 'اسکن امنیتی انجام داد';
+                case 'system':
+                    return 'تنظیمات سیستم تغییر کرد';
+                default:
+                    return 'فعالیت نامشخص';
+            }
+        }
+        
+        // Get time ago
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const activityTime = new Date(timestamp);
+            const diffMs = now - activityTime;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 1) return 'همین الان';
+            if (diffMins < 60) return `${diffMins} دقیقه پیش`;
+            if (diffHours < 24) return `${diffHours} ساعت پیش`;
+            return `${diffDays} روز پیش`;
+        }
+        
+        // Update activity stats
+        function updateActivityStats() {
+            const onlineUsersElement = document.getElementById('onlineUsersCount');
+            const activeSessionsElement = document.getElementById('activeSessionsCount');
+            const todayActivitiesElement = document.getElementById('todayActivitiesCount');
+            
+            if (!onlineUsersElement) return;
+            
+            // Simulate online users (in real app, this would come from server)
+            const totalUsers = Object.keys(registeredUsers).length;
+            const onlineUsers = Math.max(1, Math.floor(totalUsers * 0.3)); // 30% online simulation
+            
+            // Count today's activities
+            const today = new Date().toLocaleDateString('fa-IR');
+            const todayActivities = userActivities.filter(activity => 
+                activity.timestampPersian === today
+            ).length;
+            
+            // Count active sessions (unique users in last hour)
+            const oneHourAgo = new Date(Date.now() - 3600000);
+            const recentActivities = userActivities.filter(activity => 
+                new Date(activity.timestamp) > oneHourAgo
+            );
+            const activeSessions = new Set(recentActivities.map(a => a.user)).size;
+            
+            onlineUsersElement.textContent = onlineUsers;
+            activeSessionsElement.textContent = activeSessions;
+            todayActivitiesElement.textContent = todayActivities;
+        }
+        
+        // Refresh user activity
+        function refreshUserActivity() {
+            updateActivityDisplay();
+            showNotification('فعالیت‌های کاربران بروزرسانی شد', 'success');
+        }
+        
+        // Toggle auto refresh
+        function toggleActivityAutoRefresh() {
+            const button = document.getElementById('autoRefreshBtn');
+            
+            if (activityAutoRefresh) {
+                // Stop auto refresh
+                activityAutoRefresh = false;
+                if (activityRefreshInterval) {
+                    clearInterval(activityRefreshInterval);
+                    activityRefreshInterval = null;
+                }
+                button.className = 'px-2 py-1 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-all text-xs';
+                button.textContent = '⏸️';
+                showNotification('بروزرسانی خودکار متوقف شد', 'info');
+            } else {
+                // Start auto refresh
+                activityAutoRefresh = true;
+                activityRefreshInterval = setInterval(() => {
+                    updateActivityDisplay();
+                }, 5000); // Refresh every 5 seconds
+                button.className = 'px-2 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all text-xs';
+                button.textContent = '⏱️';
+                showNotification('بروزرسانی خودکار فعال شد', 'success');
+            }
+        }
+        
+        // Filter user activity
+        function filterUserActivity() {
+            updateActivityDisplay();
+            const filter = document.getElementById('activityFilter').value;
+            const filterNames = {
+                'all': 'همه فعالیت‌ها',
+                'login': 'ورود/خروج',
+                'dns_test': 'تست DNS',
+                'gaming': 'DNS گیمینگ',
+                'download': 'DNS دانلود',
+                'ping': 'تست پینگ',
+                'admin': 'فعالیت ادمین'
+            };
+            showNotification(`فیلتر ${filterNames[filter]} اعمال شد`, 'info');
+        }
+        
+        // Export activity log
+        function exportActivityLog() {
+            if (!isAdmin) {
+                showNotification('فقط ادمین می‌تواند لاگ فعالیت‌ها را خروجی بگیرد', 'error');
+                return;
+            }
+            
+            const exportData = {
+                activities: userActivities,
+                exportDate: new Date().toISOString(),
+                exportDatePersian: new Date().toLocaleDateString('fa-IR'),
+                exportTime: new Date().toLocaleTimeString('fa-IR'),
+                totalActivities: userActivities.length,
+                exportedBy: currentUser
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `activity_log_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            // Add admin activity
+            addActivity('admin', {
+                action: 'خروجی لاگ فعالیت‌ها',
+                description: `${userActivities.length} فعالیت خروجی گرفته شد`
+            });
+            
+            showNotification('لاگ فعالیت‌ها خروجی گرفته شد', 'success');
+        }
+        
+        // Clear activity log
+        function clearActivityLog() {
+            if (!isAdmin) {
+                showNotification('فقط ادمین می‌تواند لاگ فعالیت‌ها را پاک کند', 'error');
+                return;
+            }
+            
+            if (!confirm('آیا مطمئن هستید که می‌خواهید تمام لاگ فعالیت‌ها را پاک کنید؟')) {
+                return;
+            }
+            
+            const activityCount = userActivities.length;
+            userActivities = [];
+            localStorage.setItem('userActivities', JSON.stringify(userActivities));
+            
+            updateActivityDisplay();
+            
+            // Add admin activity (this will be the only activity left)
+            addActivity('admin', {
+                action: 'پاک کردن لاگ فعالیت‌ها',
+                description: `${activityCount} فعالیت پاک شد`
+            });
+            
+            showNotification('تمام لاگ فعالیت‌ها پاک شدند', 'success');
+        }
+
         // Enhanced refresh admin stats
         function refreshAdminStats() {
             if (!isAdmin) {
@@ -5398,6 +5797,9 @@
             document.getElementById('popularDNS').textContent = 'Cloudflare (1.1.1.1)';
             document.getElementById('lastActivity').textContent = 'همین الان';
             document.getElementById('serverStatus').textContent = '🟢 آنلاین';
+            
+            // Update activity display
+            updateActivityDisplay();
             
             showNotification('آمار بروزرسانی شد', 'success');
         }
@@ -5951,5 +6353,5 @@
         });
 
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989f3e3bf5f4348f',t:'MTc1OTY5MTY3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989f49211718f4e5',t:'MTc1OTY5MjEyNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
