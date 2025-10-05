@@ -765,99 +765,141 @@
         @media (max-width: 768px) {
             /* Base Mobile Layout */
             body {
-                font-size: 14px;
-                line-height: 1.4;
+                font-size: 16px;
+                line-height: 1.5;
+                overflow-x: hidden;
+                -webkit-text-size-adjust: 100%;
+                -webkit-font-smoothing: antialiased;
             }
             
             .container {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
                 max-width: 100%;
             }
             
-            /* Mobile Header */
+            /* Mobile Header - Fixed and Optimized */
             header {
-                padding: 0.5rem 0;
+                padding: 1rem 0;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(255,255,255,0.1);
             }
             
             header .container {
                 flex-wrap: nowrap;
                 justify-content: space-between;
                 align-items: center;
+                padding: 0 1rem;
             }
             
             header h1 {
                 display: none;
             }
             
+            /* Mobile Logo and Title */
+            .fallback-icon, 
+            header img {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
+            
             /* Mobile Menu */
             .menu-item {
-                font-size: 1.125rem;
-                margin: 0.75rem 0;
-                padding: 0.5rem;
+                font-size: 1.25rem;
+                margin: 1rem 0;
+                padding: 1.5rem;
+                border-radius: 1rem;
+                background: rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255,255,255,0.2);
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-weight: 600;
             }
             
             .menu-items {
-                padding: 1rem;
-                max-height: 80vh;
+                padding: 2rem 1rem;
+                max-height: 90vh;
                 overflow-y: auto;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
             }
             
-            /* Mobile Cards */
+            /* Mobile Cards - Larger and More Readable */
             .card {
-                margin: 0.5rem 0;
-                padding: 1rem;
-                border-radius: 1rem;
+                margin: 1rem 0;
+                padding: 1.5rem;
+                border-radius: 1.5rem;
+                width: 100%;
+                box-sizing: border-box;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             }
             
-            /* Mobile Grid System */
+            /* Mobile Grid System - Better Spacing */
             .grid {
-                gap: 0.75rem;
+                gap: 1rem;
+                width: 100%;
             }
             
             .grid.grid-cols-2 {
                 grid-template-columns: 1fr 1fr;
-                gap: 0.5rem;
+                gap: 0.75rem;
             }
             
             .grid.grid-cols-4,
             .grid.md\\:grid-cols-4 {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
             }
             
             .grid.md\\:grid-cols-3 {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 1rem;
             }
             
             .grid.md\\:grid-cols-2 {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 1rem;
             }
             
-            /* Mobile Typography */
+            /* Mobile Typography - Larger and More Readable */
             h1 {
                 font-size: 1.25rem;
-                line-height: 1.3;
+                line-height: 1.4;
+                font-weight: 700;
             }
             
             h2 {
-                font-size: 1.75rem;
+                font-size: 2rem;
                 line-height: 1.3;
-                margin-bottom: 1rem;
+                margin-bottom: 1.5rem;
+                text-align: center;
+                font-weight: 700;
             }
             
             h3 {
                 font-size: 1.5rem;
                 line-height: 1.3;
-                margin-bottom: 0.75rem;
+                margin-bottom: 1rem;
+                font-weight: 600;
             }
             
             h4 {
                 font-size: 1.25rem;
                 line-height: 1.3;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.75rem;
+                font-weight: 600;
             }
             
             .text-8xl {
@@ -892,13 +934,18 @@
                 font-size: 1rem;
             }
             
-            /* Mobile Buttons */
+            /* Mobile Buttons - Touch Friendly */
             .btn-primary, 
             button {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
-                border-radius: 0.5rem;
-                min-height: 44px; /* iOS touch target */
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 0.75rem;
+                min-height: 48px;
+                width: 100%;
+                box-sizing: border-box;
+                font-weight: 600;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
             
             .btn-primary.px-8 {
@@ -906,43 +953,71 @@
                 padding-right: 1.5rem;
             }
             
-            /* Mobile Forms */
+            /* Mobile Forms - Better UX */
             input, 
             select, 
             textarea {
-                font-size: 16px; /* Prevents zoom on iOS */
-                padding: 0.75rem;
-                border-radius: 0.5rem;
-                min-height: 44px;
+                font-size: 16px;
+                padding: 1rem;
+                border-radius: 0.75rem;
+                min-height: 48px;
+                width: 100%;
+                box-sizing: border-box;
+                border: 2px solid #e2e8f0;
+                transition: all 0.3s ease;
             }
             
-            /* Mobile Modals */
+            input:focus,
+            select:focus,
+            textarea:focus {
+                outline: none;
+                border-color: #6366f1;
+                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            }
+            
+            /* Mobile Modals - Full Screen Friendly */
             .modal-3d,
             #loginModal > div,
             #registerModal > div,
             #editProfileModal > div,
-            #changePasswordModal > div {
-                margin: 0.5rem;
-                max-width: calc(100vw - 1rem);
-                max-height: calc(100vh - 1rem);
+            #changePasswordModal > div,
+            #changeAdminCredentialsModal > div {
+                margin: 1rem;
+                max-width: calc(100vw - 2rem);
+                max-height: calc(100vh - 2rem);
                 overflow-y: auto;
+                width: calc(100vw - 2rem);
+                border-radius: 1.5rem;
             }
             
-            /* Mobile Tables */
+            /* Mobile Modal Content */
+            .modal-3d .modal-header {
+                margin: -2rem -2rem 1.5rem -2rem;
+                padding: 2rem 1.5rem;
+                border-radius: 1.5rem 1.5rem 0 0;
+            }
+            
+            .modal-3d .overflow-y-auto {
+                max-height: 60vh;
+                padding: 0;
+            }
+            
+            /* Mobile Tables - Horizontal Scroll */
             table {
-                font-size: 0.75rem;
+                font-size: 0.875rem;
                 width: 100%;
                 display: block;
                 overflow-x: auto;
                 white-space: nowrap;
+                border-radius: 0.75rem;
             }
             
             th, td {
-                padding: 0.5rem 0.25rem;
-                min-width: 80px;
+                padding: 0.75rem 0.5rem;
+                min-width: 100px;
             }
             
-            /* Mobile Spacing */
+            /* Mobile Spacing - Better Visual Hierarchy */
             .space-x-4 > * + * {
                 margin-right: 0.5rem;
             }
@@ -952,23 +1027,30 @@
             }
             
             .space-y-6 > * + * {
-                margin-top: 1rem;
-            }
-            
-            .space-y-8 > * + * {
                 margin-top: 1.5rem;
             }
             
-            /* Mobile Sections */
-            .section {
-                padding-top: 1rem;
-                min-height: calc(100vh - 80px);
+            .space-y-8 > * + * {
+                margin-top: 2rem;
             }
             
-            /* Mobile DNS Options */
+            /* Mobile Sections - Better Spacing */
+            .section {
+                padding-top: 2rem;
+                min-height: calc(100vh - 80px);
+                margin-top: 80px;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Mobile DNS Options - Touch Optimized */
             .usage-type-btn {
                 padding: 1rem 0.5rem;
                 font-size: 0.75rem;
+                min-height: 80px;
+                width: 100%;
+                border-radius: 1rem;
+                font-weight: 600;
             }
             
             .usage-type-btn .text-4xl {
@@ -982,12 +1064,18 @@
             .global-ip-type-btn {
                 padding: 0.75rem 0.5rem;
                 font-size: 0.75rem;
+                min-height: 48px;
+                border-radius: 0.75rem;
+                font-weight: 600;
             }
             
             .create-device-btn,
             .global-device-btn {
                 padding: 1rem 0.5rem;
                 font-size: 0.75rem;
+                min-height: 80px;
+                border-radius: 1rem;
+                font-weight: 600;
             }
             
             .create-device-btn .text-4xl,
@@ -996,20 +1084,21 @@
                 margin-bottom: 0.5rem;
             }
             
-            /* Mobile DNS Results */
+            /* Mobile DNS Results - Better Layout */
             .dns-item {
-                padding: 1rem;
+                padding: 1.5rem;
                 margin-bottom: 1rem;
+                border-radius: 1.5rem;
             }
             
             .dns-item .grid {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 1rem;
             }
             
             .dns-item .flex {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.75rem;
             }
             
             .dns-item .flex.space-x-4 {
@@ -1018,14 +1107,14 @@
             
             .dns-item .flex.space-x-4 > * + * {
                 margin-right: 0;
-                margin-top: 0.5rem;
+                margin-top: 0.75rem;
             }
             
-            /* Mobile User Panel */
+            /* Mobile User Panel - Compact */
             #loggedInPanel {
                 flex-direction: row;
                 flex-wrap: wrap;
-                gap: 0.25rem;
+                gap: 0.5rem;
             }
             
             #loggedInPanel > div {
@@ -1034,6 +1123,7 @@
             
             #userDisplayName {
                 font-size: 0.75rem;
+                font-weight: 600;
             }
             
             /* Mobile Auto Switcher Status */
@@ -1041,14 +1131,17 @@
                 display: none;
             }
             
-            /* Mobile Notifications */
+            /* Mobile Notifications - Better Positioning */
             .notification {
-                right: 0.5rem;
-                left: 0.5rem;
-                top: 70px;
+                right: 1rem;
+                left: 1rem;
+                top: 90px;
                 transform: translateX(0);
                 margin: 0;
-                font-size: 0.875rem;
+                font-size: 1rem;
+                z-index: 1001;
+                border-radius: 1rem;
+                padding: 1.5rem;
             }
             
             .notification.show {
@@ -1057,88 +1150,107 @@
             
             /* Mobile Global Message */
             #globalMessageBanner {
-                top: 60px;
-                margin: 0 0.5rem;
+                top: 80px;
+                margin: 0 1rem;
+                z-index: 45;
+                border-radius: 1rem;
             }
             
-            /* Mobile Speed Test */
+            /* Mobile Speed Test - Larger Gauge */
             .speed-gauge {
-                width: 120px;
-                height: 120px;
+                width: 150px;
+                height: 150px;
             }
             
             .speed-needle {
-                height: 50px;
+                height: 60px;
             }
             
             /* Mobile Ping Chart */
             .flex.items-end.justify-center {
-                height: 100px;
-                padding: 0.5rem;
+                height: 120px;
+                padding: 1rem;
             }
             
-            /* Mobile Advertisement */
+            /* Mobile Advertisement - Better Size */
             .connectix-fallback, 
             .advertisement img {
                 width: 3rem;
                 height: 3rem;
             }
             
-            /* Mobile Hamburger */
+            /* Mobile Hamburger - Larger Touch Target */
             .hamburger {
                 width: 24px;
                 height: 24px;
+                padding: 0.5rem;
             }
             
             .hamburger span {
-                height: 2px;
+                height: 3px;
+                border-radius: 2px;
             }
             
-            /* Mobile Game Selection */
+            /* Mobile Game Selection - Better UX */
             #createGameSearch,
             #globalGameSearch {
                 font-size: 16px;
-                padding: 0.75rem 3rem 0.75rem 0.75rem;
+                padding: 1rem;
+                border-radius: 1rem;
             }
             
             #createPopularGamesList button,
             #globalPopularGamesList button {
                 font-size: 0.75rem;
-                padding: 0.5rem 0.75rem;
+                padding: 0.75rem;
+                margin: 0.25rem;
+                border-radius: 0.75rem;
+                min-height: 44px;
             }
             
-            /* Mobile Chat */
+            /* Mobile Chat - Better Size */
             #chatMessages {
                 height: 200px;
                 font-size: 0.875rem;
+                padding: 1rem;
+                border-radius: 1rem;
             }
             
             #chatInput {
                 font-size: 16px;
+                padding: 1rem;
+                border-radius: 1rem;
             }
             
             /* Mobile Profile Stats */
             .profile-stats .grid {
                 grid-template-columns: 1fr;
-                gap: 0.5rem;
+                gap: 1rem;
             }
             
             /* Mobile Admin Panel */
             .admin-controls .grid {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 1rem;
             }
             
-            /* Mobile Education Tabs */
+            /* Mobile Education Tabs - Touch Friendly */
             .tab-button {
-                padding: 0.5rem 0.75rem;
+                padding: 0.75rem;
                 font-size: 0.75rem;
                 margin: 0.25rem;
+                flex: 1;
+                text-align: center;
+                border-radius: 0.75rem;
+                min-height: 44px;
+                font-weight: 600;
             }
             
             /* Mobile Comparison Table */
             #comparisonTable {
-                font-size: 0.75rem;
+                font-size: 0.875rem;
+                overflow-x: auto;
+                border-radius: 1rem;
             }
             
             #comparisonTable table {
@@ -1148,21 +1260,81 @@
             /* Mobile Features Grid */
             .features-grid .grid {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 1rem;
             }
             
             /* Mobile Statistics Dashboard */
             .stats-dashboard .grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
             }
             
             .stats-dashboard .card {
-                padding: 0.75rem;
+                padding: 1rem;
             }
             
             .stats-dashboard .text-3xl {
                 font-size: 1.5rem;
+            }
+            
+            /* Mobile Form 3D Adjustments */
+            .form-3d .wrapper li, .form-3d button {
+                width: 100%;
+                margin: 0 auto 12px auto;
+            }
+            
+            .form-3d .wrapper li::after, .form-3d button::after {
+                width: 100%;
+            }
+            
+            .form-3d .input {
+                font-size: 16px;
+                padding: 1rem;
+            }
+            
+            /* Mobile Flex Adjustments */
+            .flex.space-x-4.space-x-reverse {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .flex.space-x-4.space-x-reverse > * + * {
+                margin-right: 0;
+                margin-top: 0;
+            }
+            
+            /* Mobile Text Centering */
+            .text-center {
+                text-align: center;
+            }
+            
+            /* Mobile Overflow Fix */
+            * {
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            
+            /* Mobile Container Padding */
+            .container.mx-auto {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Mobile Touch Improvements */
+            button, .btn-primary, .menu-item, .tab-button {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            
+            /* Mobile Scroll Improvements */
+            .overflow-y-auto {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Mobile Font Improvements */
+            body, input, button, select, textarea {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
             }
         }
         
@@ -2291,6 +2463,49 @@
                     </div>
                 </div>
 
+                <!-- Admin Security Settings -->
+                <div class="card p-8 rounded-2xl animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-6">🔐 تنظیمات امنیتی ادمین</h3>
+                    <div class="space-y-4">
+                        <!-- Current Admin Info -->
+                        <div class="p-4 rounded-lg border-2 border-blue-200" style="background: var(--bg-tertiary);">
+                            <h4 class="font-bold mb-3 text-sm flex items-center">
+                                <span class="text-lg mr-2">👤</span>
+                                اطلاعات ادمین فعلی:
+                            </h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between items-center">
+                                    <span class="opacity-75">نام کاربری:</span>
+                                    <span class="font-mono font-bold" id="currentAdminUsername">در حال بارگذاری...</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="opacity-75">رمز عبور:</span>
+                                    <span class="font-mono font-bold">••••••••••••</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="opacity-75">آخرین تغییر:</span>
+                                    <span class="text-xs opacity-50" id="lastAdminChange">هرگز</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="showChangeAdminCredentialsModal()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg w-full transition-all">
+                            🔑 تغییر نام کاربری و رمز عبور ادمین
+                        </button>
+                        
+                        <div class="p-4 rounded-lg" style="background: var(--bg-tertiary);">
+                            <h4 class="font-bold mb-2 text-sm">⚠️ نکات امنیتی:</h4>
+                            <ul class="text-xs opacity-75 space-y-1">
+                                <li>• اطلاعات ادمین به صورت رمزگذاری شده ذخیره می‌شود</li>
+                                <li>• تغییرات بلافاصله اعمال و ذخیره می‌شوند</li>
+                                <li>• رمز عبور قوی انتخاب کنید (حداقل 8 کاراکتر)</li>
+                                <li>• اطلاعات را در جای امن نگهداری کنید</li>
+                                <li>• از اشتراک اطلاعات ادمین خودداری کنید</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Admin Tools -->
                 <div class="card p-8 rounded-2xl animate-fade-in-up">
                     <h3 class="text-2xl font-bold mb-6">🛠️ ابزارهای مدیریت</h3>
@@ -2435,6 +2650,71 @@
         </div>
     </div>
 
+    <!-- Change Admin Credentials Modal -->
+    <div id="changeAdminCredentialsModal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="modal-3d rounded-2xl max-w-md w-full max-h-[90vh] overflow-hidden animate-bounce-in">
+            <!-- Header -->
+            <div class="modal-header">
+                <div class="icon">🔑</div>
+                <h2 class="text-2xl font-bold">تغییر اطلاعات ادمین</h2>
+                <p class="text-sm opacity-90 mt-2">تغییر نام کاربری و رمز عبور مدیر سیستم</p>
+            </div>
+            
+            <!-- Scrollable Content -->
+            <div class="overflow-y-auto max-h-[60vh] p-6">
+                <!-- Security Warning -->
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <span class="text-2xl">⚠️</span>
+                        <div>
+                            <div class="font-bold text-red-800">هشدار امنیتی</div>
+                            <div class="text-sm text-red-600">پس از تغییر اطلاعات، حتماً از سیستم خارج شده و مجدداً وارد شوید</div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="changeAdminCredentialsForm" class="form-3d">
+                    <ul class="wrapper">
+                        <li style="--i:4;">
+                            <input class="input" type="password" id="adminCurrentPassword" placeholder="رمز عبور فعلی ادمین" required>
+                        </li>
+                        <li style="--i:3;">
+                            <input class="input" type="text" id="adminNewUsername" placeholder="نام کاربری جدید ادمین" required>
+                        </li>
+                        <li style="--i:2;">
+                            <input class="input" type="password" id="adminNewPassword" placeholder="رمز عبور جدید ادمین" required>
+                        </li>
+                        <li style="--i:1;">
+                            <input class="input" type="password" id="adminConfirmPassword" placeholder="تکرار رمز عبور جدید" required>
+                        </li>
+                        <button type="button" onclick="handleChangeAdminCredentials()" style="--i:0;">🔑 تغییر اطلاعات ادمین</button>
+                    </ul>
+                </form>
+
+                <!-- Security Tips -->
+                <div class="mt-6 p-4 rounded-lg" style="background: var(--bg-tertiary);">
+                    <h4 class="font-bold mb-3 text-sm">💡 نکات امنیتی:</h4>
+                    <ul class="text-xs opacity-75 space-y-1">
+                        <li>• از ترکیب حروف بزرگ، کوچک، اعداد و نمادها استفاده کنید</li>
+                        <li>• حداقل 12 کاراکتر برای رمز عبور انتخاب کنید</li>
+                        <li>• از کلمات قابل حدس زدن استفاده نکنید</li>
+                        <li>• اطلاعات را در جای امن نگهداری کنید</li>
+                        <li>• به هیچ کس اطلاعات ادمین را ندهید</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Buttons -->
+            <div class="p-6 border-t border-gray-200">
+                <div class="flex space-x-4 space-x-reverse">
+                    <button type="button" onclick="closeChangeAdminCredentialsModal()" class="btn-cancel-3d flex-1">
+                        ❌ لغو
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Global Variables
         let currentTheme = 'light';
@@ -2457,10 +2737,10 @@
             }
         };
 
-        // Admin credentials (hidden from users)
-        const ADMIN_CREDENTIALS = {
-            username: 'academi_admin_2024',
-            password: 'DNS_Manager_Admin_@2024!'
+        // Admin credentials (will be loaded from storage or use defaults)
+        let ADMIN_CREDENTIALS = {
+            username: 'Mahdi_Admin_panel1(msnbjj)',
+            password: 'AMjuyh-M-academi-nytrfgh876tgh'
         };
 
         // System data
@@ -2486,7 +2766,13 @@
         function initializeApp() {
             console.log('🚀 Initializing Academi DNS Manager...');
             
-            // Load user data first
+            // Check for data migration from previous versions
+            migrateDataFromPreviousVersions();
+            
+            // Load admin credentials first (for security)
+            loadAdminCredentials();
+            
+            // Load user data
             loadUserData();
             loadSystemData();
             
@@ -2503,6 +2789,60 @@
             showSection('home');
             
             console.log('✅ App initialized successfully!');
+        }
+
+        // Migration function to preserve data from previous versions
+        function migrateDataFromPreviousVersions() {
+            console.log('🔄 بررسی نیاز به مهاجرت داده‌ها...');
+            
+            // Check if this is first run of new version
+            const currentVersion = '2.0.0';
+            const lastVersion = localStorage.getItem('appVersion');
+            
+            if (!lastVersion || lastVersion !== currentVersion) {
+                console.log(`📦 مهاجرت از ورژن ${lastVersion || 'قدیمی'} به ${currentVersion}`);
+                
+                // Migrate admin credentials if they exist in old format
+                const oldAdminData = localStorage.getItem('adminCredentials');
+                if (oldAdminData) {
+                    try {
+                        const oldCredentials = JSON.parse(oldAdminData);
+                        // If old format doesn't have version, update it
+                        if (!oldCredentials.version) {
+                            oldCredentials.version = currentVersion;
+                            oldCredentials.migrated = true;
+                            oldCredentials.migratedAt = new Date().toISOString();
+                            localStorage.setItem('adminCredentials', JSON.stringify(oldCredentials));
+                            console.log('✅ اطلاعات ادمین قدیمی مهاجرت یافت');
+                        }
+                    } catch (error) {
+                        console.error('❌ خطا در مهاجرت اطلاعات ادمین:', error);
+                    }
+                }
+                
+                // Migrate user data if needed
+                const oldUserData = localStorage.getItem('dnsManagerUserData');
+                if (oldUserData && !localStorage.getItem('dataMigrated')) {
+                    try {
+                        // Mark as migrated to prevent re-migration
+                        localStorage.setItem('dataMigrated', 'true');
+                        console.log('✅ داده‌های کاربری قدیمی حفظ شد');
+                    } catch (error) {
+                        console.error('❌ خطا در مهاجرت داده‌های کاربری:', error);
+                    }
+                }
+                
+                // Update version
+                localStorage.setItem('appVersion', currentVersion);
+                console.log(`✅ مهاجرت به ورژن ${currentVersion} کامل شد`);
+                
+                // Show migration success message
+                setTimeout(() => {
+                    showNotification(`🎉 به ورژن جدید ${currentVersion} خوش آمدید!\n✅ تمام اطلاعات قبلی شما حفظ شده است`, 'success');
+                }, 2000);
+            } else {
+                console.log('✅ ورژن فعلی به‌روز است، نیازی به مهاجرت نیست');
+            }
         }
 
         function loadUserData() {
@@ -2775,13 +3115,13 @@
             const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
 
-            // Check if admin login
-            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+            // Check if admin login (with updated credentials support)
+            if (isAdminLogin(username, password)) {
                 currentUser = {
                     id: 'admin',
                     name: 'مدیر سیستم',
-                    username: ADMIN_CREDENTIALS.username,
-                    password: ADMIN_CREDENTIALS.password,
+                    username: username,
+                    password: password,
                     isAdmin: true,
                     joinDate: 'مدیر سیستم'
                 };
@@ -6559,6 +6899,109 @@
             }
         }
 
+        // Admin Credentials Management Functions
+        function showChangeAdminCredentialsModal() {
+            if (!isAdmin()) {
+                showNotification('دسترسی غیرمجاز!', 'error');
+                return;
+            }
+            document.getElementById('changeAdminCredentialsModal').classList.remove('hidden');
+        }
+
+        function closeChangeAdminCredentialsModal() {
+            document.getElementById('changeAdminCredentialsModal').classList.add('hidden');
+            document.getElementById('changeAdminCredentialsForm').reset();
+        }
+
+        function handleChangeAdminCredentials() {
+            const currentPassword = document.getElementById('adminCurrentPassword').value;
+            const newUsername = document.getElementById('adminNewUsername').value;
+            const newPassword = document.getElementById('adminNewPassword').value;
+            const confirmPassword = document.getElementById('adminConfirmPassword').value;
+
+            // Verify current password
+            if (currentPassword !== ADMIN_CREDENTIALS.password) {
+                showNotification('رمز عبور فعلی ادمین اشتباه است!', 'error');
+                return;
+            }
+
+            // Validate new credentials
+            if (newUsername.length < 5) {
+                showNotification('نام کاربری باید حداقل 5 کاراکتر باشد!', 'error');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                showNotification('رمز عبور باید حداقل 8 کاراکتر باشد!', 'error');
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                showNotification('رمز عبور جدید و تکرار آن یکسان نیستند!', 'error');
+                return;
+            }
+
+            // Encode and save new credentials securely
+            const encodedCredentials = {
+                username: btoa(newUsername),
+                password: btoa(newPassword),
+                lastChanged: new Date().toISOString(),
+                version: '2.0.0' // Version tracking for compatibility
+            };
+
+            localStorage.setItem('adminCredentials', JSON.stringify(encodedCredentials));
+
+            // Update global ADMIN_CREDENTIALS immediately
+            ADMIN_CREDENTIALS.username = newUsername;
+            ADMIN_CREDENTIALS.password = newPassword;
+
+            // Update current session
+            currentUser.username = newUsername;
+            currentUser.password = newPassword;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+            closeChangeAdminCredentialsModal();
+            showNotification('اطلاعات ادمین با موفقیت تغییر کرد! ✅', 'success');
+
+            // Add to system activities
+            addSystemActivity(`اطلاعات ادمین تغییر کرد - نام کاربری: ${newUsername}`);
+
+            // Show success message with new credentials info
+            setTimeout(() => {
+                showNotification(`🔑 اطلاعات جدید ادمین:\n👤 نام کاربری: ${newUsername}\n🔐 رمز عبور: ${newPassword.replace(/./g, '*')}\n💾 ذخیره شد و آماده استفاده است!`, 'success');
+            }, 1000);
+
+            console.log('✅ اطلاعات ادمین با موفقیت تغییر کرد و ذخیره شد');
+        }
+
+        // Load admin credentials from storage (if changed)
+        function loadAdminCredentials() {
+            const savedCredentials = localStorage.getItem('adminCredentials');
+            if (savedCredentials) {
+                try {
+                    const credentials = JSON.parse(savedCredentials);
+                    // Update ADMIN_CREDENTIALS with decoded values
+                    ADMIN_CREDENTIALS.username = atob(credentials.username);
+                    ADMIN_CREDENTIALS.password = atob(credentials.password);
+                    console.log('✅ اطلاعات ادمین سفارشی بارگذاری شد');
+                } catch (error) {
+                    console.error('❌ خطا در بارگذاری اطلاعات ادمین:', error);
+                    // Keep default credentials if there's an error
+                    console.log('🔄 استفاده از اطلاعات پیش‌فرض ادمین');
+                }
+            } else {
+                console.log('📝 اطلاعات ادمین پیش‌فرض در حال استفاده');
+            }
+        }
+
+        // Enhanced admin login check
+        function isAdminLogin(username, password) {
+            // Load any custom admin credentials first
+            loadAdminCredentials();
+            
+            return username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password;
+        }
+
         // Initialize admin panel when showing admin section
         function initializeAdminPanel() {
             if (!isAdmin()) {
@@ -6580,11 +7023,43 @@
                 currentMessageDiv.classList.remove('hidden');
             }
 
+            // Update current admin info display
+            updateAdminInfoDisplay();
+
             // Refresh stats
             refreshUserStats();
         }
 
+        // Update admin info display in admin panel
+        function updateAdminInfoDisplay() {
+            const usernameEl = document.getElementById('currentAdminUsername');
+            const lastChangeEl = document.getElementById('lastAdminChange');
+            
+            if (usernameEl) {
+                usernameEl.textContent = ADMIN_CREDENTIALS.username;
+            }
+            
+            if (lastChangeEl) {
+                const savedCredentials = localStorage.getItem('adminCredentials');
+                if (savedCredentials) {
+                    try {
+                        const credentials = JSON.parse(savedCredentials);
+                        if (credentials.lastChanged) {
+                            const changeDate = new Date(credentials.lastChanged);
+                            lastChangeEl.textContent = changeDate.toLocaleDateString('fa-IR') + ' ' + changeDate.toLocaleTimeString('fa-IR');
+                        } else {
+                            lastChangeEl.textContent = 'اطلاعات پیش‌فرض';
+                        }
+                    } catch (error) {
+                        lastChangeEl.textContent = 'خطا در بارگذاری';
+                    }
+                } else {
+                    lastChangeEl.textContent = 'اطلاعات پیش‌فرض';
+                }
+            }
+        }
+
 
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989c2200a3959125',t:'MTc1OTY1OTA2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989c373af765906c',t:'MTc1OTY1OTkzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
