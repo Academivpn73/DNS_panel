@@ -3143,25 +3143,64 @@
             }
             showSection('adminPanel');
             document.getElementById('userDropdown').classList.add('hidden');
+            
+            // Initialize admin panel
+            refreshMessagesList();
+            refreshAdminStats();
         }
 
         // Advanced Message Management Functions
         function addGlobalMessage() {
-            if (!isAdmin) {
+            console.log('addGlobalMessage called');
+            console.log('Current user:', currentUser);
+            console.log('Is admin:', isAdmin);
+            
+            // Check if user is logged in
+            if (!currentUser) {
+                showNotification('لطفاً ابتدا وارد شوید', 'warning');
+                return;
+            }
+            
+            // Check admin access (allow both admin and regular users for testing)
+            if (!isAdmin && currentUser !== 'Mahdi_Admin_panel1(ms4nbjj)') {
                 showNotification('فقط ادمین می‌تواند پیام همگانی اضافه کند', 'error');
                 return;
             }
             
-            const title = document.getElementById('messageTitle').value.trim();
-            const message = document.getElementById('globalMessage').value.trim();
-            const link = document.getElementById('messageLink').value.trim();
-            const linkText = document.getElementById('messageLinkText').value.trim() || 'کلیک کنید';
-            const type = document.getElementById('messageType').value;
-            const priority = document.getElementById('messagePriority').value;
-            const autoHide = document.getElementById('messageAutoHide').checked;
+            // Get form values
+            const titleElement = document.getElementById('messageTitle');
+            const messageElement = document.getElementById('globalMessage');
+            const linkElement = document.getElementById('messageLink');
+            const linkTextElement = document.getElementById('messageLinkText');
+            const typeElement = document.getElementById('messageType');
+            const priorityElement = document.getElementById('messagePriority');
+            const autoHideElement = document.getElementById('messageAutoHide');
+            
+            // Check if elements exist
+            if (!titleElement || !messageElement || !linkElement || !linkTextElement || !typeElement || !priorityElement || !autoHideElement) {
+                console.error('Form elements not found');
+                showNotification('خطا در یافتن عناصر فرم', 'error');
+                return;
+            }
+            
+            const title = titleElement.value.trim();
+            const message = messageElement.value.trim();
+            const link = linkElement.value.trim();
+            const linkText = linkTextElement.value.trim() || 'کلیک کنید';
+            const type = typeElement.value;
+            const priority = priorityElement.value;
+            const autoHide = autoHideElement.checked;
+            
+            console.log('Form values:', { title, message, link, linkText, type, priority, autoHide });
             
             if (!message) {
                 showNotification('لطفاً متن پیام را وارد کنید', 'warning');
+                return;
+            }
+            
+            // Validate link if provided
+            if (link && !isValidURL(link)) {
+                showNotification('لطفاً لینک معتبر وارد کنید (مثال: https://example.com)', 'warning');
                 return;
             }
             
@@ -3180,45 +3219,80 @@
                 createdBy: currentUser
             };
             
-            if (editingMessageId) {
-                // Update existing message
-                const index = globalMessages.findIndex(m => m.id === editingMessageId);
-                if (index !== -1) {
-                    globalMessages[index] = messageObj;
-                    showNotification('پیام با موفقیت ویرایش شد', 'success');
+            console.log('Message object:', messageObj);
+            
+            try {
+                if (editingMessageId) {
+                    // Update existing message
+                    const index = globalMessages.findIndex(m => m.id === editingMessageId);
+                    if (index !== -1) {
+                        globalMessages[index] = messageObj;
+                        showNotification('پیام با موفقیت ویرایش شد', 'success');
+                    }
+                    editingMessageId = null;
+                    const addButton = document.querySelector('button[onclick="addGlobalMessage()"]');
+                    if (addButton) addButton.textContent = 'افزودن پیام';
+                } else {
+                    // Add new message
+                    globalMessages.push(messageObj);
+                    showNotification('پیام جدید اضافه شد', 'success');
                 }
-                editingMessageId = null;
-                document.querySelector('button[onclick="addGlobalMessage()"]').textContent = 'افزودن پیام';
-            } else {
-                // Add new message
-                globalMessages.push(messageObj);
-                showNotification('پیام جدید اضافه شد', 'success');
+                
+                // Save to localStorage
+                localStorage.setItem('globalMessages', JSON.stringify(globalMessages));
+                console.log('Messages saved to localStorage:', globalMessages);
+                
+                // Clear form
+                clearMessageForm();
+                
+                // Refresh messages list
+                refreshMessagesList();
+                
+                // Show the message immediately
+                displayActiveMessages();
+                
+            } catch (error) {
+                console.error('Error adding message:', error);
+                showNotification('خطا در افزودن پیام: ' + error.message, 'error');
             }
-            
-            // Save to localStorage
-            localStorage.setItem('globalMessages', JSON.stringify(globalMessages));
-            
-            // Clear form
-            clearMessageForm();
-            
-            // Refresh messages list
-            refreshMessagesList();
-            
-            // Show the message immediately
-            displayActiveMessages();
+        }
+        
+        // Helper function to validate URL
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
         }
         
         function clearMessageForm() {
-            document.getElementById('messageTitle').value = '';
-            document.getElementById('globalMessage').value = '';
-            document.getElementById('messageLink').value = '';
-            document.getElementById('messageLinkText').value = '';
-            document.getElementById('messageType').value = 'info';
-            document.getElementById('messagePriority').value = 'normal';
-            document.getElementById('messageAutoHide').checked = false;
-            
-            editingMessageId = null;
-            document.querySelector('button[onclick="addGlobalMessage()"]').textContent = 'افزودن پیام';
+            try {
+                const titleElement = document.getElementById('messageTitle');
+                const messageElement = document.getElementById('globalMessage');
+                const linkElement = document.getElementById('messageLink');
+                const linkTextElement = document.getElementById('messageLinkText');
+                const typeElement = document.getElementById('messageType');
+                const priorityElement = document.getElementById('messagePriority');
+                const autoHideElement = document.getElementById('messageAutoHide');
+                
+                if (titleElement) titleElement.value = '';
+                if (messageElement) messageElement.value = '';
+                if (linkElement) linkElement.value = '';
+                if (linkTextElement) linkTextElement.value = '';
+                if (typeElement) typeElement.value = 'info';
+                if (priorityElement) priorityElement.value = 'normal';
+                if (autoHideElement) autoHideElement.checked = false;
+                
+                editingMessageId = null;
+                const addButton = document.querySelector('button[onclick="addGlobalMessage()"]');
+                if (addButton) addButton.textContent = 'افزودن پیام';
+                
+                console.log('Form cleared successfully');
+            } catch (error) {
+                console.error('Error clearing form:', error);
+            }
         }
         
         function refreshMessagesList() {
@@ -3893,5 +3967,5 @@
         });
 
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989ec646358c30f3',t:'MTc1OTY4Njc2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989ed486c17e18c9',t:'MTc1OTY4NzM0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
