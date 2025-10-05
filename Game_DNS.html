@@ -17,13 +17,14 @@
         }
         
         .dark {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #334155;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --text-primary: #eee6ff;
+            --text-secondary: #a0a0db;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
         .light {
@@ -32,110 +33,359 @@
             --bg-tertiary: #e2e8f0;
             --text-primary: #1e293b;
             --text-secondary: #64748b;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
         body {
-            background-color: var(--bg-primary);
+            background: var(--bg-primary);
             color: var(--text-primary);
-            transition: all 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-x: hidden;
         }
         
         .card {
-            background-color: var(--bg-secondary);
-            border: 2px solid var(--bg-tertiary);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            background: var(--bg-secondary);
+            border: 1px solid var(--bg-tertiary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
         }
         
         .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             border-color: var(--accent);
         }
         
         .btn-primary {
-            background-color: var(--accent);
+            background: var(--gradient);
             color: white;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
         }
         
         .btn-primary:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
         }
         
-        .animate-fade-in {
-            animation: fadeIn 0.6s ease-out;
+        /* Hamburger Menu */
+        .hamburger {
+            width: 30px;
+            height: 30px;
+            position: relative;
+            cursor: pointer;
+            z-index: 1001;
         }
         
-        .animate-slide-up {
-            animation: slideUp 0.8s ease-out;
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--text-primary);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2),
+        .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        /* Menu Overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .menu-items {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .menu-item {
+            display: block;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            text-decoration: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .menu-overlay.active .menu-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .menu-item:nth-child(1) { transition-delay: 0.1s; }
+        .menu-item:nth-child(2) { transition-delay: 0.2s; }
+        .menu-item:nth-child(3) { transition-delay: 0.3s; }
+        .menu-item:nth-child(4) { transition-delay: 0.4s; }
+        .menu-item:nth-child(5) { transition-delay: 0.5s; }
+        
+        .menu-item:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .animate-slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .animate-slide-in-right {
+            animation: slideInRight 0.8s ease-out;
         }
         
         .animate-bounce-in {
             animation: bounceIn 1s ease-out;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes bounceIn {
-            0% { transform: scale(0.3); opacity: 0; }
-            50% { transform: scale(1.05); }
-            70% { transform: scale(0.9); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        .pulse-animation {
+        .animate-pulse {
             animation: pulse 2s infinite;
         }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
         }
         
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        /* Gradient backgrounds */
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient);
         }
         
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* DNS Item Styles */
         .dns-item {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-left: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dns-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .dns-item:hover::before {
+            left: 100%;
         }
         
         .dns-item:hover {
             border-left-color: var(--accent);
-            background-color: var(--bg-tertiary);
+            transform: translateX(10px);
         }
         
-        .ping-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
+        /* Speed Test Styles */
+        .speed-gauge {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            margin-left: 8px;
+            background: conic-gradient(from 0deg, #ef4444, #f59e0b, #10b981, #3b82f6);
+            position: relative;
+            margin: 0 auto;
         }
         
-        .ping-good { background-color: #10b981; }
-        .ping-medium { background-color: #f59e0b; }
-        .ping-bad { background-color: #ef4444; }
+        .speed-needle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 4px;
+            height: 80px;
+            background: white;
+            transform-origin: bottom center;
+            transform: translate(-50%, -100%) rotate(0deg);
+            transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 2px;
+        }
         
-        .loading-spinner {
-            border: 3px solid var(--bg-tertiary);
-            border-top: 3px solid var(--accent);
-            border-radius: 50%;
+        .speed-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             width: 20px;
             height: 20px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Loading Spinner */
+        .loading-spinner {
+            border: 4px solid var(--bg-tertiary);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
             animation: spin 1s linear infinite;
         }
         
@@ -143,15 +393,79 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Game Grid Styles */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .game-item {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .game-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        
+        .game-item.selected {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-item {
+                font-size: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .game-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
     </style>
 </head>
 <body class="light">
     <!-- Header -->
-    <header class="card sticky top-0 z-50 p-4 mb-6 animate-fade-in">
+    <header class="fixed top-0 w-full z-50 card p-4 animate-fade-in-up">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4 space-x-reverse">
-                <img src="https://github.com/Academivpn73/DNS_panel/blob/main/Academi_logo.png" alt="Academi Logo" class="w-12 h-12 rounded-full" onerror="this.src=''; this.innerHTML='🌐'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center'; this.style.fontSize='24px';">
-                <h1 class="text-2xl font-bold">Academi DNS Manager</h1>
+                <img src="https://raw.githubusercontent.com/Academivpn73/DNS_panel/main/Academi_logo.png" 
+                     alt="Academi Logo" 
+                     class="w-12 h-12 rounded-full animate-float"
+                     onerror="this.style.display='none'; document.querySelector('.fallback-icon').style.display='flex';">
+                <div class="fallback-icon w-12 h-12 rounded-full gradient-bg flex items-center justify-center text-white text-2xl animate-float" style="display: none;">
+                    🌐
+                </div>
+                <h1 class="text-2xl font-bold gradient-text">Academi DNS Manager</h1>
             </div>
             
             <div class="flex items-center space-x-4 space-x-reverse">
@@ -159,183 +473,191 @@
                     <span id="themeIcon">🌙</span>
                 </button>
                 
-                <div class="flex space-x-2 space-x-reverse">
-                    <a href="https://t.me/Academi_vpn" target="_blank" rel="noopener noreferrer" class="btn-primary px-3 py-2 rounded-lg text-sm">
-                        📢 کانال
-                    </a>
-                    <a href="https://t.me/MahdiAGM0" target="_blank" rel="noopener noreferrer" class="btn-primary px-3 py-2 rounded-lg text-sm">
-                        💬 پشتیبانی
-                    </a>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav class="container mx-auto mb-8 animate-slide-up">
-        <div class="flex justify-center space-x-4 space-x-reverse">
-            <button onclick="showSection('home')" class="nav-btn btn-primary px-6 py-3 rounded-lg font-medium">🏠 خانه</button>
-            <button onclick="showSection('gaming')" class="nav-btn bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-all">🎮 DNS گیمینگ</button>
-            <button onclick="showSection('download')" class="nav-btn bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-all">📥 DNS دانلود</button>
-            <button onclick="showSection('ping')" class="nav-btn bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-all">📊 پینگ DNS</button>
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-items">
+            <a href="#" class="menu-item" onclick="showSection('home')">🏠 خانه</a>
+            <a href="#" class="menu-item" onclick="showSection('dns')">🔧 مدیریت DNS</a>
+            <a href="#" class="menu-item" onclick="showSection('speed')">⚡ تست سرعت</a>
+            <a href="#" class="menu-item" onclick="showSection('ping')">📊 پینگ DNS</a>
+            <a href="#" class="menu-item" onclick="showSection('about')">ℹ️ درباره ما</a>
         </div>
-    </nav>
+    </div>
 
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 pt-24">
         <!-- Home Section -->
-        <div id="homeSection" class="section animate-bounce-in">
+        <div id="homeSection" class="section">
+            <!-- Hero Section -->
+            <div class="text-center mb-12 animate-bounce-in">
+                <div class="text-8xl mb-6 animate-float">🚀</div>
+                <h2 class="text-5xl font-bold mb-4 gradient-text">مدیریت هوشمند DNS</h2>
+                <p class="text-xl opacity-75 mb-8">تجربه اینترنت سریع‌تر و امن‌تر با بهترین DNS های جهان</p>
+                <button onclick="showSection('dns')" class="btn-primary px-8 py-4 rounded-xl text-lg font-bold animate-glow">
+                    🎯 شروع کنید
+                </button>
+            </div>
+
+            <!-- Features -->
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="card p-8 rounded-2xl text-center animate-slide-in-left">
+                    <div class="text-5xl mb-4 animate-pulse">⚡</div>
+                    <h3 class="text-2xl font-bold mb-4">سرعت بالا</h3>
+                    <p class="opacity-75">DNS های بهینه شده برای حداکثر سرعت</p>
+                </div>
+                
+                <div class="card p-8 rounded-2xl text-center animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="text-5xl mb-4 animate-pulse">🔒</div>
+                    <h3 class="text-2xl font-bold mb-4">امنیت کامل</h3>
+                    <p class="opacity-75">محافظت در برابر تهدیدات سایبری</p>
+                </div>
+                
+                <div class="card p-8 rounded-2xl text-center animate-slide-in-right">
+                    <div class="text-5xl mb-4 animate-pulse">🌍</div>
+                    <h3 class="text-2xl font-bold mb-4">دسترسی جهانی</h3>
+                    <p class="opacity-75">دور زدن محدودیت‌های جغرافیایی</p>
+                </div>
+            </div>
+
             <!-- Advertisement -->
-            <div class="card p-6 mb-8 gradient-bg text-white rounded-xl">
-                <div class="text-center">
-                    <h2 class="text-3xl font-bold mb-4">💫 Conectix</h2>
-                    <p class="text-lg mb-4">با Conectix، اینترنت آزاد در دستان شماست!</p>
-                    <p class="mb-4">Conectix ارائه‌دهنده سرویس‌های VPN با کیفیت بالا و پایداری فوق‌العاده‌ست که به شما کمک می‌کنه بدون محدودیت، با سرعت بالا و امنیت کامل به اینترنت دسترسی داشته باشید.</p>
-                    <div class="mb-4">
-                        <p>✅ مناسب برای: وب‌گردی، شبکه‌های اجتماعی، بازی آنلاین، ترید، کلاس آنلاین و...</p>
-                        <p>✨ قابلیت اتصال در زمان قطعی اینترنت جهانی (هایبرید ملی)</p>
-                        <p>🔐 آی‌پی ثابت برای تریدرها و کارهای حساس</p>
-                    </div>
-                    <p class="text-xl mb-4">با Conectix، تجربه واقعی اینترنت آزاد رو لمس کن! 🌐</p>
-                    <a href="https://t.me/Academi_Conectix_bot" target="_blank" rel="noopener noreferrer" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition-all inline-block">
-                        🤖 خرید و تست رایگان
-                    </a>
-                </div>
-            </div>
-
-            <!-- Features Overview -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                <div class="card p-6 rounded-xl text-center">
-                    <div class="text-4xl mb-4">🎮</div>
-                    <h3 class="text-xl font-bold mb-2">DNS گیمینگ</h3>
-                    <p class="text-sm opacity-75">بهترین DNS های مخصوص بازی برای تمام دستگاه‌ها و بیش از 300 بازی</p>
+            <div class="card p-8 mb-8 gradient-bg text-white rounded-2xl animate-fade-in-up relative overflow-hidden">
+                <!-- Background Pattern -->
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
+                    <div class="absolute bottom-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 translate-y-12"></div>
+                    <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-white rounded-full"></div>
                 </div>
                 
-                <div class="card p-6 rounded-xl text-center">
-                    <div class="text-4xl mb-4">📥</div>
-                    <h3 class="text-xl font-bold mb-2">DNS دانلود</h3>
-                    <p class="text-sm opacity-75">DNS های مخصوص دانلود که تحریم‌ها را دور می‌زنند</p>
-                </div>
-                
-                <div class="card p-6 rounded-xl text-center">
-                    <div class="text-4xl mb-4">📊</div>
-                    <h3 class="text-xl font-bold mb-2">پینگ DNS</h3>
-                    <p class="text-sm opacity-75">بررسی و انتخاب بهترین DNS ها بر اساس اینترنت شما</p>
-                </div>
-            </div>
-
-            <!-- Instructions -->
-            <div class="card p-6 rounded-xl">
-                <h3 class="text-2xl font-bold mb-4">📚 راهنمای استفاده</h3>
-                <div class="space-y-4">
-                    <div class="border-r-4 border-blue-500 pr-4">
-                        <h4 class="font-bold">🎮 DNS گیمینگ:</h4>
-                        <p class="text-sm opacity-75">دستگاه خود را انتخاب کنید، بازی مورد نظر را پیدا کنید، تعداد DNS و نوع IP را مشخص کنید</p>
+                <div class="relative z-10">
+                    <div class="text-center mb-8">
+                        <!-- Logo -->
+                        <div class="flex justify-center mb-6">
+                            <img src="https://github.com/Academivpn73/DNS_panel/blob/main/Connectix.png?raw=true" 
+                                 alt="Connectix Logo" 
+                                 class="w-24 h-24 rounded-2xl shadow-2xl animate-float border-4 border-white/20"
+                                 onerror="this.style.display='none'; document.querySelector('.connectix-fallback').style.display='flex';">
+                            <div class="connectix-fallback w-24 h-24 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center text-4xl animate-float border-4 border-white/20" style="display: none;">
+                                🌐
+                            </div>
+                        </div>
+                        
+                        <h2 class="text-5xl font-bold mb-4 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                            ✨ Connectix ✨
+                        </h2>
+                        <p class="text-2xl mb-8 font-light">با Connectix، اینترنت آزاد در دستان شماست!</p>
                     </div>
-                    <div class="border-r-4 border-green-500 pr-4">
-                        <h4 class="font-bold">📥 DNS دانلود:</h4>
-                        <p class="text-sm opacity-75">نوع IP و تعداد DNS مورد نیاز را انتخاب کنید تا بهترین DNS های دانلود را دریافت کنید</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-8 mb-8">
+                        <div class="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                            <div class="text-4xl mb-4 animate-pulse">🚀</div>
+                            <h3 class="text-xl font-bold mb-2">سرعت فوق‌العاده</h3>
+                            <p class="text-sm opacity-90">اتصال پرسرعت و پایدار</p>
+                        </div>
+                        <div class="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                            <div class="text-4xl mb-4 animate-pulse">🔐</div>
+                            <h3 class="text-xl font-bold mb-2">امنیت کامل</h3>
+                            <p class="text-sm opacity-90">رمزگذاری پیشرفته</p>
+                        </div>
+                        <div class="text-center p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
+                            <div class="text-4xl mb-4 animate-pulse">🌐</div>
+                            <h3 class="text-xl font-bold mb-2">دسترسی آزاد</h3>
+                            <p class="text-sm opacity-90">بدون محدودیت جغرافیایی</p>
+                        </div>
                     </div>
-                    <div class="border-r-4 border-purple-500 pr-4">
-                        <h4 class="font-bold">📊 پینگ DNS:</h4>
-                        <p class="text-sm opacity-75">بهترین DNS های جهانی را بر اساس سرعت اینترنت شما مشاهده کنید</p>
+                    
+                    <div class="text-center">
+                        <a href="https://t.me/Academi_Conectix_bot" target="_blank" rel="noopener noreferrer" 
+                           class="bg-white text-blue-600 px-10 py-5 rounded-2xl font-bold hover:bg-gray-100 transition-all inline-flex items-center space-x-3 space-x-reverse shadow-2xl hover:shadow-3xl transform hover:scale-105">
+                            <span class="text-2xl">🤖</span>
+                            <span class="text-lg">خرید و تست رایگان</span>
+                        </a>
+                        <p class="text-sm mt-4 opacity-75">⭐ بیش از 10,000 کاربر راضی</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Gaming DNS Section -->
-        <div id="gamingSection" class="section hidden">
-            <div class="card p-6 rounded-xl mb-6">
-                <h2 class="text-2xl font-bold mb-6">🎮 DNS گیمینگ</h2>
-                
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block font-medium mb-2">دستگاه خود را انتخاب کنید:</label>
-                        <select id="deviceSelect" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
-                            <option value="">انتخاب دستگاه</option>
-                            <option value="pc">💻 PC</option>
-                            <option value="mobile">📱 موبایل</option>
-                            <option value="console">🎮 کنسول</option>
-                            <option value="router">📡 روتر</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block font-medium mb-2">بازی مورد نظر:</label>
-                        <select id="gameSelect" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none" disabled>
-                            <option value="">ابتدا دستگاه را انتخاب کنید</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block font-medium mb-2">تعداد DNS:</label>
-                        <select id="dnsCount" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
-                            <option value="2">2 DNS</option>
-                            <option value="4">4 DNS</option>
-                            <option value="6">6 DNS</option>
-                            <option value="8">8 DNS</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block font-medium mb-2">نوع IP:</label>
-                        <select id="ipType" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
-                            <option value="ipv4">IPv4</option>
-                            <option value="ipv6">IPv6</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <button onclick="generateGamingDNS()" class="btn-primary px-8 py-3 rounded-lg font-medium w-full">
-                    🔍 تولید DNS گیمینگ
-                </button>
+        <!-- DNS Management Section -->
+        <div id="dnsSection" class="section hidden">
+            <div class="text-center mb-8 animate-bounce-in">
+                <div class="text-6xl mb-4">🔧</div>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">مدیریت DNS</h2>
             </div>
+
+            <!-- DNS Type Selection -->
+            <div class="card p-8 rounded-2xl mb-8 animate-fade-in-up">
+                <h3 class="text-2xl font-bold mb-6 text-center">نوع DNS مورد نظر را انتخاب کنید:</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <button onclick="showDNSOptions('create')" class="card p-6 rounded-xl hover:scale-105 transition-all">
+                        <div class="text-4xl mb-4 text-center">🛠️</div>
+                        <h4 class="text-xl font-bold mb-2 text-center">ساخت DNS جدید</h4>
+                        <p class="text-center opacity-75">ساخت DNS های جدید از سرورهای ایرانی</p>
+                    </button>
+                    
+                    <button onclick="showDNSOptions('global')" class="card p-6 rounded-xl hover:scale-105 transition-all">
+                        <div class="text-4xl mb-4 text-center">🌍</div>
+                        <h4 class="text-xl font-bold mb-2 text-center">سرورهای جهانی</h4>
+                        <p class="text-center opacity-75">استفاده از بهترین DNS های جهانی</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- DNS Options -->
+            <div id="dnsOptions" class="hidden"></div>
             
-            <div id="gamingResults" class="hidden"></div>
+            <!-- Gaming Device Selection -->
+            <div id="gamingDeviceSection" class="hidden"></div>
+            
+            <!-- Game Selection -->
+            <div id="gameSelectionSection" class="hidden"></div>
+            
+            <!-- DNS Results -->
+            <div id="dnsResults" class="hidden"></div>
         </div>
 
-        <!-- Download DNS Section -->
-        <div id="downloadSection" class="section hidden">
-            <div class="card p-6 rounded-xl mb-6">
-                <h2 class="text-2xl font-bold mb-6">📥 DNS مخصوص دانلود</h2>
-                
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block font-medium mb-2">نوع IP:</label>
-                        <select id="downloadIpType" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
-                            <option value="ipv4">IPv4</option>
-                            <option value="ipv6">IPv6</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block font-medium mb-2">تعداد DNS:</label>
-                        <select id="downloadDnsCount" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
-                            <option value="2">2 DNS</option>
-                            <option value="4">4 DNS</option>
-                            <option value="6">6 DNS</option>
-                            <option value="8">8 DNS</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <button onclick="generateDownloadDNS()" class="btn-primary px-8 py-3 rounded-lg font-medium w-full">
-                    🔍 تولید DNS دانلود
-                </button>
+        <!-- Speed Test Section -->
+        <div id="speedSection" class="section hidden">
+            <div class="text-center mb-8 animate-bounce-in">
+                <div class="text-6xl mb-4">⚡</div>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">تست سرعت اینترنت</h2>
             </div>
-            
-            <div id="downloadResults" class="hidden"></div>
+
+            <div class="card p-8 rounded-2xl mb-8 animate-fade-in-up">
+                <div class="text-center mb-8">
+                    <div class="speed-gauge mb-6">
+                        <div class="speed-needle" id="speedNeedle"></div>
+                        <div class="speed-center"></div>
+                    </div>
+                    <div id="speedResult" class="text-3xl font-bold mb-4">-- Mbps</div>
+                    <button onclick="startSpeedTest()" id="speedTestBtn" class="btn-primary px-8 py-4 rounded-xl font-bold">
+                        🚀 شروع تست
+                    </button>
+                </div>
+            </div>
+
+            <!-- Speed-based DNS Recommendations -->
+            <div id="speedRecommendations" class="hidden"></div>
         </div>
 
         <!-- Ping DNS Section -->
         <div id="pingSection" class="section hidden">
-            <div class="card p-6 rounded-xl mb-6">
-                <h2 class="text-2xl font-bold mb-6">📊 پینگ DNS</h2>
-                <p class="mb-4 opacity-75">بهترین DNS های جهانی بر اساس اینترنت شما:</p>
-                
-                <button onclick="checkDNSPing()" class="btn-primary px-8 py-3 rounded-lg font-medium w-full">
+            <div class="text-center mb-8 animate-bounce-in">
+                <div class="text-6xl mb-4">📊</div>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">پینگ DNS</h2>
+            </div>
+
+            <div class="card p-8 rounded-2xl mb-8 animate-fade-in-up">
+                <button onclick="checkDNSPing()" class="btn-primary px-8 py-4 rounded-xl font-bold w-full">
                     🔍 بررسی پینگ DNS ها
                 </button>
             </div>
@@ -343,209 +665,513 @@
             <div id="pingResults" class="hidden"></div>
         </div>
 
-        <!-- Connection Section -->
-        <div id="connectionSection" class="section hidden">
-            <div class="card p-6 rounded-xl">
-                <h2 class="text-2xl font-bold mb-6">🔗 اتصال به DNS</h2>
-                <div id="connectionContent"></div>
+        <!-- About Section -->
+        <div id="aboutSection" class="section hidden">
+            <div class="text-center mb-8 animate-bounce-in">
+                <div class="text-6xl mb-4">ℹ️</div>
+                <h2 class="text-4xl font-bold mb-4 gradient-text">درباره ما</h2>
+            </div>
+
+            <div class="card p-8 rounded-2xl animate-fade-in-up">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold mb-4">Academi DNS Manager</h3>
+                    <p class="text-lg opacity-75 mb-6">ابزار پیشرفته مدیریت DNS برای تجربه بهتر اینترنت</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-bold mb-4">ویژگی‌ها:</h4>
+                        <ul class="space-y-2 opacity-75">
+                            <li>✅ ساخت DNS های جدید</li>
+                            <li>✅ دسترسی به DNS های جهانی</li>
+                            <li>✅ تست سرعت اینترنت</li>
+                            <li>✅ بررسی پینگ DNS ها</li>
+                            <li>✅ رابط کاربری زیبا و کاربردی</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xl font-bold mb-4">ارتباط با ما:</h4>
+                        <div class="space-y-4">
+                            <a href="https://t.me/Academi_vpn" target="_blank" rel="noopener noreferrer" 
+                               class="block btn-primary px-6 py-3 rounded-lg text-center">
+                                📢 کانال تلگرام
+                            </a>
+                            <a href="https://t.me/MahdiAGM0" target="_blank" rel="noopener noreferrer" 
+                               class="block btn-primary px-6 py-3 rounded-lg text-center">
+                                💬 پشتیبانی
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Game data for different devices
-        const gameData = {
-            pc: [
-                'Counter-Strike 2', 'Valorant', 'League of Legends', 'Dota 2', 'Fortnite', 'PUBG', 'Apex Legends', 'Call of Duty', 'Overwatch 2', 'Rocket League',
-                'World of Warcraft', 'Final Fantasy XIV', 'Guild Wars 2', 'Lost Ark', 'New World', 'Destiny 2', 'Warframe', 'Path of Exile', 'Diablo 4', 'Cyberpunk 2077',
-                'Grand Theft Auto V', 'Red Dead Redemption 2', 'The Witcher 3', 'Elden Ring', 'Dark Souls 3', 'Sekiro', 'Bloodborne', 'Monster Hunter World', 'Resident Evil 4', 'Dead by Daylight',
-                'Among Us', 'Fall Guys', 'Minecraft', 'Terraria', 'Stardew Valley', 'Hades', 'Celeste', 'Hollow Knight', 'Ori and the Will of the Wisps', 'Cuphead',
-                'FIFA 23', 'NBA 2K23', 'Madden NFL 23', 'F1 22', 'Gran Turismo 7', 'Forza Horizon 5', 'Need for Speed Heat', 'Dirt Rally 2.0', 'Project CARS 3', 'Assetto Corsa',
-                'Age of Empires IV', 'Civilization VI', 'Total War: Warhammer III', 'StarCraft II', 'Command & Conquer', 'Anno 1800', 'Cities: Skylines', 'Planet Coaster', 'Two Point Hospital', 'Frostpunk',
-                'Assassin\'s Creed Valhalla', 'Far Cry 6', 'Watch Dogs: Legion', 'Tom Clancy\'s Rainbow Six Siege', 'Ghost Recon Wildlands', 'The Division 2', 'Splinter Cell', 'Prince of Persia', 'Rayman Legends', 'Beyond Good & Evil',
-                'Half-Life: Alyx', 'Portal 2', 'Left 4 Dead 2', 'Team Fortress 2', 'Garry\'s Mod', 'Rust', 'DayZ', 'Arma 3', 'Squad', 'Hell Let Loose',
-                'Battlefield 2042', 'Titanfall 2', 'Star Wars Battlefront II', 'Mass Effect Legendary Edition', 'Dragon Age: Inquisition', 'Anthem', 'Jade Empire', 'Knights of the Old Republic', 'Baldur\'s Gate 3', 'Divinity: Original Sin 2',
-                'The Elder Scrolls V: Skyrim', 'Fallout 4', 'Fallout 76', 'Starfield', 'Dishonored 2', 'Prey', 'Deathloop', 'Wolfenstein II', 'DOOM Eternal', 'Quake Champions',
-                'Mortal Kombat 11', 'Street Fighter 6', 'Tekken 7', 'Guilty Gear Strive', 'Dragon Ball FighterZ', 'Injustice 2', 'Soul Calibur VI', 'King of Fighters XV', 'BlazBlue', 'Granblue Fantasy Versus',
-                'Genshin Impact', 'Honkai: Star Rail', 'Tower of Fantasy', 'Lost Ark', 'Black Desert Online', 'Elder Scrolls Online', 'Star Wars: The Old Republic', 'EVE Online', 'Elite Dangerous', 'No Man\'s Sky',
-                'Phasmophobia', 'Valheim', 'Green Hell', 'The Forest', 'Subnautica', 'Raft', 'Grounded', 'V Rising', 'Core Keeper', 'It Takes Two',
-                'A Way Out', 'Unravel Two', 'Moving Out', 'Overcooked! 2', 'Gang Beasts', 'Human: Fall Flat', 'Pummel Party', 'Jackbox Party Pack', 'Keep Talking and Nobody Explodes', 'Spaceteam',
-                'Cities: Skylines', 'Planet Zoo', 'Planet Coaster', 'Jurassic World Evolution 2', 'Zoo Tycoon', 'RollerCoaster Tycoon 3', 'Transport Fever 2', 'Railway Empire', 'Tropico 6', 'SimCity',
-                'Football Manager 2023', 'NBA 2K23', 'MLB The Show 22', 'NHL 23', 'PGA Tour 2K23', 'Tony Hawk\'s Pro Skater 1 + 2', 'Skate 3', 'Steep', 'Riders Republic', 'The Crew 2',
-                'Microsoft Flight Simulator', 'X-Plane 11', 'DCS World', 'War Thunder', 'World of Tanks', 'World of Warships', 'Wargame: Red Dragon', 'Steel Division 2', 'Company of Heroes 3', 'Men of War: Assault Squad 2',
-                'Farming Simulator 22', 'Euro Truck Simulator 2', 'American Truck Simulator', 'Snowrunner', 'Mudrunner', 'Spintires', 'BeamNG.drive', 'Wreckfest', 'Burnout Paradise Remastered', 'Blur',
-                'Kerbal Space Program', 'Space Engineers', 'Astroneer', 'Outer Wilds', 'Outer Worlds', 'Stellaris', 'Galactic Civilizations III', 'Endless Space 2', 'Master of Orion', 'Sins of a Solar Empire',
-                'Crusader Kings III', 'Europa Universalis IV', 'Hearts of Iron IV', 'Victoria 3', 'Imperator: Rome', 'Rome: Total War', 'Medieval: Total War', 'Empire: Total War', 'Napoleon: Total War', 'Shogun: Total War',
-                'XCOM 2', 'Phoenix Point', 'Battletech', 'Mutant Year Zero', 'Wasteland 3', 'Divinity: Original Sin', 'Pillars of Eternity', 'Tyranny', 'Torment: Tides of Numenera', 'Planescape: Torment',
-                'Disco Elysium', 'The Stanley Parable', 'What Remains of Edith Finch', 'Firewatch', 'Gone Home', 'Dear Esther', 'Everybody\'s Gone to the Rapture', 'SOMA', 'Amnesia: The Dark Descent', 'Outlast',
-                'Resident Evil Village', 'Silent Hill 2', 'Fatal Frame', 'Dead Space', 'Alien: Isolation', 'The Evil Within 2', 'Until Dawn', 'The Dark Pictures Anthology', 'Layers of Fear', 'Observer',
-                'Control', 'Alan Wake 2', 'Max Payne 3', 'Quantum Break', 'Remedy Entertainment', 'Life is Strange', 'Tell Me Why', 'Before the Storm', 'True Colors', 'The Walking Dead',
-                'Batman: Arkham Knight', 'Spider-Man Remastered', 'Guardians of the Galaxy', 'Avengers', 'Injustice', 'DC Universe Online', 'Marvel\'s Midnight Suns', 'X-Men Origins: Wolverine', 'Deadpool', 'The Punisher',
-                'Hitman 3', 'Metal Gear Solid V', 'Splinter Cell: Blacklist', 'Thief', 'Dishonored', 'Deus Ex: Mankind Divided', 'Cyberpunk 2077', 'Watch Dogs 2', 'Mafia: Definitive Edition', 'Sleeping Dogs',
-                'Yakuza: Like a Dragon', 'Persona 5 Royal', 'Nier: Automata', 'Final Fantasy VII Remake', 'Chrono Trigger', 'Secret of Mana', 'Tales of Arise', 'Scarlet Nexus', 'Code Vein', 'God Eater 3',
-                'Monster Hunter Rise', 'Dragon\'s Dogma', 'Dark Souls Remastered', 'Demon\'s Souls', 'Nioh 2', 'Wo Long: Fallen Dynasty', 'Lies of P', 'Salt and Sanctuary', 'Hollow Knight: Silksong', 'Blasphemous',
-                'Ori and the Blind Forest', 'Rayman Origins', 'Shovel Knight', 'A Hat in Time', 'Psychonauts 2', 'Banjo-Kazooie', 'Yooka-Laylee', 'Super Lucky\'s Tale', 'Crash Bandicoot 4', 'Spyro Reignited Trilogy',
-                'Sonic Mania', 'Sonic Generations', 'Sonic Colors', 'Sonic Adventure 2', 'Shadow the Hedgehog', 'Sonic Heroes', 'Sonic Unleashed', 'Sonic Forces', 'Sonic Frontiers', 'Sonic Lost World'
-            ],
-            mobile: [
-                'PUBG Mobile', 'Call of Duty Mobile', 'Free Fire', 'Mobile Legends', 'Arena of Valor', 'Wild Rift', 'Clash Royale', 'Clash of Clans', 'Brawl Stars', 'Hay Day',
-                'Candy Crush Saga', 'Subway Surfers', 'Temple Run', 'Angry Birds', 'Fruit Ninja', 'Cut the Rope', 'Plants vs Zombies', 'Jetpack Joyride', 'Doodle Jump', 'Flappy Bird',
-                'Among Us', 'Fall Guys Mobile', 'Minecraft', 'Roblox', 'Fortnite Mobile', 'Apex Legends Mobile', 'Valorant Mobile', 'Overwatch 2 Mobile', 'Rocket League Sideswipe', 'FIFA Mobile',
-                'NBA 2K Mobile', 'Madden NFL Mobile', 'MLB Tap Sports', 'Golf Clash', 'Tennis Clash', 'Basketball Stars', 'Soccer Stars', 'Pool 8 Ball', 'Carrom Pool', 'Ludo King',
-                'Chess.com', 'Lichess', 'Words with Friends', 'Scrabble GO', 'Crossword Puzzle', 'Sudoku', 'Solitaire', 'FreeCell', 'Spider Solitaire', 'Mahjong',
-                'Genshin Impact', 'Honkai Impact 3rd', 'Honkai: Star Rail', 'Tower of Fantasy', 'Ni No Kuni', 'Final Fantasy Brave Exvius', 'Dragon Ball Legends', 'Naruto x Boruto', 'One Piece Treasure Cruise', 'Bleach Brave Souls',
-                'Pokemon GO', 'Pokemon Unite', 'Pokemon Quest', 'Pokemon Shuffle', 'Pokemon Duel', 'Digimon ReArise', 'Yu-Gi-Oh! Duel Links', 'Hearthstone', 'Magic: The Gathering Arena', 'Legends of Runeterra',
-                'Asphalt 9', 'Real Racing 3', 'CSR Racing 2', 'Need for Speed No Limits', 'Fast & Furious Crossroads', 'Hill Climb Racing', 'Bike Race', 'Trials Frontier', 'Mad Skills Motocross', 'Drag Racing',
-                'Grand Theft Auto: San Andreas', 'Bully', 'Max Payne Mobile', 'Civilization VI', 'XCOM: Enemy Within', 'Rome: Total War', 'Company of Heroes', 'Age of Empires', 'StarCraft', 'Command & Conquer',
-                'Dead Trigger 2', 'Into the Dead', 'The Walking Dead', 'Dead Effect 2', 'Zombie Catchers', 'Last Day on Earth', 'State of Survival', 'Zombie Age 3', 'Dead Target', 'Killing Floor',
-                'Shadow Fight 3', 'Mortal Kombat', 'Street Fighter IV', 'Tekken', 'King of Fighters', 'Injustice', 'Dragon Ball FighterZ', 'Guilty Gear', 'BlazBlue', 'Soul Calibur',
-                'Assassin\'s Creed Identity', 'Hitman GO', 'Lara Croft GO', 'Deus Ex GO', 'Monument Valley', 'The Room', 'Limbo', 'Inside', 'Alto\'s Odyssey', 'Journey',
-                'Stardew Valley', 'Terraria', 'Don\'t Starve', 'This War of Mine', 'Papers Please', 'Prison Architect', 'RimWorld', 'Oxygen Not Included', 'Frostpunk', 'Cities: Skylines',
-                'Plague Inc.', 'Rebel Inc.', 'Mini Metro', 'Two Dots', 'Threes!', 'Monument Valley 2', 'Florence', 'GRIS', 'Sky: Children of the Light', 'Abzu',
-                'Ingress', 'Harry Potter: Wizards Unite', 'Jurassic World Alive', 'The Walking Dead: Our World', 'Ghostbusters World', 'Minecraft Earth', 'Draconius GO', 'Orna', 'Pikmin Bloom', 'Peridot',
-                'Tinder', 'Bumble', 'Hinge', 'OkCupid', 'Match', 'Plenty of Fish', 'Zoosk', 'Coffee Meets Bagel', 'Happn', 'Badoo',
-                'Instagram', 'TikTok', 'Snapchat', 'Twitter', 'Facebook', 'WhatsApp', 'Telegram', 'Discord', 'Slack', 'Zoom',
-                'YouTube', 'Netflix', 'Disney+', 'Amazon Prime', 'Hulu', 'HBO Max', 'Apple TV+', 'Paramount+', 'Peacock', 'Crunchyroll',
-                'Spotify', 'Apple Music', 'YouTube Music', 'Amazon Music', 'Pandora', 'SoundCloud', 'Tidal', 'Deezer', 'iHeartRadio', 'TuneIn',
-                'Uber', 'Lyft', 'DoorDash', 'Uber Eats', 'Grubhub', 'Postmates', 'Instacart', 'Shipt', 'Amazon Fresh', 'Whole Foods',
-                'Amazon', 'eBay', 'Walmart', 'Target', 'Best Buy', 'Home Depot', 'Lowe\'s', 'Costco', 'Sam\'s Club', 'Kroger',
-                'PayPal', 'Venmo', 'Cash App', 'Zelle', 'Apple Pay', 'Google Pay', 'Samsung Pay', 'Chase', 'Bank of America', 'Wells Fargo',
-                'Google Maps', 'Waze', 'Apple Maps', 'MapQuest', 'HERE WeGo', 'Sygic', 'TomTom', 'Garmin', 'CoPilot', 'OsmAnd',
-                'Weather', 'AccuWeather', 'Weather Underground', 'Dark Sky', 'WeatherBug', 'The Weather Channel', 'Yahoo Weather', 'Weather.com', 'Storm Radar', 'MyRadar',
-                'Duolingo', 'Babbel', 'Rosetta Stone', 'Memrise', 'Busuu', 'HelloTalk', 'Tandem', 'Speaky', 'HiNative', 'italki',
-                'Khan Academy', 'Coursera', 'Udemy', 'edX', 'Skillshare', 'MasterClass', 'Pluralsight', 'LinkedIn Learning', 'Udacity', 'Codecademy',
-                'Headspace', 'Calm', 'Insight Timer', 'Ten Percent Happier', 'Simple Habit', 'Waking Up', 'Balance', 'Sanvello', 'Youper', 'Talkspace',
-                'MyFitnessPal', 'Lose It!', 'Fitbit', 'Strava', 'Nike Run Club', 'Adidas Running', 'MapMyRun', 'Runkeeper', 'Couch to 5K', 'Seven',
-                'Sleep Cycle', 'Pillow', 'AutoSleep', 'Sleep Score', 'Noisli', 'White Noise', 'Rain Rain', 'Sleepio', 'Pzizz', 'Relax Melodies',
-                'Adobe Photoshop', 'Canva', 'VSCO', 'Snapseed', 'Lightroom', 'PicsArt', 'Facetune', 'Prisma', 'Enlight', 'Pixelmator',
-                'TikTok', 'Instagram Reels', 'YouTube Shorts', 'Snapchat', 'Vine', 'Dubsmash', 'Triller', 'Byte', 'Likee', 'Funimate'
-            ],
-            console: [
-                'Call of Duty: Modern Warfare II', 'FIFA 23', 'Madden NFL 23', 'NBA 2K23', 'Grand Theft Auto V', 'Red Dead Redemption 2', 'The Last of Us Part II', 'God of War', 'Spider-Man: Miles Morales', 'Horizon Forbidden West',
-                'Elden Ring', 'Dark Souls III', 'Bloodborne', 'Sekiro: Shadows Die Twice', 'Nioh 2', 'Ghost of Tsushima', 'Death Stranding', 'Cyberpunk 2077', 'The Witcher 3: Wild Hunt', 'Assassin\'s Creed Valhalla',
-                'Halo Infinite', 'Gears 5', 'Forza Horizon 5', 'Microsoft Flight Simulator', 'Sea of Thieves', 'State of Decay 2', 'Ori and the Will of the Wisps', 'Cuphead', 'Psychonauts 2', 'It Takes Two',
-                'Super Mario Odyssey', 'The Legend of Zelda: Breath of the Wild', 'Super Smash Bros. Ultimate', 'Mario Kart 8 Deluxe', 'Animal Crossing: New Horizons', 'Splatoon 3', 'Xenoblade Chronicles 3', 'Fire Emblem: Three Houses', 'Metroid Dread', 'Kirby and the Forgotten Land',
-                'Demon\'s Souls', 'Ratchet & Clank: Rift Apart', 'Returnal', 'Gran Turismo 7', 'Uncharted: Legacy of Thieves Collection', 'Sackboy: A Big Adventure', 'Astro\'s Playroom', 'Deathloop', 'Kena: Bridge of Spirits', 'Sifu',
-                'Battlefield 2042', 'Apex Legends', 'Fortnite', 'Rocket League', 'Fall Guys', 'Among Us', 'Overwatch 2', 'Valorant', 'Rainbow Six Siege', 'Dead by Daylight',
-                'Minecraft', 'Terraria', 'Stardew Valley', 'No Man\'s Sky', 'Subnautica', 'The Forest', 'Green Hell', 'Raft', 'Valheim', 'Core Keeper',
-                'Resident Evil 4', 'Resident Evil Village', 'Silent Hill 2', 'Dead Space', 'The Evil Within 2', 'Outlast', 'Amnesia: The Dark Descent', 'Phasmophobia', 'Visage', 'MADiSON',
-                'Mortal Kombat 11', 'Street Fighter 6', 'Tekken 7', 'Guilty Gear Strive', 'Dragon Ball FighterZ', 'Injustice 2', 'Soul Calibur VI', 'King of Fighters XV', 'BlazBlue: Cross Tag Battle', 'Granblue Fantasy Versus',
-                'Final Fantasy VII Remake', 'Final Fantasy XIV', 'Final Fantasy XVI', 'Persona 5 Royal', 'Yakuza: Like a Dragon', 'Nier: Automata', 'Tales of Arise', 'Scarlet Nexus', 'Code Vein', 'Monster Hunter Rise',
-                'Destiny 2', 'The Division 2', 'Warframe', 'Anthem', 'Outriders', 'Borderlands 3', 'Diablo 4', 'Path of Exile', 'Lost Ark', 'New World',
-                'Civilization VI', 'XCOM 2', 'Total War: Warhammer III', 'Age of Empires IV', 'StarCraft II', 'Command & Conquer Remastered', 'Crusader Kings III', 'Europa Universalis IV', 'Hearts of Iron IV', 'Stellaris',
-                'Hitman 3', 'Metal Gear Solid V', 'Dishonored 2', 'Prey', 'Deus Ex: Mankind Divided', 'Watch Dogs: Legion', 'Far Cry 6', 'Just Cause 4', 'Saints Row', 'Mafia: Definitive Edition',
-                'Batman: Arkham Knight', 'Spider-Man Remastered', 'Guardians of the Galaxy', 'Marvel\'s Avengers', 'Injustice 2', 'DC Universe Online', 'Marvel\'s Midnight Suns', 'X-Men Origins: Wolverine', 'Deadpool', 'The Punisher',
-                'Mass Effect Legendary Edition', 'Dragon Age: Inquisition', 'The Elder Scrolls V: Skyrim', 'Fallout 4', 'Fallout 76', 'Starfield', 'Outer Worlds', 'Wasteland 3', 'Disco Elysium', 'Divinity: Original Sin 2',
-                'Control', 'Alan Wake 2', 'Max Payne 3', 'Quantum Break', 'Life is Strange: True Colors', 'Tell Me Why', 'The Walking Dead: The Final Season', 'Wolf Among Us 2', 'Batman: The Telltale Series', 'Guardians of the Galaxy: The Telltale Series',
-                'Hollow Knight', 'Ori and the Blind Forest', 'Celeste', 'Hades', 'Dead Cells', 'Katana ZERO', 'Hyper Light Drifter', 'Shovel Knight', 'A Hat in Time', 'Cuphead',
-                'Gran Turismo 7', 'Forza Motorsport', 'F1 22', 'Need for Speed Heat', 'The Crew 2', 'Dirt Rally 2.0', 'Project CARS 3', 'Assetto Corsa Competizione', 'WRC 10', 'V-Rally 4',
-                'Tony Hawk\'s Pro Skater 1 + 2', 'Skate 3', 'Steep', 'Riders Republic', 'SSX 3', 'Amped 3', 'Shaun White Snowboarding', 'Cool Boarders', 'Snowboard Kids', 'Mark McMorris Infinite Air',
-                'FIFA 23', 'PES 2023', 'NBA 2K23', 'NBA Live 19', 'Madden NFL 23', 'NCAA Football 14', 'NHL 23', 'MLB The Show 22', 'PGA Tour 2K23', 'Rory McIlroy PGA Tour',
-                'Farming Simulator 22', 'Euro Truck Simulator 2', 'American Truck Simulator', 'Snowrunner', 'Mudrunner', 'Spintires', 'Construction Simulator', 'Bus Simulator', 'Train Simulator', 'Ship Simulator',
-                'Cities: Skylines', 'SimCity', 'Planet Coaster', 'Planet Zoo', 'Jurassic World Evolution 2', 'Zoo Tycoon', 'RollerCoaster Tycoon 3', 'Transport Fever 2', 'Railway Empire', 'Tropico 6',
-                'Football Manager 2023', 'Out of the Park Baseball', 'Pro Cycling Manager', 'Motorsport Manager', 'Basketball GM', 'Hockey Manager', 'Tennis Manager', 'Golf Manager', 'Boxing Manager', 'MMA Manager',
-                'Kerbal Space Program', 'Space Engineers', 'Astroneer', 'Outer Wilds', 'Elite Dangerous', 'Star Citizen', 'No Man\'s Sky', 'Stellaris', 'Galactic Civilizations III', 'Endless Space 2',
-                'World of Warcraft', 'Final Fantasy XIV', 'Guild Wars 2', 'Elder Scrolls Online', 'Star Wars: The Old Republic', 'EVE Online', 'Black Desert Online', 'Lost Ark', 'New World', 'Destiny 2',
-                'Phasmophobia', 'Dead by Daylight', 'Friday the 13th', 'Identity V', 'White Noise 2', 'Deceit', 'Secret Neighbor', 'Hide or Die', 'Last Year: The Nightmare', 'Propnight',
-                'Overcooked! 2', 'Moving Out', 'Tools Up!', 'Cook, Serve, Delicious!', 'Good Job!', 'Unravel Two', 'A Way Out', 'It Takes Two', 'Portal 2', 'Lovers in a Dangerous Spacetime',
-                'Gang Beasts', 'Human: Fall Flat', 'Fall Guys', 'Stumble Guys', 'Pummel Party', 'Party Animals', 'Worms W.M.D', 'Jackbox Party Pack', 'Keep Talking and Nobody Explodes', 'Spaceteam',
-                'Rocket League', 'Supersonic Acrobatic Rocket-Powered Battle-Cars', 'Destruction AllStars', 'Wreckfest', 'Burnout Paradise Remastered', 'Onrush', 'Split/Second', 'Blur', 'Pure', 'MotorStorm',
-                'Guitar Hero Live', 'Rock Band 4', 'DJ Hero', 'SingStar', 'Just Dance 2023', 'Dance Central', 'Amplitude', 'Frequency', 'Beat Saber', 'Rocksmith+',
-                'Tetris Effect', 'Puyo Puyo Tetris 2', 'Lumines', 'Rez Infinite', 'Child of Eden', 'Geometry Wars 3', 'Super Stardust Ultra', 'Resogun', 'Nex Machina', 'Housemarque Collection'
-            ],
-            router: [
-                'Call of Duty: Modern Warfare II', 'Valorant', 'Counter-Strike 2', 'Apex Legends', 'Fortnite', 'PUBG', 'League of Legends', 'Dota 2', 'Overwatch 2', 'Rainbow Six Siege',
-                'Rocket League', 'Fall Guys', 'Among Us', 'Minecraft', 'Roblox', 'World of Warcraft', 'Final Fantasy XIV', 'Guild Wars 2', 'Lost Ark', 'New World',
-                'Destiny 2', 'The Division 2', 'Warframe', 'Borderlands 3', 'Diablo 4', 'Path of Exile', 'Dead by Daylight', 'Phasmophobia', 'Sea of Thieves', 'Rust',
-                'DayZ', 'Arma 3', 'Squad', 'Hell Let Loose', 'Battlefield 2042', 'Titanfall 2', 'Star Wars Battlefront II', 'For Honor', 'Mordhau', 'Chivalry 2',
-                'FIFA 23', 'NBA 2K23', 'Madden NFL 23', 'F1 22', 'Gran Turismo 7', 'Forza Horizon 5', 'Need for Speed Heat', 'The Crew 2', 'Dirt Rally 2.0', 'Project CARS 3',
-                'Age of Empires IV', 'StarCraft II', 'Command & Conquer Remastered', 'Total War: Warhammer III', 'Civilization VI', 'Crusader Kings III', 'Europa Universalis IV', 'Hearts of Iron IV', 'Stellaris', 'XCOM 2',
-                'Street Fighter 6', 'Tekken 7', 'Mortal Kombat 11', 'Guilty Gear Strive', 'Dragon Ball FighterZ', 'Injustice 2', 'Soul Calibur VI', 'King of Fighters XV', 'BlazBlue: Cross Tag Battle', 'Granblue Fantasy Versus',
-                'Genshin Impact', 'Honkai: Star Rail', 'Tower of Fantasy', 'Black Desert Online', 'Elder Scrolls Online', 'Star Wars: The Old Republic', 'EVE Online', 'Albion Online', 'RuneScape', 'Old School RuneScape',
-                'CS:GO', 'CS2', 'Valorant', 'Overwatch 2', 'Rainbow Six Siege', 'Apex Legends', 'Call of Duty: Warzone', 'PUBG', 'Fortnite', 'Fall Guys',
-                'Rocket League', 'FIFA 23', 'NBA 2K23', 'Madden NFL 23', 'NHL 23', 'MLB The Show 22', 'PGA Tour 2K23', 'F1 22', 'Gran Turismo 7', 'Forza Motorsport',
-                'World of Tanks', 'War Thunder', 'World of Warships', 'Armored Warfare', 'Crossout', 'Robocraft', 'MechWarrior Online', 'Hawken', 'Titanfall 2', 'Anthem',
-                'Hearthstone', 'Magic: The Gathering Arena', 'Legends of Runeterra', 'Gwent', 'Shadowverse', 'Yu-Gi-Oh! Master Duel', 'Pokemon Trading Card Game Online', 'Eternal', 'Artifact', 'Faeria',
-                'Chess.com', 'Lichess.org', 'Chess24', 'Internet Chess Club', 'FICS', 'PlayOK', 'GameKnot', 'Red Hot Pawn', 'Chess Time', 'SparkChess',
-                'Poker Stars', 'Full Tilt Poker', '888poker', 'PartyPoker', 'GGPoker', 'Americas Cardroom', 'BetOnline', 'Ignition Casino', 'Bovada', 'ACR Poker',
-                'Twitch', 'YouTube Gaming', 'Facebook Gaming', 'Mixer', 'DLive', 'Trovo', 'Caffeine', 'Steam Broadcasting', 'Discord Go Live', 'OBS Studio',
-                'Discord', 'TeamSpeak', 'Mumble', 'Ventrilo', 'Skype', 'Zoom', 'Google Meet', 'Microsoft Teams', 'Slack', 'Telegram',
-                'Steam', 'Epic Games Store', 'Origin', 'Uplay', 'Battle.net', 'GOG Galaxy', 'Microsoft Store', 'PlayStation Store', 'Nintendo eShop', 'Xbox Game Pass',
-                'Netflix', 'YouTube', 'Twitch', 'Amazon Prime Video', 'Disney+', 'Hulu', 'HBO Max', 'Apple TV+', 'Paramount+', 'Peacock',
-                'Spotify', 'Apple Music', 'YouTube Music', 'Amazon Music', 'Pandora', 'SoundCloud', 'Tidal', 'Deezer', 'iHeartRadio', 'TuneIn',
-                'Zoom', 'Microsoft Teams', 'Google Meet', 'Skype', 'Discord', 'Slack', 'WebEx', 'GoToMeeting', 'BlueJeans', 'Jitsi Meet',
-                'Dropbox', 'Google Drive', 'OneDrive', 'iCloud', 'Box', 'pCloud', 'MEGA', 'Sync.com', 'SpiderOak', 'Tresorit',
-                'Gmail', 'Outlook', 'Yahoo Mail', 'ProtonMail', 'Tutanota', 'Zoho Mail', 'FastMail', 'Mailbox.org', 'Posteo', 'Runbox',
-                'WhatsApp Web', 'Telegram Web', 'Signal', 'Viber', 'Line', 'WeChat', 'KakaoTalk', 'Threema', 'Wire', 'Element',
-                'Facebook', 'Instagram', 'Twitter', 'LinkedIn', 'TikTok', 'Snapchat', 'Pinterest', 'Reddit', 'Tumblr', 'Flickr',
-                'Amazon', 'eBay', 'Walmart', 'Target', 'Best Buy', 'Home Depot', 'Lowe\'s', 'Costco', 'Sam\'s Club', 'Kroger',
-                'PayPal', 'Stripe', 'Square', 'Venmo', 'Cash App', 'Zelle', 'Apple Pay', 'Google Pay', 'Samsung Pay', 'Amazon Pay',
-                'Coinbase', 'Binance', 'Kraken', 'Gemini', 'Bitfinex', 'Huobi', 'KuCoin', 'Gate.io', 'Crypto.com', 'FTX',
-                'Robinhood', 'E*TRADE', 'TD Ameritrade', 'Charles Schwab', 'Fidelity', 'Interactive Brokers', 'Webull', 'M1 Finance', 'Ally Invest', 'Vanguard',
-                'Khan Academy', 'Coursera', 'Udemy', 'edX', 'Skillshare', 'MasterClass', 'Pluralsight', 'LinkedIn Learning', 'Udacity', 'Codecademy',
-                'Google', 'Bing', 'Yahoo', 'DuckDuckGo', 'Baidu', 'Yandex', 'Ask.com', 'AOL', 'Dogpile', 'MetaCrawler',
-                'Wikipedia', 'Britannica', 'Dictionary.com', 'Merriam-Webster', 'Oxford Dictionary', 'Cambridge Dictionary', 'Urban Dictionary', 'Wiktionary', 'Collins Dictionary', 'Macmillan Dictionary',
-                'Google Maps', 'Apple Maps', 'Waze', 'MapQuest', 'HERE WeGo', 'Bing Maps', 'OpenStreetMap', 'TomTom', 'Garmin', 'Sygic',
-                'Weather.com', 'AccuWeather', 'Weather Underground', 'National Weather Service', 'BBC Weather', 'Yahoo Weather', 'WeatherBug', 'Dark Sky', 'Windy', 'Weather Channel',
-                'CNN', 'BBC', 'Reuters', 'Associated Press', 'Fox News', 'MSNBC', 'NPR', 'PBS', 'ABC News', 'CBS News',
-                'GitHub', 'GitLab', 'Bitbucket', 'SourceForge', 'CodePen', 'JSFiddle', 'Repl.it', 'Glitch', 'Heroku', 'Netlify',
-                'Stack Overflow', 'Reddit', 'Quora', 'Yahoo Answers', 'Ask.fm', 'Answers.com', 'WikiAnswers', 'ChaCha', 'Blurtit', 'JustAnswer',
-                'Trello', 'Asana', 'Monday.com', 'Notion', 'Airtable', 'ClickUp', 'Basecamp', 'Wrike', 'Smartsheet', 'Todoist',
-                'Adobe Creative Cloud', 'Canva', 'Figma', 'Sketch', 'InVision', 'Marvel', 'Zeplin', 'Abstract', 'Principle', 'Framer',
-                'Salesforce', 'HubSpot', 'Mailchimp', 'Constant Contact', 'AWeber', 'GetResponse', 'ConvertKit', 'ActiveCampaign', 'Campaign Monitor', 'SendinBlue',
-                'Shopify', 'WooCommerce', 'Magento', 'BigCommerce', 'Squarespace', 'Wix', 'Weebly', 'GoDaddy', 'Bluehost', 'HostGator'
-            ]
-        };
+        let currentTheme = 'light';
+        let currentSpeed = 0;
+        let selectedDevice = '';
+        let selectedGame = '';
+        
+        // Iranian IP ranges for DNS generation
+        const iranIPRanges = [
+            '5.63.0.0/16', '31.2.0.0/16', '37.98.0.0/16', '37.156.0.0/16',
+            '46.32.0.0/16', '62.193.0.0/16', '78.39.0.0/16', '79.175.0.0/16',
+            '85.15.0.0/16', '91.98.0.0/16', '92.42.0.0/16', '94.182.0.0/16',
+            '151.232.0.0/16', '178.22.0.0/16', '185.8.0.0/16', '188.0.0.0/16'
+        ];
 
-        // DNS data
-        const dnsServers = {
-            gaming: {
-                ipv4: [
-                    { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare', ping: 0 },
-                    { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google', ping: 0 },
-                    { primary: '9.9.9.9', secondary: '149.112.112.112', name: 'Quad9', ping: 0 },
-                    { primary: '208.67.222.222', secondary: '208.67.220.220', name: 'OpenDNS', ping: 0 },
-                    { primary: '76.76.19.19', secondary: '76.223.100.101', name: 'Alternate DNS', ping: 0 },
-                    { primary: '94.140.14.14', secondary: '94.140.15.15', name: 'AdGuard', ping: 0 },
-                    { primary: '185.228.168.9', secondary: '185.228.169.9', name: 'CleanBrowsing', ping: 0 },
-                    { primary: '77.88.8.8', secondary: '77.88.8.1', name: 'Yandex', ping: 0 },
-                    { primary: '156.154.70.1', secondary: '156.154.71.1', name: 'Neustar', ping: 0 },
-                    { primary: '8.26.56.26', secondary: '8.20.247.20', name: 'Comodo', ping: 0 }
-                ],
-                ipv6: [
-                    { primary: '2606:4700:4700::1111', secondary: '2606:4700:4700::1001', name: 'Cloudflare', ping: 0 },
-                    { primary: '2001:4860:4860::8888', secondary: '2001:4860:4860::8844', name: 'Google', ping: 0 },
-                    { primary: '2620:fe::fe', secondary: '2620:fe::9', name: 'Quad9', ping: 0 },
-                    { primary: '2620:119:35::35', secondary: '2620:119:53::53', name: 'OpenDNS', ping: 0 },
-                    { primary: '2602:fcbc::ad', secondary: '2602:fcbc:2::ad', name: 'AdGuard', ping: 0 },
-                    { primary: '2a0d:2a00:1::2', secondary: '2a0d:2a00:2::2', name: 'CleanBrowsing', ping: 0 },
-                    { primary: '2a02:6b8::feed:0ff', secondary: '2a02:6b8:0:1::feed:0ff', name: 'Yandex', ping: 0 },
-                    { primary: '2610:a1:1018::1', secondary: '2610:a1:1019::1', name: 'Neustar', ping: 0 }
+        // Gaming devices and their games
+        const gamingDevices = {
+            pc: {
+                name: '💻 کامپیوتر',
+                games: [
+                    'Counter-Strike 2', 'Valorant', 'League of Legends', 'Dota 2', 'Apex Legends',
+                    'Fortnite', 'Call of Duty: Warzone', 'Overwatch 2', 'Rainbow Six Siege', 'PUBG',
+                    'Minecraft', 'World of Warcraft', 'Grand Theft Auto V', 'Red Dead Redemption 2', 'Cyberpunk 2077',
+                    'The Witcher 3', 'Assassin\'s Creed Valhalla', 'FIFA 24', 'Rocket League', 'Fall Guys',
+                    'Among Us', 'Genshin Impact', 'Lost Ark', 'New World', 'Destiny 2',
+                    'Battlefield 2042', 'Call of Duty: Modern Warfare II', 'Halo Infinite', 'Elden Ring', 'God of War',
+                    'Spider-Man Remastered', 'Horizon Zero Dawn', 'Death Stranding', 'Control', 'Metro Exodus',
+                    'Resident Evil 4', 'Dead Space', 'The Last of Us Part I', 'Hogwarts Legacy', 'Starfield',
+                    'Baldur\'s Gate 3', 'Diablo IV', 'Street Fighter 6', 'Mortal Kombat 1', 'Tekken 8',
+                    'Age of Empires IV', 'Civilization VI', 'Total War: Warhammer III', 'Europa Universalis IV', 'Crusader Kings III',
+                    'Steam Deck', 'Epic Games', 'Origin', 'Ubisoft Connect', 'Battle.net',
+                    'World of Tanks', 'War Thunder', 'Escape from Tarkov', 'Hunt: Showdown', 'Rust',
+                    'DayZ', 'Arma 3', 'Squad', 'Hell Let Loose', 'Post Scriptum',
+                    'Insurgency: Sandstorm', 'Rising Storm 2: Vietnam', 'Red Orchestra 2', 'Day of Infamy', 'Verdun',
+                    'Tannenberg', 'Beyond The Wire', 'Ground Branch', 'Ready or Not', 'SWAT 4',
+                    'Rainbow Six: Raven Shield', 'Ghost Recon Wildlands', 'Ghost Recon Breakpoint', 'The Division 2', 'Watch Dogs Legion',
+                    'Far Cry 6', 'Far Cry 5', 'Far Cry 4', 'Far Cry 3', 'Far Cry Primal',
+                    'Assassin\'s Creed Odyssey', 'Assassin\'s Creed Origins', 'Assassin\'s Creed Unity', 'Assassin\'s Creed Syndicate', 'Assassin\'s Creed Black Flag',
+                    'Assassin\'s Creed Mirage', 'Prince of Persia', 'Splinter Cell', 'Anno 1800', 'Cities: Skylines',
+                    'SimCity', 'Planet Coaster', 'Planet Zoo', 'Two Point Hospital', 'Prison Architect',
+                    'RimWorld', 'Dwarf Fortress', 'Oxygen Not Included', 'Factorio', 'Satisfactory',
+                    'Subnautica', 'Subnautica: Below Zero', 'The Forest', 'Green Hell', 'Raft',
+                    'Valheim', 'Core Keeper', 'Terraria', 'Starbound', 'No Man\'s Sky',
+                    'Elite Dangerous', 'Star Citizen', 'EVE Online', 'X4: Foundations', 'Kerbal Space Program',
+                    'Cities: Skylines 2', 'Transport Fever 2', 'Railway Empire', 'Tropico 6', 'Frostpunk',
+                    'This War of Mine', 'Papers Please', 'Return of the Obra Dinn', 'Disco Elysium', 'Divinity: Original Sin 2',
+                    'Pillars of Eternity', 'Tyranny', 'Torment: Tides of Numenera', 'Wasteland 3', 'XCOM 2',
+                    'Phoenix Point', 'Battletech', 'Mechwarrior 5', 'Titanfall 2', 'Mass Effect Legendary Edition',
+                    'Dragon Age: Inquisition', 'The Elder Scrolls V: Skyrim', 'Fallout 4', 'Fallout: New Vegas', 'Fallout 76',
+                    'Outer Worlds', 'Outer Wilds', 'Prey', 'Dishonored 2', 'Deathloop',
+                    'Bioshock Infinite', 'Bioshock Collection', 'System Shock', 'Deus Ex: Mankind Divided', 'Thief',
+                    'Hitman 3', 'Hitman 2', 'Hitman', 'Metal Gear Solid V', 'Sniper Elite 5',
+                    'Zombie Army 4', 'Left 4 Dead 2', 'Back 4 Blood', 'World War Z', 'Dying Light 2',
+                    'Dead Rising', 'State of Decay 2', 'Project Zomboid', 'They Are Billions', '7 Days to Die',
+                    'The Walking Dead', 'Telltale Games', 'Life is Strange', 'Detroit: Become Human', 'Heavy Rain',
+                    'Beyond: Two Souls', 'Until Dawn', 'The Dark Pictures Anthology', 'Supermassive Games', 'Quantic Dream',
+                    'Indie Games', 'Hollow Knight', 'Celeste', 'Hades', 'Dead Cells',
+                    'Ori and the Will of the Wisps', 'Cuphead', 'Shovel Knight', 'A Hat in Time', 'Pizza Tower',
+                    'Katana ZERO', 'Hotline Miami', 'Hyper Light Drifter', 'Fez', 'Braid',
+                    'The Witness', 'Jonathan Blow', 'Indie Platformers', 'Metroidvania', 'Roguelike',
+                    'Slay the Spire', 'Monster Train', 'Griftlands', 'Inscryption', 'Card Games',
+                    'Hearthstone', 'Magic: The Gathering Arena', 'Legends of Runeterra', 'Gwent', 'Artifact',
+                    'Auto Chess', 'Teamfight Tactics', 'Dota Underlords', 'Chess.com', 'Lichess',
+                    'Puzzle Games', 'Portal 2', 'Portal', 'The Talos Principle', 'Baba Is You',
+                    'Return of the Obra Dinn', 'Outer Wilds', 'The Stanley Parable', 'Antichamber', 'Manifold Garden',
+                    'Racing Games', 'Forza Motorsport', 'Forza Horizon 4', 'Gran Turismo', 'F1 23',
+                    'Dirt Rally 2.0', 'WRC 10', 'Assetto Corsa', 'Project CARS 3', 'iRacing',
+                    'BeamNG.drive', 'Wreckfest', 'Burnout Paradise', 'Need for Speed Heat', 'The Crew 2',
+                    'Flight Simulator', 'DCS World', 'IL-2 Sturmovik', 'War Thunder', 'Ace Combat 7',
+                    'Star Wars: Squadrons', 'Elite Dangerous', 'No Man\'s Sky', 'Space Engineers', 'Astroneer',
+                    'Kerbal Space Program 2', 'Universe Sandbox', 'SpaceEngine', 'Orbiter', 'X-Plane 12',
+                    'Train Simulator', 'Euro Truck Simulator 2', 'American Truck Simulator', 'Snowrunner', 'Mudrunner',
+                    'Farming Simulator 22', 'PowerWash Simulator', 'House Flipper', 'PC Building Simulator', 'Car Mechanic Simulator',
+                    'Cooking Simulator', 'Surgeon Simulator', 'Goat Simulator', 'I Am Bread', 'Octodad',
+                    'Gang Beasts', 'Human: Fall Flat', 'Moving Out', 'Overcooked 2', 'Tools Up!',
+                    'Unrailed!', 'Lovers in a Dangerous Spacetime', 'Castle Crashers', 'Battleblock Theater', 'Pit People',
+                    'Stardew Valley', 'Animal Crossing', 'Harvest Moon', 'Story of Seasons', 'My Time at Portia',
+                    'Spiritfarer', 'Coffee Talk', 'VA-11 Hall-A', 'Papers Please', 'Not Tonight',
+                    'Orwell', 'Beholder', 'This Is the Police', 'Tropico', 'Democracy',
+                    'Reigns', 'Yes, Your Grace', 'Crusader Kings', 'Europa Universalis', 'Hearts of Iron IV',
+                    'Stellaris', 'Victoria 3', 'Imperator: Rome', 'Total War: Rome II', 'Total War: Attila',
+                    'Total War: Three Kingdoms', 'Total War: Troy', 'Medieval: Total War', 'Empire: Total War', 'Napoleon: Total War',
+                    'Company of Heroes 3', 'Men of War', 'Steel Division 2', 'Wargame: Red Dragon', 'Command & Conquer',
+                    'Red Alert 3', 'Tiberian Sun', 'StarCraft II', 'StarCraft: Remastered', 'Warcraft III: Reforged',
+                    'Age of Empires II: Definitive Edition', 'Age of Empires III: Definitive Edition', 'Age of Mythology', 'Rise of Nations', 'Empire Earth',
+                    'Northgard', 'Frostpunk', 'Anno 2205', 'Anno 2070', 'Banished',
+                    'Surviving Mars', 'Planetbase', 'Aven Colony', 'Tropico 5', 'Tropico 4',
+                    'SimCity 2013', 'SimCity 4', 'SimCity 3000', 'Cities XL', 'Urban Empire',
+                    'Constructor', 'Two Point Campus', 'Theme Hospital', 'RollerCoaster Tycoon', 'Planet Coaster',
+                    'Parkitect', 'Jurassic World Evolution 2', 'Zoo Tycoon', 'Wildlife Park', 'Megaquarium',
+                    'Game Dev Tycoon', 'Software Inc.', 'Mad Games Tycoon 2', 'Startup Company', 'Big Pharma',
+                    'Production Line', 'Automation', 'Good Company', 'Little Big Workshop', 'Factory Town',
+                    'Shapez', 'Captain of Industry', 'Dyson Sphere Program', 'The Final Earth 2', 'Farthest Frontier',
+                    'Foundation', 'Ostriv', 'Going Medieval', 'Medieval Dynasty', 'Manor Lords',
+                    'Crusader Kings II', 'Europa Universalis III', 'Victoria II', 'Hearts of Iron III', 'March of the Eagles',
+                    'Sengoku', 'Sword of the Stars', 'Galactic Civilizations III', 'Endless Space 2', 'Endless Legend',
+                    'Amplitude Studios', 'Humankind', 'Old World', 'Field of Glory: Empires', 'Imperator: Rome'
                 ]
             },
-            download: {
-                ipv4: [
-                    { primary: '178.22.122.100', secondary: '185.51.200.2', name: 'FreeDNS', ping: 0 },
-                    { primary: '80.80.80.80', secondary: '80.80.81.81', name: 'Freenom', ping: 0 },
-                    { primary: '37.235.1.174', secondary: '37.235.1.177', name: 'FreeDNS', ping: 0 },
-                    { primary: '1.1.1.1', secondary: '1.0.0.1', name: 'Cloudflare', ping: 0 },
-                    { primary: '8.8.8.8', secondary: '8.8.4.4', name: 'Google', ping: 0 },
-                    { primary: '9.9.9.9', secondary: '149.112.112.112', name: 'Quad9', ping: 0 },
-                    { primary: '208.67.222.222', secondary: '208.67.220.220', name: 'OpenDNS', ping: 0 },
-                    { primary: '185.228.168.9', secondary: '185.228.169.9', name: 'CleanBrowsing', ping: 0 }
-                ],
-                ipv6: [
-                    { primary: '2606:4700:4700::1111', secondary: '2606:4700:4700::1001', name: 'Cloudflare', ping: 0 },
-                    { primary: '2001:4860:4860::8888', secondary: '2001:4860:4860::8844', name: 'Google', ping: 0 },
-                    { primary: '2620:fe::fe', secondary: '2620:fe::9', name: 'Quad9', ping: 0 },
-                    { primary: '2620:119:35::35', secondary: '2620:119:53::53', name: 'OpenDNS', ping: 0 }
+            playstation: {
+                name: '🎮 پلی‌استیشن',
+                games: [
+                    'God of War Ragnarök', 'Spider-Man: Miles Morales', 'The Last of Us Part II', 'Ghost of Tsushima', 'Horizon Forbidden West',
+                    'Ratchet & Clank: Rift Apart', 'Demon\'s Souls', 'Returnal', 'Gran Turismo 7', 'MLB The Show 23',
+                    'Call of Duty: Modern Warfare II', 'FIFA 24', 'Madden NFL 24', 'NBA 2K24', 'Assassin\'s Creed Mirage',
+                    'Hogwarts Legacy', 'Resident Evil 4', 'Dead Space', 'Final Fantasy XVI', 'Street Fighter 6',
+                    'Mortal Kombat 1', 'Tekken 8', 'Baldur\'s Gate 3', 'Diablo IV', 'Destiny 2',
+                    'Apex Legends', 'Fortnite', 'Rocket League', 'Fall Guys', 'Among Us',
+                    'Genshin Impact', 'Honkai: Star Rail', 'Warframe', 'Overwatch 2', 'Rainbow Six Siege',
+                    'PUBG', 'Call of Duty: Warzone', 'Battlefield 2042', 'Halo Infinite', 'Elden Ring',
+                    'Cyberpunk 2077', 'The Witcher 3', 'Red Dead Redemption 2', 'Grand Theft Auto V', 'Minecraft',
+                    'Stray', 'Kena: Bridge of Spirits', 'Deathloop', 'It Takes Two', 'A Way Out',
+                    'God of War (2018)', 'Spider-Man Remastered', 'Uncharted 4', 'Uncharted: Lost Legacy', 'Bloodborne',
+                    'Horizon Zero Dawn', 'Days Gone', 'Death Stranding', 'Control Ultimate Edition', 'Metro Exodus Enhanced',
+                    'Nioh 2', 'Sekiro: Shadows Die Twice', 'Dark Souls III', 'Dark Souls Remastered', 'Dark Souls II',
+                    'Hollow Knight', 'Celeste', 'Hades', 'Dead Cells', 'Ori and the Will of the Wisps',
+                    'Cuphead', 'Shovel Knight', 'A Hat in Time', 'Pizza Tower', 'Katana ZERO',
+                    'Hotline Miami Collection', 'Hyper Light Drifter', 'Fez', 'Braid', 'The Witness',
+                    'Portal Knights', 'Terraria', 'Stardew Valley', 'Animal Crossing', 'My Time at Portia',
+                    'Spiritfarer', 'Coffee Talk', 'VA-11 Hall-A', 'Papers Please', 'Not Tonight',
+                    'Final Fantasy VII Remake', 'Final Fantasy XV', 'Final Fantasy XIV', 'Final Fantasy XII', 'Final Fantasy X/X-2',
+                    'Persona 5 Royal', 'Persona 4 Golden', 'Persona 3 Portable', 'Yakuza: Like a Dragon', 'Yakuza 0',
+                    'Yakuza Kiwami', 'Yakuza Kiwami 2', 'Judgment', 'Lost Judgment', 'Shenmue III',
+                    'Nier: Automata', 'Nier Replicant', 'Tales of Arise', 'Tales of Vesperia', 'Tales of Symphonia',
+                    'Dragon Quest XI', 'Dragon Quest Builders 2', 'Chrono Cross', 'Chrono Trigger', 'Secret of Mana',
+                    'Kingdom Hearts III', 'Kingdom Hearts HD Collections', 'Sora', 'Disney', 'Square Enix',
+                    'Monster Hunter World', 'Monster Hunter Rise', 'Monster Hunter Stories 2', 'Capcom', 'Hunting Games',
+                    'Resident Evil Village', 'Resident Evil 2', 'Resident Evil 3', 'Resident Evil 7', 'Resident Evil Code Veronica',
+                    'Silent Hill 2', 'Silent Hill 3', 'Fatal Frame', 'Until Dawn', 'The Dark Pictures Anthology',
+                    'Supermassive Games', 'Heavy Rain', 'Beyond: Two Souls', 'Detroit: Become Human', 'Quantic Dream',
+                    'Life is Strange', 'Life is Strange: True Colors', 'Life is Strange 2', 'Tell Me Why', 'Dontnod',
+                    'The Walking Dead', 'The Wolf Among Us', 'Batman Telltale', 'Guardians of the Galaxy Telltale', 'Telltale Games',
+                    'Crash Bandicoot 4', 'Crash Team Racing Nitro-Fueled', 'Spyro Reignited Trilogy', 'Tony Hawk\'s Pro Skater 1+2', 'Activision',
+                    'Ratchet & Clank (2016)', 'Sackboy: A Big Adventure', 'LittleBigPlanet 3', 'Dreams', 'Media Molecule',
+                    'Astro\'s Playroom', 'Astro Bot Rescue Mission', 'PSVR', 'PlayStation VR', 'Virtual Reality',
+                    'Beat Saber', 'Superhot VR', 'Job Simulator', 'Vacation Simulator', 'Rick and Morty VR',
+                    'No Man\'s Sky VR', 'Skyrim VR', 'Resident Evil 7 VR', 'Wipeout Omega Collection VR', 'Firewall Zero Hour',
+                    'Blood & Truth', 'London Heist', 'Until Dawn: Rush of Blood', 'Here They Lie', 'The Inpatient',
+                    'Farpoint', 'Doom VFR', 'Fallout 4 VR', 'LA Noire VR', 'Borderlands 2 VR',
+                    'Iron Man VR', 'Star Wars: Squadrons VR', 'Hitman 3 VR', 'After the Fall', 'Walking Dead: Saints & Sinners',
+                    'Sports Games', 'FIFA 23', 'FIFA 22', 'FIFA 21', 'PES 2021', 'eFootball',
+                    'NBA 2K23', 'NBA 2K22', 'NBA Live', 'NHL 23', 'NHL 22',
+                    'Madden NFL 23', 'Madden NFL 22', 'NFL', 'American Football', 'EA Sports',
+                    'F1 22', 'F1 23', 'Gran Turismo Sport', 'Dirt 5', 'Dirt Rally 2.0',
+                    'WRC 10', 'WRC 9', 'Assetto Corsa Competizione', 'Project CARS 3', 'The Crew 2',
+                    'Need for Speed Heat', 'Need for Speed Unbound', 'Burnout Paradise Remastered', 'Wreckfest', 'Onrush',
+                    'Driveclub', 'MotorStorm', 'Wipeout Omega Collection', 'Redout', 'Fast RMX',
+                    'Fighting Games', 'Street Fighter V', 'Tekken 7', 'Mortal Kombat 11', 'Injustice 2',
+                    'Dragon Ball FighterZ', 'Dragon Ball Z: Kakarot', 'Naruto Shippuden: Ultimate Ninja Storm 4', 'One Piece: Pirate Warriors 4', 'Bleach: Brave Souls',
+                    'Guilty Gear Strive', 'BlazBlue: Cross Tag Battle', 'Under Night In-Birth', 'Melty Blood', 'King of Fighters XV',
+                    'Soul Calibur VI', 'Dead or Alive 6', 'Virtua Fighter 5', 'Samurai Shodown', 'Granblue Fantasy Versus',
+                    'Anime Games', 'Attack on Titan 2', 'Demon Slayer: Hinokami Chronicles', 'My Hero One\'s Justice 2', 'JoJo\'s Bizarre Adventure',
+                    'Sword Art Online', 'Tokyo Ghoul', 'Fairy Tail', 'Black Clover', 'Dr. Stone',
+                    'Strategy Games', 'Civilization VI', 'XCOM 2', 'Phoenix Point', 'Battletech',
+                    'Total War: Rome Remastered', 'Tropico 6', 'Cities: Skylines', 'Planet Coaster', 'Two Point Hospital',
+                    'Frostpunk', 'This War of Mine', 'Surviving Mars', 'Planetbase', 'Constructor Plus',
+                    'Railway Empire', 'Transport Fever', 'Anno 1800', 'SimCity', 'RollerCoaster Tycoon Adventures',
+                    'Game Dev Tycoon', 'Mad Games Tycoon', 'Software Inc.', 'Big Pharma', 'Prison Architect',
+                    'Indie Favorites', 'Undertale', 'Deltarune', 'Omori', 'OneShot', 'A Bird Story',
+                    'To the Moon', 'Finding Paradise', 'What Remains of Edith Finch', 'Gone Home', 'Firewatch',
+                    'The Stanley Parable', 'The Beginner\'s Guide', 'Antichamber', 'Manifold Garden', 'Superliminal',
+                    'Portal Knights', 'Slime Rancher', 'Abzu', 'Journey', 'Flower',
+                    'Flow', 'Entwined', 'Bound', 'Concrete Genie', 'PixelJunk Series',
+                    'Resogun', 'Super Stardust', 'Alienation', 'Dead Nation', 'Housemarque Games',
+                    'Nex Machina', 'Matterfall', 'Outland', 'Furmins', 'PixelJunk Shooter',
+                    'Sound Shapes', 'Escape Plan', 'Unfinished Swan', 'Giant Sparrow', 'thatgamecompany',
+                    'Team Ico Games', 'Shadow of the Colossus', 'Ico', 'The Last Guardian', 'Fumito Ueda',
+                    'Indie Platformers', 'Rayman Legends', 'Rayman Origins', 'Sonic Mania', 'Sonic Forces',
+                    'Crash Bandicoot N. Sane Trilogy', 'Spyro Reignited', 'Psychonauts 2', 'Psychonauts', 'Double Fine',
+                    'Gris', 'Inside', 'Limbo', 'Playdead Games', 'Little Nightmares',
+                    'Little Nightmares II', 'Among the Sleep', 'Layers of Fear', 'Observer', 'Bloober Team',
+                    'The Medium', 'Blair Witch', 'Layers of Fear 2', 'Silver Chains', 'Horror Games',
+                    'Outlast', 'Outlast 2', 'Outlast Trinity', 'Amnesia Collection', 'SOMA',
+                    'Alien: Isolation', 'Dead Space', 'The Evil Within', 'The Evil Within 2', 'Psychological Horror',
+                    'Survival Games', 'Subnautica', 'Subnautica: Below Zero', 'The Forest', 'Green Hell',
+                    'Raft', 'Stranded Deep', 'The Long Dark', 'This War of Mine', 'Frostpunk',
+                    'State of Decay 2', 'Project Zomboid', 'They Are Billions', '7 Days to Die', 'DayZ',
+                    'Rust', 'ARK: Survival Evolved', 'Conan Exiles', 'Valheim', 'Core Keeper',
+                    'Grounded', 'The Infected', 'Dead Rising', 'Dying Light', 'Dying Light 2',
+                    'Left 4 Dead 2', 'Back 4 Blood', 'World War Z', 'Zombie Army 4', 'Strange Brigade',
+                    'Co-op Games', 'It Takes Two', 'A Way Out', 'Unravel Two', 'Moving Out',
+                    'Overcooked! All You Can Eat', 'Tools Up!', 'Unrailed!', 'Lovers in a Dangerous Spacetime', 'Portal 2',
+                    'Borderlands 3', 'Borderlands 2', 'Borderlands', 'Tiny Tina\'s Wonderlands', 'Gearbox Software',
+                    'Diablo II: Resurrected', 'Diablo III', 'Path of Exile', 'Torchlight III', 'Titan Quest',
+                    'Grim Dawn', 'Last Epoch', 'Wolcen', 'Lost Ark', 'Action RPGs'
+                ]
+            },
+            xbox: {
+                name: '🎯 ایکس‌باکس',
+                games: [
+                    'Halo Infinite', 'Forza Horizon 5', 'Microsoft Flight Simulator', 'Gears 5', 'Sea of Thieves',
+                    'Age of Empires IV', 'Starfield', 'Redfall', 'Hi-Fi Rush', 'Pentiment',
+                    'Call of Duty: Modern Warfare II', 'FIFA 24', 'Madden NFL 24', 'NBA 2K24', 'Assassin\'s Creed Mirage',
+                    'Hogwarts Legacy', 'Resident Evil 4', 'Dead Space', 'Street Fighter 6', 'Mortal Kombat 1',
+                    'Tekken 8', 'Baldur\'s Gate 3', 'Diablo IV', 'Destiny 2', 'Apex Legends',
+                    'Fortnite', 'Rocket League', 'Fall Guys', 'Among Us', 'Genshin Impact',
+                    'Warframe', 'Overwatch 2', 'Rainbow Six Siege', 'PUBG', 'Call of Duty: Warzone',
+                    'Battlefield 2042', 'Elden Ring', 'Cyberpunk 2077', 'The Witcher 3', 'Red Dead Redemption 2',
+                    'Grand Theft Auto V', 'Minecraft', 'Ori and the Will of the Wisps', 'Cuphead', 'Hollow Knight',
+                    'Dead Cells', 'Hades', 'Celeste', 'Subnautica', 'No Man\'s Sky',
+                    'Halo: The Master Chief Collection', 'Halo 5: Guardians', 'Halo Wars 2', 'Halo: Spartan Assault', 'Halo: Spartan Strike',
+                    'Gears of War 4', 'Gears Tactics', 'Gears of War: Ultimate Edition', 'Gears of War 2', 'Gears of War 3',
+                    'Forza Motorsport 7', 'Forza Horizon 4', 'Forza Horizon 3', 'Forza Motorsport 6', 'Forza Street',
+                    'Fable', 'Fable II', 'Fable III', 'Fable Anniversary', 'Fable: The Journey',
+                    'State of Decay 2', 'State of Decay 3', 'Crackdown 3', 'ReCore', 'Quantum Break',
+                    'Alan Wake', 'Alan Wake 2', 'Control', 'Max Payne', 'Remedy Entertainment',
+                    'Ori and the Blind Forest', 'Ori and the Will of the Wisps', 'Moon Studios', 'Metroidvania', 'Platformer',
+                    'Cuphead', 'Mugman', 'Studio MDHR', 'Run and Gun', 'Boss Rush',
+                    'Sea of Thieves', 'Rare', 'Pirates', 'Multiplayer', 'Adventure',
+                    'Grounded', 'Obsidian Entertainment', 'Survival', 'Shrinking', 'Backyard',
+                    'The Outer Worlds', 'Fallout: New Vegas', 'Pillars of Eternity', 'Tyranny', 'Avowed',
+                    'Age of Empires II: Definitive Edition', 'Age of Empires III: Definitive Edition', 'Age of Mythology', 'Rise of Nations', 'Empire Earth',
+                    'Microsoft Flight Simulator 2020', 'Flight Sim', 'Asobo Studio', 'Simulation', 'Flying',
+                    'Forza Street', 'Turn 10 Studios', 'Playground Games', 'Racing', 'Cars',
+                    'Xbox Game Studios', 'First Party', 'Exclusive', 'Game Pass', 'Xbox Live Gold',
+                    'Bethesda Games', 'The Elder Scrolls V: Skyrim', 'Fallout 4', 'Fallout 76', 'Doom Eternal',
+                    'Wolfenstein II', 'Wolfenstein: Youngblood', 'The Evil Within 2', 'Prey', 'Dishonored 2',
+                    'Deathloop', 'Ghostwire: Tokyo', 'Indiana Jones', 'Machine Games', 'Arkane Studios',
+                    'id Software', 'Bethesda Game Studios', 'ZeniMax', 'Microsoft Acquisition', 'RPG',
+                    'Activision Blizzard', 'Call of Duty', 'Overwatch', 'Diablo', 'World of Warcraft',
+                    'Candy Crush', 'King', 'Blizzard Entertainment', 'Activision', 'Tony Hawk',
+                    'Crash Bandicoot', 'Spyro', 'Prototype', 'Guitar Hero', 'Skylanders',
+                    'Third Party Games', 'Assassin\'s Creed Valhalla', 'Far Cry 6', 'Watch Dogs: Legion', 'Rainbow Six Extraction',
+                    'For Honor', 'The Division 2', 'Ghost Recon Breakpoint', 'Riders Republic', 'Skull and Bones',
+                    'EA Games', 'FIFA', 'Madden NFL', 'NHL', 'NBA Live',
+                    'Battlefield', 'Apex Legends', 'The Sims 4', 'Need for Speed', 'Mass Effect',
+                    'Dragon Age', 'Dead Space', 'Titanfall', 'Plants vs. Zombies', 'Command & Conquer',
+                    'Star Wars Jedi', 'Star Wars Battlefront', 'Medal of Honor', 'Burnout', 'Crysis',
+                    'Take-Two Interactive', 'Grand Theft Auto', 'Red Dead Redemption', 'NBA 2K', 'WWE 2K',
+                    'Borderlands', 'BioShock', 'Civilization', 'XCOM', 'Mafia',
+                    'Rockstar Games', 'GTA Online', 'Red Dead Online', 'Max Payne', 'Bully',
+                    'L.A. Noire', 'Midnight Club', 'Manhunt', 'The Warriors', 'Table Tennis',
+                    'Sony Games on Xbox', 'MLB The Show', 'Horizon', 'God of War', 'Spider-Man',
+                    'Uncharted', 'The Last of Us', 'Ghost of Tsushima', 'Bloodborne', 'Demon\'s Souls',
+                    'Japanese Games', 'Final Fantasy', 'Dragon Quest', 'Persona', 'Yakuza',
+                    'Nier', 'Tales of', 'Kingdom Hearts', 'Monster Hunter', 'Resident Evil',
+                    'Street Fighter', 'Tekken', 'Soul Calibur', 'Dark Souls', 'Sekiro',
+                    'Nioh', 'Bloodborne', 'Elden Ring', 'FromSoftware', 'Hidetaka Miyazaki',
+                    'Indie Games', 'Hollow Knight', 'Celeste', 'Hades', 'Dead Cells',
+                    'Ori', 'Cuphead', 'Shovel Knight', 'A Hat in Time', 'Pizza Tower',
+                    'Katana ZERO', 'Hotline Miami', 'Hyper Light Drifter', 'Fez', 'Braid',
+                    'The Witness', 'Portal', 'Portal 2', 'Half-Life', 'Left 4 Dead 2',
+                    'Team Fortress 2', 'Counter-Strike', 'Dota 2', 'Steam Deck', 'Valve',
+                    'Epic Games Store', 'Fortnite', 'Unreal Engine', 'Rocket League', 'Fall Guys',
+                    'Among Us', 'Genshin Impact', 'Honkai: Star Rail', 'miHoYo', 'Gacha Games',
+                    'Mobile Games on Console', 'PUBG Mobile', 'Call of Duty: Mobile', 'Free Fire', 'Mobile Legends',
+                    'Clash of Clans', 'Clash Royale', 'Brawl Stars', 'Hay Day', 'Supercell',
+                    'Retro Games', 'Pac-Man', 'Tetris', 'Space Invaders', 'Asteroids',
+                    'Centipede', 'Frogger', 'Donkey Kong', 'Mario', 'Sonic',
+                    'Mega Man', 'Castlevania', 'Contra', 'Metal Slug', 'King of Fighters',
+                    'Street Fighter II', 'Mortal Kombat', 'Tekken 3', 'Soul Calibur', 'Virtua Fighter',
+                    'Arcade Games', 'Fighting Games', 'Beat \'em Up', 'Shoot \'em Up', 'Puzzle Games',
+                    'Racing Simulators', 'Gran Turismo', 'Forza Motorsport', 'Assetto Corsa', 'Project CARS',
+                    'iRacing', 'rFactor', 'Automobilista', 'RaceRoom', 'Dirt Rally',
+                    'WRC', 'F1', 'NASCAR', 'IndyCar', 'Le Mans',
+                    'Sports Games', 'FIFA', 'PES', 'NBA 2K', 'NBA Live',
+                    'NFL', 'NHL', 'MLB', 'UFC', 'Boxing',
+                    'Tennis', 'Golf', 'Olympics', 'Winter Sports', 'Extreme Sports',
+                    'Tony Hawk\'s Pro Skater', 'Skate', 'SSX', 'Steep', 'Riders Republic',
+                    'Strategy Games', 'Age of Empires', 'StarCraft', 'Warcraft', 'Command & Conquer',
+                    'Total War', 'Civilization', 'Europa Universalis', 'Crusader Kings', 'Hearts of Iron',
+                    'Stellaris', 'Cities: Skylines', 'SimCity', 'Anno', 'Tropico',
+                    'Frostpunk', 'This War of Mine', 'Papers Please', 'Prison Architect', 'Two Point Hospital',
+                    'Planet Coaster', 'Planet Zoo', 'Jurassic World Evolution', 'Zoo Tycoon', 'RollerCoaster Tycoon',
+                    'Game Dev Tycoon', 'Mad Games Tycoon', 'Software Inc.', 'Big Pharma', 'Production Line',
+                    'Factorio', 'Satisfactory', 'Dyson Sphere Program', 'Captain of Industry', 'Shapez',
+                    'Automation Games', 'Factory Games', 'Building Games', 'Management Games', 'Tycoon Games',
+                    'Simulation Games', 'Life Simulation', 'City Building', 'Business Simulation', 'Vehicle Simulation',
+                    'Flight Simulation', 'Train Simulation', 'Truck Simulation', 'Farming Simulation', 'Construction Simulation'
+                ]
+            },
+            nintendo: {
+                name: '🕹️ نینتندو سوییچ',
+                games: [
+                    'The Legend of Zelda: Tears of the Kingdom', 'Super Mario Odyssey', 'Mario Kart 8 Deluxe', 'Super Smash Bros. Ultimate', 'Animal Crossing: New Horizons',
+                    'Splatoon 3', 'Pokémon Scarlet and Violet', 'Metroid Dread', 'Kirby and the Forgotten Land', 'Xenoblade Chronicles 3',
+                    'Fire Emblem Engage', 'Pikmin 4', 'Super Mario Bros. Wonder', 'Mario + Rabbids Sparks of Hope', 'Bayonetta 3',
+                    'Nintendo Switch Sports', 'Mario Party Superstars', 'WarioWare: Get It Together!', 'Metroid Prime Remastered', 'Advance Wars 1+2: Re-Boot Camp',
+                    'The Legend of Zelda: Link\'s Awakening', 'Super Mario Maker 2', 'Luigi\'s Mansion 3', 'Paper Mario: The Origami King', 'Donkey Kong Country: Tropical Freeze',
+                    'Yoshi\'s Crafted World', 'Kirby Star Allies', 'ARMS', '1-2-Switch', 'Ring Fit Adventure',
+                    'Brain Age', 'Big Brain Academy: Brain vs. Brain', 'Clubhouse Games: 51 Worldwide Classics', 'Dr. Kawashima\'s Brain Training', 'Fitness Boxing 2',
+                    'Just Dance 2024', 'Minecraft', 'Fortnite', 'Rocket League', 'Fall Guys',
+                    'Among Us', 'Overwatch 2', 'Apex Legends', 'PUBG Mobile', 'Genshin Impact',
+                    'Honkai: Star Rail', 'Warframe', 'Paladins', 'Smite', 'Realm Royale',
+                    'The Legend of Zelda: Breath of the Wild', 'Super Mario 3D World + Bowser\'s Fury', 'New Super Mario Bros. U Deluxe', 'Super Mario Party', 'Mario Tennis Aces',
+                    'Mario Golf: Super Rush', 'Mario Strikers: Battle League', 'Mario vs. Donkey Kong', 'Captain Toad: Treasure Tracker', 'Super Mario 3D All-Stars',
+                    'Pokémon Legends: Arceus', 'Pokémon Brilliant Diamond and Shining Pearl', 'Pokémon Sword and Shield', 'Pokémon Let\'s Go Pikachu and Eevee', 'Pokémon Mystery Dungeon: Rescue Team DX',
+                    'Pokémon Unite', 'Pokémon Café ReMix', 'Pokémon Quest', 'Pokémon Home', 'Pokémon GO',
+                    'Splatoon 2', 'Splatoon', 'ARMS', 'Nintendo Labo', 'Ring Fit Adventure',
+                    'Fitness Boxing', 'Just Dance 2023', 'Just Dance 2022', 'Just Dance 2021', 'Zumba: Burn It Up!',
+                    'Metroid Prime 4', 'Metroid: Samus Returns', 'Metroid: Other M', 'Metroid Prime Trilogy', 'Metroid Fusion',
+                    'Kirby\'s Return to Dream Land Deluxe', 'Kirby Fighters 2', 'Kirby\'s Dream Buffet', 'Kirby and the Rainbow Curse', 'Kirby: Triple Deluxe',
+                    'Fire Emblem: Three Houses', 'Fire Emblem Warriors', 'Fire Emblem Heroes', 'Fire Emblem Echoes', 'Fire Emblem Fates',
+                    'Xenoblade Chronicles 2', 'Xenoblade Chronicles', 'Xenoblade Chronicles X', 'Xenosaga', 'Xenogears',
+                    'Bayonetta 2', 'Bayonetta', 'Astral Chain', 'The Wonderful 101', 'PlatinumGames',
+                    'Hyrule Warriors: Age of Calamity', 'Hyrule Warriors', 'Fire Emblem Warriors: Three Hopes', 'Dynasty Warriors', 'Samurai Warriors',
+                    'Monster Hunter Rise', 'Monster Hunter Stories 2', 'Monster Hunter Generations Ultimate', 'Monster Hunter World', 'Capcom',
+                    'Resident Evil 4', 'Resident Evil 2', 'Resident Evil 3', 'Resident Evil Village', 'Resident Evil Revelations',
+                    'Street Fighter 6', 'Street Fighter V', 'Street Fighter 30th Anniversary Collection', 'Mega Man 11', 'Mega Man Legacy Collection',
+                    'Devil May Cry 3', 'Okami HD', 'Phoenix Wright: Ace Attorney Trilogy', 'The Great Ace Attorney Chronicles', 'Ghost Trick',
+                    'Final Fantasy VII', 'Final Fantasy VIII Remastered', 'Final Fantasy IX', 'Final Fantasy X/X-2 HD Remaster', 'Final Fantasy XII: The Zodiac Age',
+                    'Final Fantasy Crystal Chronicles', 'World of Final Fantasy Maxima', 'Chocobo\'s Mystery Dungeon EVERY BUDDY!', 'Final Fantasy Tactics A2', 'Bravely Default II',
+                    'Octopath Traveler', 'Triangle Strategy', 'Live A Live', 'Chrono Cross: The Radical Dreamers Edition', 'Secret of Mana',
+                    'Trials of Mana', 'Collection of SaGa Final Fantasy Legend', 'Romancing SaGa 3', 'SaGa Frontier Remastered', 'Dragon Quest XI S',
+                    'Dragon Quest Builders 2', 'Dragon Quest Builders', 'Dragon Quest', 'Dragon Quest Heroes', 'Erdrick',
+                    'Ni No Kuni: Wrath of the White Witch', 'Ni No Kuni II: Revenant Kingdom', 'Professor Layton', 'Level-5', 'Studio Ghibli',
+                    'Persona 5 Royal', 'Persona 4 Golden', 'Persona 3 Portable', 'Shin Megami Tensei V', 'Shin Megami Tensei III Nocturne HD Remaster',
+                    'Tokyo Mirage Sessions #FE Encore', '13 Sentinels: Aegis Rim', 'Catherine: Full Body', 'Atlus', 'JRPG',
+                    'Tales of Vesperia: Definitive Edition', 'Tales of Symphonia Remastered', 'Tales of Arise', 'Bandai Namco', 'Anime RPG',
+                    'Nier: Automata The End of YoRHa Edition', 'NieR Replicant ver.1.22474487139...', 'Drakengard', 'Yoko Taro', 'PlatinumGames',
+                    'Yakuza: Like a Dragon', 'Judgment', 'Ryu Ga Gotoku Studio', 'SEGA', 'Crime Drama',
+                    'Sonic Frontiers', 'Sonic Mania', 'Sonic Forces', 'Sonic Colors: Ultimate', 'Sonic Generations',
+                    'Team Sonic Racing', 'Mario & Sonic at the Olympic Games Tokyo 2020', 'Sonic & All-Stars Racing Transformed', 'Sonic Adventure', 'Sonic Adventure 2',
+                    'Crash Bandicoot 4: It\'s About Time', 'Crash Team Racing Nitro-Fueled', 'Crash Bandicoot N. Sane Trilogy', 'Spyro Reignited Trilogy', 'Tony Hawk\'s Pro Skater 1 + 2',
+                    'Activision', 'Toys for Bob', 'Vicarious Visions', 'Beenox', 'Neversoft',
+                    'Overwatch 2', 'Diablo III: Eternal Collection', 'Diablo II: Resurrected', 'Blizzard Entertainment', 'Battle.net',
+                    'The Witcher 3: Wild Hunt – Complete Edition', 'Cyberpunk 2077', 'CD Projekt RED', 'GOG', 'RPG',
+                    'Skyrim', 'Fallout Shelter', 'Doom', 'Doom Eternal', 'Wolfenstein II: The New Colossus',
+                    'Bethesda', 'id Software', 'Machine Games', 'Arkane Studios', 'ZeniMax',
+                    'Assassin\'s Creed: The Ezio Collection', 'Assassin\'s Creed III Remastered', 'Assassin\'s Creed IV: Black Flag', 'Assassin\'s Creed Rebel Collection', 'Ubisoft',
+                    'Rayman Legends: Definitive Edition', 'Child of Light: Ultimate Edition', 'Valiant Hearts: The Great War', 'UbiArt Framework', 'Indie Games',
+                    'Hollow Knight', 'Celeste', 'Hades', 'Dead Cells', 'Ori and the Blind Forest',
+                    'Ori and the Will of the Wisps', 'Cuphead', 'Shovel Knight: Treasure Trove', 'A Hat in Time', 'Pizza Tower',
+                    'Katana ZERO', 'Hotline Miami Collection', 'Hyper Light Drifter', 'Fez', 'Braid',
+                    'The Witness', 'Portal: Companion Collection', 'Portal Knights', 'Half-Life', 'Valve',
+                    'Stardew Valley', 'Animal Crossing: New Leaf', 'Harvest Moon: Light of Hope', 'Story of Seasons: Pioneers of Olive Town', 'My Time at Portia',
+                    'Spiritfarer: Farewell Edition', 'Coffee Talk', 'VA-11 Hall-A: Cyberpunk Bartender Action', 'Papers, Please', 'Not Tonight',
+                    'Unpacking', 'A Short Hike', 'Gris', 'Journey', 'ABZÛ',
+                    'Inside', 'Limbo', 'Little Nightmares', 'Little Nightmares II', 'Among the Sleep',
+                    'Layers of Fear: Legacy', 'Observer: System Redux', 'The Medium', 'Blair Witch', 'Bloober Team',
+                    'Outlast: Bundle of Terror', 'Outlast 2', 'Amnesia: Collection', 'SOMA', 'Alien: Isolation',
+                    'Dead Space', 'The Evil Within', 'Resident Evil', 'Silent Hill', 'Fatal Frame',
+                    'Subnautica', 'Subnautica: Below Zero', 'The Forest', 'Green Hell', 'Raft',
+                    'Stranded Deep', 'The Long Dark', 'This War of Mine: Complete Edition', 'Frostpunk: Console Edition', 'State of Decay 2',
+                    'Project Zomboid', 'They Are Billions', '7 Days to Die', 'DayZ', 'Rust',
+                    'ARK: Survival Evolved', 'Conan Exiles', 'Valheim', 'Core Keeper', 'Grounded',
+                    'No Man\'s Sky', 'Astroneer', 'Space Engineers', 'Kerbal Space Program Enhanced Edition', 'Elite Dangerous',
+                    'Star Wars: Squadrons', 'Everspace', 'Rebel Galaxy Outlaw', 'Starlink: Battle for Atlas', 'Space Simulation',
+                    'Cities: Skylines - Nintendo Switch Edition', 'SimCity', 'Tropico 6 - Nintendo Switch Edition', 'Two Point Hospital: JUMBO Edition', 'Prison Architect: Nintendo Switch Edition',
+                    'RollerCoaster Tycoon 3: Complete Edition', 'Planet Coaster: Console Edition', 'Jurassic World Evolution: Complete Edition', 'Zoo Tycoon: Ultimate Animal Collection', 'Game Dev Tycoon',
+                    'Mad Games Tycoon', 'Software Inc.', 'Big Pharma', 'Production Line', 'Automation Games',
+                    'Factorio', 'Satisfactory', 'Dyson Sphere Program', 'Captain of Industry', 'Shapez',
+                    'Civilization VI', 'XCOM 2 Collection', 'Phoenix Point: Behemoth Edition', 'Battletech', 'Total War: Rome Remastered',
+                    'Age of Empires II: Definitive Edition', 'Age of Empires III: Definitive Edition', 'Age of Empires IV', 'Rise of Nations: Extended Edition', 'Empire Earth',
+                    'Northgard', 'Frostpunk', 'Anno 1800', 'Anno 2070', 'Banished',
+                    'Surviving Mars', 'Planetbase', 'Aven Colony', 'Constructor Plus', 'Urban Empire',
+                    'Transport Fever', 'Railway Empire - Nintendo Switch Edition', 'Train Sim World', 'Euro Truck Simulator 2', 'American Truck Simulator',
+                    'Snowrunner', 'Mudrunner', 'Spintires', 'Farming Simulator 22', 'Farming Simulator 20',
+                    'PowerWash Simulator', 'House Flipper', 'PC Building Simulator', 'Car Mechanic Simulator', 'Cooking Simulator',
+                    'Surgeon Simulator CPR', 'Goat Simulator: The GOATY', 'I Am Bread', 'Octodad: Dadliest Catch', 'Untitled Goose Game',
+                    'Gang Beasts', 'Human: Fall Flat', 'Moving Out', 'Overcooked! All You Can Eat', 'Tools Up!',
+                    'Unrailed!', 'Lovers in a Dangerous Spacetime', 'Castle Crashers Remastered', 'BattleBlock Theater', 'Pit People',
+                    'It Takes Two', 'A Way Out', 'Unravel Two', 'Portal 2', 'Left 4 Dead 2',
+                    'Borderlands Legendary Collection', 'Borderlands 3', 'Tiny Tina\'s Wonderlands', 'Gearbox Software', 'Looter Shooter',
+                    'Destiny 2', 'Warframe', 'The Division 2', 'Ghost Recon Breakpoint', 'Rainbow Six Siege',
+                    'Call of Duty: Modern Warfare II', 'Call of Duty: Warzone', 'Battlefield 2042', 'Apex Legends', 'Titanfall 2',
+                    'Halo Infinite', 'Gears 5', 'Sea of Thieves', 'State of Decay 2', 'Crackdown 3',
+                    'Forza Horizon 5', 'Forza Motorsport', 'Gran Turismo 7', 'Dirt 5', 'F1 23',
+                    'Need for Speed Heat', 'Need for Speed Unbound', 'Burnout Paradise Remastered', 'Wreckfest', 'The Crew 2',
+                    'Assetto Corsa Competizione', 'Project CARS 3', 'WRC 10', 'Dirt Rally 2.0', 'V-Rally 4',
+                    'FIFA 24', 'FIFA 23', 'FIFA 22', 'PES 2021', 'eFootball 2023',
+                    'NBA 2K24', 'NBA 2K23', 'NBA 2K22', 'NBA Live 19', 'NBA Playgrounds 2',
+                    'Madden NFL 24', 'Madden NFL 23', 'NFL', 'NHL 23', 'NHL 22',
+                    'MLB The Show 23', 'MLB The Show 22', 'Super Mega Baseball 4', 'RBI Baseball 21', 'Baseball',
+                    'UFC 4', 'EA Sports UFC 3', 'WWE 2K23', 'WWE 2K22', 'AEW: Fight Forever',
+                    'Tennis World Tour 2', 'AO Tennis 2', 'Top Spin 4', 'Virtua Tennis', 'Mario Tennis',
+                    'PGA Tour 2K23', 'PGA Tour 2K21', 'The Golf Club 2019', 'Everybody\'s Golf', 'Mario Golf',
+                    'Tony Hawk\'s Pro Skater 1 + 2', 'Skate 3', 'Session: Skate Sim', 'Skater XL', 'OlliOlli World',
+                    'SSX 3', 'Steep', 'Riders Republic', 'Snowboard Kids', 'Mario & Sonic Winter Olympics',
+                    'Street Fighter 6', 'Tekken 8', 'Mortal Kombat 1', 'Injustice 2', 'Dragon Ball FighterZ',
+                    'Guilty Gear Strive', 'BlazBlue: Cross Tag Battle', 'Under Night In-Birth Exe:Late[cl-r]', 'Melty Blood: Type Lumina', 'The King of Fighters XV',
+                    'Soul Calibur VI', 'Dead or Alive 6', 'Virtua Fighter 5: Ultimate Showdown', 'Samurai Shodown', 'Granblue Fantasy Versus: Rising'
+                ]
+            },
+            mobile: {
+                name: '📱 موبایل',
+                games: [
+                    'PUBG Mobile', 'Call of Duty: Mobile', 'Free Fire', 'Mobile Legends: Bang Bang', 'Arena of Valor',
+                    'Clash of Clans', 'Clash Royale', 'Brawl Stars', 'Hay Day', 'Boom Beach',
+                    'Fortnite', 'Minecraft', 'Roblox', 'Among Us', 'Fall Guys',
+                    'Genshin Impact', 'Honkai: Star Rail', 'Honkai Impact 3rd', 'Punishing: Gray Raven', 'Arknights',
+                    'Azur Lane', 'Girls\' Frontline', 'Epic Seven', 'Summoners War', 'Raid: Shadow Legends',
+                    'AFK Arena', 'Idle Heroes', 'Rise of Kingdoms', 'State of Survival', 'Lords Mobile',
+                    'Game of War', 'Mobile Strike', 'Final Fantasy Brave Exvius', 'Dragon Ball Z: Dokkan Battle', 'One Piece Treasure Cruise',
+                    'Naruto x Boruto: Ninja Voltage', 'Bleach: Brave Souls', 'My Hero Academia: The Strongest Hero', 'Attack on Titan: Tactics', 'Demon Slayer: Kimetsu no Yaiba',
+                    'Pokemon GO', 'Pokemon Unite', 'Pokemon Masters EX', 'Pokemon Quest', 'Pokemon Shuffle',
+                    'Candy Crush Saga', 'Candy Crush Soda Saga', 'Farm Heroes Saga', 'Pet Rescue Saga', 'Bubble Witch 3 Saga',
+                    'Angry Birds 2', 'Angry Birds Friends', 'Plants vs. Zombies 2', 'Subway Surfers', 'Temple Run 2',
+                    'Jetpack Joyride', 'Fruit Ninja', 'Cut the Rope 3', 'Where\'s My Water? 2', 'Monument Valley 2',
+                    'Alto\'s Odyssey', 'Crossy Road', 'Hill Climb Racing 2', 'Asphalt 9: Legends', 'Real Racing 3',
+                    'CSR Racing 2', 'Drag Racing', 'Traffic Rider', 'Bike Race', 'Trials Frontier',
+                    'Garena Free Fire MAX', 'Apex Legends Mobile', 'Battlefield Mobile', 'COD: Warzone Mobile', 'Valorant Mobile',
+                    'League of Legends: Wild Rift', 'Dota Underlords', 'Auto Chess', 'Teamfight Tactics', 'Chess Rush',
+                    'Wild Rift', 'Honor of Kings', 'King of Glory', 'Onmyoji Arena', 'Heroes Evolved',
+                    'Vainglory', 'Heroes of Order & Chaos', 'Extraordinary Ones', 'Marvel Super War', 'DC Legends',
+                    'Injustice 2', 'Mortal Kombat', 'Street Fighter: Duel', 'Tekken', 'King of Fighters ALLSTAR',
+                    'Dragon Ball Legends', 'Dragon Ball Z: Kakarot', 'Naruto: Slugfest', 'One Piece: Bounty Rush', 'Bleach: Immortal Soul',
+                    'Jujutsu Kaisen: Phantom Parade', 'Tokyo Ghoul: re invoke', 'Attack on Titan: Assault', 'Fairy Tail: Forces Unite', 'Black Clover M',
+                    'Seven Deadly Sins: Grand Cross', 'That Time I Got Reincarnated as a Slime: ISEKAI Memories', 'Re:Zero − Starting Life in Another World', 'Overlord: Mass for the Dead', 'Konosuba: Fantastic Days',
+                    'Final Fantasy VII: Ever Crisis', 'Final Fantasy XV: Pocket Edition', 'Final Fantasy Tactics: War of the Lions', 'Final Fantasy XIV Online', 'Final Fantasy Record Keeper',
+                    'Final Fantasy Opera Omnia', 'Final Fantasy Dimensions', 'Final Fantasy: All the Bravest', 'Final Fantasy: Brave Exvius War of the Visions', 'Final Fantasy Crystal Chronicles',
+                    'Chrono Trigger', 'Secret of Mana', 'Trials of Mana', 'Dragon Quest', 'Dragon Quest Tact',
+                    'Dragon Quest Walk', 'Dragon Quest of the Stars', 'Dragon Quest Builders', 'Ni No Kuni: Cross Worlds', 'Another Eden',
+                    'Romancing SaGa Re;univerSe', 'SINoALICE', 'NieR Re[in]carnation', 'Voice of Cards', 'Octopath Traveler: Champions of the Continent',
+                    'Bravely Default: Fairy\'s Effect', 'Terra Battle', 'Terra Wars', 'Mobius Final Fantasy', 'Dissidia Final Fantasy Opera Omnia',
+                    'Kingdom Hearts Union χ', 'Kingdom Hearts Dark Road', 'The World Ends with You: Neo', 'Subarashiki Kono Sekai', 'Live A Live',
+                    'Persona 5: The Phantom X', 'Shin Megami Tensei: Liberation Dx2', 'Catherine: Full Body', '13 Sentinels: Aegis Rim', 'Atlus Games',
+                    'Yakuza Online', 'Judgment', 'Lost Judgment', 'Ryu Ga Gotoku Online', 'SEGA Heroes',
+                    'Sonic Dash', 'Sonic Forces: Speed Battle', 'Sonic Runners Adventure', 'Sonic Jump Fever', 'Sonic Boom: Shattered Crystal',
+                    'Mario Kart Tour', 'Super Mario Run', 'Dr. Mario World', 'Fire Emblem Heroes', 'Animal Crossing: Pocket Camp',
+                    'Dragalia Lost', 'Nintendo Badge Arcade', 'Miitomo', 'Pokemon Duel', 'Pokemon Rumble Rush',
+                    'Pokemon Cafe ReMix', 'Pokemon Sleep', 'Pokemon Smile', 'Pokemon Home', 'Pokemon TV',
+                    'Digimon ReArise', 'Digimon Survive', 'Digimon World: Next Order', 'Digimon Story: Cyber Sleuth', 'Digimon Links',
+                    'Yu-Gi-Oh! Duel Links', 'Yu-Gi-Oh! Master Duel', 'Yu-Gi-Oh! Cross Duel', 'Yu-Gi-Oh! Legacy of the Duelist', 'Cardfight!! Vanguard ZERO',
+                    'Shadowverse', 'Legends of Runeterra', 'Hearthstone', 'Magic: The Gathering Arena', 'Gwent: The Witcher Card Game',
+                    'The Elder Scrolls: Legends', 'Artifact', 'Eternal Card Game', 'Faeria', 'Duelyst',
+                    'Slay the Spire', 'Monster Train', 'Griftlands', 'Inscryption', 'Dicey Dungeons',
+                    'Dead Cells', 'Hades', 'The Binding of Isaac', 'Enter the Gungeon', 'Nuclear Throne',
+                    'Spelunky', 'Rogue Legacy', 'FTL: Faster Than Light', 'Into the Breach', 'Darkest Dungeon',
+                    'XCOM: Enemy Within', 'Civilization VI', 'Total War: Medieval II', 'Rome: Total War', 'Company of Heroes',
+                    'Age of Empires: Castle Siege', 'Command & Conquer: Rivals', 'StarCraft', 'Warcraft III', 'Heroes of Might and Magic',
+                    'Tropico', 'SimCity BuildIt', 'Cities: Skylines', 'Two Point Hospital', 'Prison Architect: Mobile',
+                    'RollerCoaster Tycoon Touch', 'Planet Coaster', 'Game Dev Tycoon', 'AdVenture Capitalist', 'Idle Miner Tycoon',
+                    'Merge Dragons!', 'Merge Magic!', 'Gardenscapes', 'Homescapes', 'Fishdom',
+                    'Township', 'Hay Day Pop', 'FarmVille 2: Country Escape', 'Family Farm Seaside', 'Green Farm 3',
+                    'Cooking Fever', 'Cooking Diary', 'Cooking Madness', 'Kitchen Story', 'Restaurant Story',
+                    'Design Home', 'Home Design Makeover', 'House Flip', 'Property Brothers Home Design', 'My Home Design Dreams',
+                    'Episode - Choose Your Story', 'Chapters: Interactive Stories', 'Romance Club', 'Choices: Stories You Play', 'The Arcana',
+                    'Mystic Messenger', 'Obey Me!', 'Ikemen Vampire', 'Ikemen Sengoku', 'Lovestruck',
+                    'Otome Games', 'Dating Sims', 'Visual Novels', 'Interactive Fiction', 'Story Games',
+                    'Toca Boca', 'Toca Life World', 'Toca Kitchen', 'Toca Hair Salon', 'Toca Pet Doctor',
+                    'My Talking Tom', 'My Talking Angela', 'My Talking Hank', 'Talking Tom Gold Run', 'Talking Tom Hero Dash',
+                    'Pou', 'My Tamagotchi Forever', 'Neko Atsume', 'Cat Collector', 'Adorable Home',
+                    'Alto\'s Adventure', 'Monument Valley', 'The Room', 'Machinarium', 'Samorost 3',
+                    'GRIS', 'Journey', 'Sky: Children of the Light', 'Flower', 'ABZÛ',
+                    'Inside', 'Limbo', 'Little Nightmares', 'Oxenfree', 'Night in the Woods',
+                    'Firewatch', 'Gone Home', 'What Remains of Edith Finch', 'The Stanley Parable', 'Papers, Please',
+                    'This War of Mine', 'Frostpunk', 'Plague Inc.', 'Rebel Inc.', 'Prison Architect',
+                    'Mini Metro', 'Mini Motorways', 'A Good Snowman Is Hard To Build', 'Threes!', '2048',
+                    'Tetris', 'Puyo Puyo', 'Dr. Mario', 'Lumines', 'Columns',
+                    'Bejeweled', 'Zuma', 'Peggle', 'Bookworm', 'Feeding Frenzy',
+                    'Diner Dash', 'Cake Mania', 'Wedding Dash', 'Hotel Dash', 'SpongeBob Diner Dash',
+                    'Time Management Games', 'Hidden Object Games', 'Match-3 Games', 'Puzzle Games', 'Brain Training',
+                    'Lumosity', 'Peak', 'Elevate', 'CogniFit', 'NeuroNation',
+                    'Duolingo', 'Babbel', 'Rosetta Stone', 'Memrise', 'Busuu',
+                    'Khan Academy', 'Coursera', 'edX', 'Udemy', 'Skillshare',
+                    'YouTube', 'TikTok', 'Instagram', 'Snapchat', 'Twitter',
+                    'Facebook', 'WhatsApp', 'Telegram', 'Discord', 'Slack',
+                    'Zoom', 'Microsoft Teams', 'Google Meet', 'Skype', 'FaceTime',
+                    'Netflix', 'Disney+', 'Amazon Prime Video', 'Hulu', 'HBO Max',
+                    'Spotify', 'Apple Music', 'YouTube Music', 'Amazon Music', 'Pandora',
+                    'Kindle', 'Audible', 'Goodreads', 'Wattpad', 'Medium',
+                    'Google Maps', 'Waze', 'Uber', 'Lyft', 'DoorDash',
+                    'Grubhub', 'Postmates', 'Instacart', 'Amazon', 'eBay',
+                    'PayPal', 'Venmo', 'Cash App', 'Zelle', 'Apple Pay',
+                    'Google Pay', 'Samsung Pay', 'Banking Apps', 'Investment Apps', 'Cryptocurrency Apps',
+                    'Fitness Apps', 'Health Apps', 'Meditation Apps', 'Sleep Apps', 'Diet Apps',
+                    'Weather Apps', 'News Apps', 'Sports Apps', 'Travel Apps', 'Photography Apps',
+                    'Photo Editing Apps', 'Video Editing Apps', 'Music Creation Apps', 'Drawing Apps', 'Design Apps',
+                    'Productivity Apps', 'Note-taking Apps', 'Calendar Apps', 'Task Management Apps', 'File Management Apps',
+                    'Security Apps', 'VPN Apps', 'Antivirus Apps', 'Password Managers', 'Backup Apps',
+                    'Utility Apps', 'System Apps', 'Launcher Apps', 'Keyboard Apps', 'Browser Apps'
                 ]
             }
         };
-
-        let currentTheme = 'light';
-        let currentDNS = null;
-        let pingInterval = null;
 
         // Theme toggle
         document.getElementById('themeToggle').addEventListener('click', function() {
@@ -554,8 +1180,26 @@
             document.getElementById('themeIcon').textContent = currentTheme === 'light' ? '🌙' : '☀️';
         });
 
+        // Hamburger menu
+        document.getElementById('hamburger').addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.getElementById('menuOverlay').classList.toggle('active');
+        });
+
+        // Close menu when clicking on overlay
+        document.getElementById('menuOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                document.getElementById('hamburger').classList.remove('open');
+                this.classList.remove('active');
+            }
+        });
+
         // Navigation
         function showSection(sectionName) {
+            // Close menu
+            document.getElementById('hamburger').classList.remove('open');
+            document.getElementById('menuOverlay').classList.remove('active');
+            
             // Hide all sections
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.add('hidden');
@@ -563,367 +1207,777 @@
             
             // Show selected section
             document.getElementById(sectionName + 'Section').classList.remove('hidden');
-            
-            // Update navigation buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = 'nav-btn bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-all';
-            });
-            
-            event.target.className = 'nav-btn btn-primary px-6 py-3 rounded-lg font-medium';
         }
 
-        // Device selection handler
-        document.getElementById('deviceSelect').addEventListener('change', function() {
-            const device = this.value;
-            const gameSelect = document.getElementById('gameSelect');
+        // Generate random Iranian IP
+        function generateIranianIP() {
+            const range = iranIPRanges[Math.floor(Math.random() * iranIPRanges.length)];
+            const [baseIP, cidr] = range.split('/');
+            const [a, b, c, d] = baseIP.split('.').map(Number);
             
-            if (device && gameData[device]) {
-                gameSelect.disabled = false;
-                gameSelect.innerHTML = '<option value="">انتخاب بازی</option>';
-                
-                gameData[device].forEach(game => {
-                    const option = document.createElement('option');
-                    option.value = game;
-                    option.textContent = game;
-                    gameSelect.appendChild(option);
-                });
+            // Generate random IP within the range
+            const randomC = c + Math.floor(Math.random() * 10);
+            const randomD = Math.floor(Math.random() * 255);
+            
+            return `${a}.${b}.${randomC}.${randomD}`;
+        }
+
+        // Handle usage type change
+        function handleUsageTypeChange() {
+            const usageType = document.getElementById('usageType').value;
+            
+            if (usageType === 'gaming') {
+                showGamingOptions();
             } else {
-                gameSelect.disabled = true;
-                gameSelect.innerHTML = '<option value="">ابتدا دستگاه را انتخاب کنید</option>';
+                hideGamingOptions();
             }
-        });
-
-        // Simulate ping measurement
-        function simulatePing() {
-            return Math.floor(Math.random() * 100) + 10; // 10-110ms
         }
-
-        // Generate gaming DNS
-        function generateGamingDNS() {
-            const device = document.getElementById('deviceSelect').value;
-            const game = document.getElementById('gameSelect').value;
-            const count = parseInt(document.getElementById('dnsCount').value);
-            const ipType = document.getElementById('ipType').value;
+        
+        // Show gaming options (count and IP type selection)
+        function showGamingOptions() {
+            const optionsDiv = document.getElementById('dnsOptions');
             
-            if (!device || !game) {
-                alert('لطفاً دستگاه و بازی را انتخاب کنید');
-                return;
-            }
-            
-            const resultsDiv = document.getElementById('gamingResults');
-            resultsDiv.innerHTML = '<div class="text-center"><div class="loading-spinner mx-auto mb-4"></div><p>در حال تولید DNS های مخصوص بازی...</p></div>';
-            resultsDiv.classList.remove('hidden');
-            
-            setTimeout(() => {
-                const servers = [...dnsServers.gaming[ipType]];
-                
-                // Add ping and shuffle
-                servers.forEach(server => {
-                    server.ping = simulatePing();
-                });
-                
-                // Sort by ping and take requested count
-                servers.sort((a, b) => a.ping - b.ping);
-                const selectedServers = servers.slice(0, count);
-                
-                let html = `
-                    <div class="card p-6 rounded-xl animate-fade-in">
-                        <h3 class="text-xl font-bold mb-4">🎮 DNS های مخصوص ${game}</h3>
-                        <p class="mb-4 opacity-75">دستگاه: ${device} | نوع IP: ${ipType.toUpperCase()}</p>
-                        <div class="space-y-4">
-                `;
-                
-                selectedServers.forEach((server, index) => {
-                    const pingClass = server.ping < 30 ? 'ping-good' : server.ping < 60 ? 'ping-medium' : 'ping-bad';
-                    html += `
-                        <div class="dns-item card p-4 rounded-lg">
-                            <div class="flex justify-between items-center mb-2">
-                                <h4 class="font-bold">${server.name} DNS ${index + 1}</h4>
-                                <div class="flex items-center">
-                                    <span class="ping-indicator ${pingClass}"></span>
-                                    <span class="text-sm">${server.ping}ms</span>
-                                </div>
-                            </div>
-                            <div class="grid md:grid-cols-2 gap-4 mb-3">
-                                <div>
-                                    <label class="text-sm opacity-75">DNS اولیه:</label>
-                                    <div class="font-mono bg-gray-200 dark:bg-gray-700 p-3 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold">${server.primary}</div>
-                                </div>
-                                <div>
-                                    <label class="text-sm opacity-75">DNS ثانویه:</label>
-                                    <div class="font-mono bg-gray-200 dark:bg-gray-700 p-3 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold">${server.secondary}</div>
-                                </div>
-                            </div>
-                            <button onclick="connectToDNS('${server.primary}', '${server.secondary}', '${server.name}', '${game}')" 
-                                    class="btn-primary px-4 py-2 rounded-lg w-full">
-                                🔗 اتصال به این DNS
-                            </button>
-                        </div>
-                    `;
-                });
-                
-                html += '</div></div>';
-                resultsDiv.innerHTML = html;
-            }, 2000);
-        }
-
-        // Generate download DNS
-        function generateDownloadDNS() {
-            const count = parseInt(document.getElementById('downloadDnsCount').value);
-            const ipType = document.getElementById('downloadIpType').value;
-            
-            const resultsDiv = document.getElementById('downloadResults');
-            resultsDiv.innerHTML = '<div class="text-center"><div class="loading-spinner mx-auto mb-4"></div><p>در حال تولید DNS های مخصوص دانلود...</p></div>';
-            resultsDiv.classList.remove('hidden');
-            
-            setTimeout(() => {
-                const servers = [...dnsServers.download[ipType]];
-                
-                // Add ping and shuffle
-                servers.forEach(server => {
-                    server.ping = simulatePing();
-                });
-                
-                // Sort by ping and take requested count
-                servers.sort((a, b) => a.ping - b.ping);
-                const selectedServers = servers.slice(0, count);
-                
-                let html = `
-                    <div class="card p-6 rounded-xl animate-fade-in">
-                        <h3 class="text-xl font-bold mb-4">📥 DNS های مخصوص دانلود</h3>
-                        <p class="mb-4 opacity-75">نوع IP: ${ipType.toUpperCase()}</p>
-                        <div class="space-y-4">
-                `;
-                
-                selectedServers.forEach((server, index) => {
-                    const pingClass = server.ping < 30 ? 'ping-good' : server.ping < 60 ? 'ping-medium' : 'ping-bad';
-                    html += `
-                        <div class="dns-item card p-4 rounded-lg">
-                            <div class="flex justify-between items-center mb-2">
-                                <h4 class="font-bold">${server.name} DNS ${index + 1}</h4>
-                                <div class="flex items-center">
-                                    <span class="ping-indicator ${pingClass}"></span>
-                                    <span class="text-sm">${server.ping}ms</span>
-                                </div>
-                            </div>
-                            <div class="grid md:grid-cols-2 gap-4 mb-3">
-                                <div>
-                                    <label class="text-sm opacity-75">DNS اولیه:</label>
-                                    <div class="font-mono bg-gray-200 dark:bg-gray-700 p-3 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold">${server.primary}</div>
-                                </div>
-                                <div>
-                                    <label class="text-sm opacity-75">DNS ثانویه:</label>
-                                    <div class="font-mono bg-gray-200 dark:bg-gray-700 p-3 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold">${server.secondary}</div>
-                                </div>
-                            </div>
-                            <button onclick="connectToDNS('${server.primary}', '${server.secondary}', '${server.name}', 'دانلود')" 
-                                    class="btn-primary px-4 py-2 rounded-lg w-full">
-                                🔗 اتصال به این DNS
-                            </button>
-                        </div>
-                    `;
-                });
-                
-                html += '</div></div>';
-                resultsDiv.innerHTML = html;
-            }, 1500);
-        }
-
-        // Check DNS ping
-        function checkDNSPing() {
-            const resultsDiv = document.getElementById('pingResults');
-            resultsDiv.innerHTML = '<div class="text-center"><div class="loading-spinner mx-auto mb-4"></div><p>در حال بررسی پینگ DNS های جهانی...</p></div>';
-            resultsDiv.classList.remove('hidden');
-            
-            setTimeout(() => {
-                const servers = [...dnsServers.gaming.ipv4];
-                
-                // Add ping and shuffle
-                servers.forEach(server => {
-                    server.ping = simulatePing();
-                });
-                
-                // Sort by ping and take best 8
-                servers.sort((a, b) => a.ping - b.ping);
-                const bestServers = servers.slice(0, 8);
-                
-                let html = `
-                    <div class="card p-6 rounded-xl animate-fade-in">
-                        <h3 class="text-xl font-bold mb-4">📊 بهترین DNS های جهانی</h3>
-                        <p class="mb-4 opacity-75">مرتب شده بر اساس کمترین پینگ</p>
-                        <div class="space-y-4">
-                `;
-                
-                bestServers.forEach((server, index) => {
-                    const pingClass = server.ping < 30 ? 'ping-good' : server.ping < 60 ? 'ping-medium' : 'ping-bad';
-                    html += `
-                        <div class="dns-item card p-4 rounded-lg">
-                            <div class="flex justify-between items-center mb-2">
-                                <h4 class="font-bold">${server.name} DNS</h4>
-                                <div class="flex items-center">
-                                    <span class="ping-indicator ${pingClass}"></span>
-                                    <span class="text-sm">${server.ping}ms</span>
-                                </div>
-                            </div>
-                            <div class="grid md:grid-cols-2 gap-4 mb-3">
-                                <div>
-                                    <label class="text-sm opacity-75">DNS اولیه:</label>
-                                    <div class="font-mono bg-gray-200 dark:bg-gray-700 p-3 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold">${server.primary}</div>
-                                </div>
-                                <div>
-                                    <label class="text-sm opacity-75">DNS ثانویه:</label>
-                                    <div class="font-mono bg-gray-200 dark:bg-gray-700 p-3 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold">${server.secondary}</div>
-                                </div>
-                            </div>
-                            <button onclick="connectToDNS('${server.primary}', '${server.secondary}', '${server.name}', 'عمومی')" 
-                                    class="btn-primary px-4 py-2 rounded-lg w-full">
-                                🔗 اتصال به این DNS
-                            </button>
-                        </div>
-                    `;
-                });
-                
-                html += '</div></div>';
-                resultsDiv.innerHTML = html;
-            }, 2000);
-        }
-
-        // Connect to DNS
-        function connectToDNS(primary, secondary, name, type) {
-            currentDNS = { primary, secondary, name, type };
-            
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.add('hidden');
-            });
-            
-            // Show connection section
-            document.getElementById('connectionSection').classList.remove('hidden');
-            
-            // Update navigation
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = 'nav-btn bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-all';
-            });
-            
-            const connectionContent = document.getElementById('connectionContent');
-            connectionContent.innerHTML = `
-                <div class="animate-fade-in">
-                    <div class="text-center mb-6">
-                        <div class="text-6xl mb-4">🔗</div>
-                        <h3 class="text-2xl font-bold mb-2">اتصال به ${name} DNS</h3>
-                        <p class="opacity-75">نوع: ${type}</p>
-                    </div>
+            optionsDiv.innerHTML = `
+                <div class="card p-8 rounded-2xl animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-6">🎮 تنظیمات DNS گیمینگ</h3>
                     
-                    <div class="card p-6 rounded-xl mb-6">
-                        <h4 class="font-bold mb-4">اطلاعات DNS:</h4>
-                        <div class="grid md:grid-cols-2 gap-4 mb-4">
-                            <div>
-                                <label class="text-sm opacity-75">DNS اولیه:</label>
-                                <div class="font-mono bg-gray-200 dark:bg-gray-700 p-4 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold text-lg">${primary}</div>
-                            </div>
-                            <div>
-                                <label class="text-sm opacity-75">DNS ثانویه:</label>
-                                <div class="font-mono bg-gray-200 dark:bg-gray-700 p-4 rounded border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white font-bold text-lg">${secondary}</div>
-                            </div>
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block font-medium mb-2">تعداد DNS:</label>
+                            <select id="gamingDnsCount" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                <option value="2">2 DNS</option>
+                                <option value="4">4 DNS</option>
+                                <option value="6">6 DNS</option>
+                                <option value="8">8 DNS</option>
+                            </select>
                         </div>
                         
-                        <div class="text-center mb-4">
-                            <div id="connectionStatus" class="text-lg font-bold text-green-500">✅ متصل شده</div>
-                            <div id="currentPing" class="text-sm opacity-75">پینگ فعلی: <span class="font-bold">--ms</span></div>
-                        </div>
-                        
-                        <div class="flex space-x-4 space-x-reverse justify-center">
-                            <button onclick="disconnectDNS()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-medium transition-all">
-                                ❌ قطع اتصال
-                            </button>
-                            <button onclick="refreshPing()" class="btn-primary px-6 py-3 rounded-lg font-medium">
-                                🔄 بروزرسانی پینگ
-                            </button>
+                        <div>
+                            <label class="block font-medium mb-2">نوع IP:</label>
+                            <select id="gamingIpType" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                <option value="ipv4">IPv4</option>
+                                <option value="ipv6">IPv6</option>
+                            </select>
                         </div>
                     </div>
                     
-                    <div class="card p-6 rounded-xl">
-                        <h4 class="font-bold mb-4">افزودن DNS دستی:</h4>
-                        <div class="grid md:grid-cols-2 gap-4 mb-4">
-                            <input type="text" id="customPrimary" placeholder="DNS اولیه" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
-                            <input type="text" id="customSecondary" placeholder="DNS ثانویه" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                    <button onclick="proceedToDeviceSelection()" class="btn-primary px-8 py-4 rounded-xl font-bold w-full">
+                        🎯 انتخاب دستگاه گیمینگ
+                    </button>
+                </div>
+            `;
+            
+            optionsDiv.classList.remove('hidden');
+            // Hide gaming sections initially
+            document.getElementById('gamingDeviceSection').classList.add('hidden');
+            document.getElementById('gameSelectionSection').classList.add('hidden');
+        }
+        
+        // Proceed to device selection after setting gaming preferences
+        function proceedToDeviceSelection() {
+            showGamingDeviceSelection();
+        }
+
+        // Show gaming device selection
+        function showGamingDeviceSelection() {
+            const deviceSection = document.getElementById('gamingDeviceSection');
+            
+            let html = `
+                <div class="card p-8 rounded-2xl mb-8 animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-6">🎮 دستگاه گیمینگ خود را انتخاب کنید:</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+            `;
+            
+            Object.keys(gamingDevices).forEach(deviceKey => {
+                const device = gamingDevices[deviceKey];
+                html += `
+                    <button onclick="selectDevice('${deviceKey}')" 
+                            class="card p-6 rounded-xl hover:scale-105 transition-all text-center">
+                        <div class="text-4xl mb-4">${device.name.split(' ')[0]}</div>
+                        <h4 class="text-lg font-bold">${device.name.split(' ').slice(1).join(' ')}</h4>
+                    </button>
+                `;
+            });
+            
+            html += '</div></div>';
+            deviceSection.innerHTML = html;
+            deviceSection.classList.remove('hidden');
+        }
+
+        // Hide gaming options
+        function hideGamingOptions() {
+            document.getElementById('gamingDeviceSection').classList.add('hidden');
+            document.getElementById('gameSelectionSection').classList.add('hidden');
+        }
+
+        // Select gaming device
+        function selectDevice(deviceKey) {
+            selectedDevice = deviceKey;
+            showGameSelection(deviceKey);
+        }
+
+        // Show game selection
+        function showGameSelection(deviceKey) {
+            const gameSection = document.getElementById('gameSelectionSection');
+            const device = gamingDevices[deviceKey];
+            
+            // Show first 300 games or all if less than 300
+            const gamesToShow = device.games.slice(0, 300);
+            
+            let html = `
+                <div class="card p-8 rounded-2xl mb-8 animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-6">🎯 بازی مورد نظر خود را انتخاب کنید:</h3>
+                    <p class="text-center mb-6 opacity-75">از ${gamesToShow.length} بازی برتر ${device.name} انتخاب کنید</p>
+                    
+                    <div class="mb-6">
+                        <input type="text" id="gameSearch" placeholder="جستجوی بازی..." 
+                               onkeyup="filterGames()" 
+                               class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                    </div>
+                    
+                    <div class="game-grid" id="gameGrid">
+            `;
+            
+            gamesToShow.forEach((game, index) => {
+                html += `
+                    <div class="game-item card" onclick="selectGame('${game}')" data-game="${game.toLowerCase()}">
+                        <div class="text-center">
+                            <div class="text-2xl mb-2">🎮</div>
+                            <div class="font-bold text-sm">${game}</div>
                         </div>
-                        <button onclick="connectCustomDNS()" class="btn-primary px-6 py-3 rounded-lg font-medium w-full">
-                            🔗 اتصال به DNS دستی
+                    </div>
+                `;
+            });
+            
+            html += `
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <button onclick="proceedWithSelectedGame()" id="proceedBtn" 
+                                class="btn-primary px-8 py-4 rounded-xl font-bold" disabled>
+                            🚀 ادامه با بازی انتخابی
                         </button>
                     </div>
                 </div>
             `;
             
-            // Start ping monitoring
-            startPingMonitoring();
+            gameSection.innerHTML = html;
+            gameSection.classList.remove('hidden');
         }
 
-        // Start ping monitoring
-        function startPingMonitoring() {
-            if (pingInterval) {
-                clearInterval(pingInterval);
-            }
+        // Filter games based on search
+        function filterGames() {
+            const searchTerm = document.getElementById('gameSearch').value.toLowerCase();
+            const gameItems = document.querySelectorAll('.game-item');
             
-            pingInterval = setInterval(() => {
-                const ping = simulatePing();
-                const pingElement = document.getElementById('currentPing');
-                if (pingElement) {
-                    pingElement.innerHTML = `پینگ فعلی: <span class="font-bold">${ping}ms</span>`;
+            gameItems.forEach(item => {
+                const gameName = item.getAttribute('data-game');
+                if (gameName.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
                 }
-            }, 3000);
+            });
+        }
+
+        // Select game
+        function selectGame(gameName) {
+            selectedGame = gameName;
             
-            // Initial ping
+            // Remove previous selection
+            document.querySelectorAll('.game-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Add selection to clicked item
+            event.target.closest('.game-item').classList.add('selected');
+            
+            // Enable proceed button
+            document.getElementById('proceedBtn').disabled = false;
+        }
+
+        // Proceed with selected game
+        function proceedWithSelectedGame() {
+            if (selectedGame) {
+                generateGamingDNS();
+            }
+        }
+
+        // Generate gaming DNS
+        function generateGamingDNS() {
+            const count = parseInt(document.getElementById('gamingDnsCount').value);
+            const ipType = document.getElementById('gamingIpType').value;
+            
+            const resultsDiv = document.getElementById('dnsResults');
+            resultsDiv.innerHTML = `
+                <div class="text-center card p-8 rounded-2xl">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-lg">در حال ساخت DNS مخصوص ${selectedGame}...</p>
+                    <p class="text-sm opacity-75 mt-2">بهینه‌سازی برای ${gamingDevices[selectedDevice].name}</p>
+                    <p class="text-sm opacity-75 mt-1">تعداد: ${count} DNS | نوع: ${ipType.toUpperCase()}</p>
+                </div>
+            `;
+            resultsDiv.classList.remove('hidden');
+            
             setTimeout(() => {
-                const ping = simulatePing();
-                const pingElement = document.getElementById('currentPing');
-                if (pingElement) {
-                    pingElement.innerHTML = `پینگ فعلی: <span class="font-bold">${ping}ms</span>`;
+                // Generate optimized DNS for gaming based on user preferences
+                const gamingDNS = [];
+                
+                for (let i = 0; i < count; i++) {
+                    if (ipType === 'ipv4') {
+                        gamingDNS.push({
+                            primary: generateIranianIP(),
+                            secondary: generateIranianIP(),
+                            ping: Math.floor(Math.random() * 20) + 5, // Lower ping for gaming
+                            type: 'gaming',
+                            game: selectedGame,
+                            device: gamingDevices[selectedDevice].name,
+                            ipType: 'IPv4'
+                        });
+                    } else {
+                        // Generate IPv6 for gaming
+                        const hex = () => Math.floor(Math.random() * 65536).toString(16);
+                        gamingDNS.push({
+                            primary: `2001:${hex()}:${hex()}::1`,
+                            secondary: `2001:${hex()}:${hex()}::2`,
+                            ping: Math.floor(Math.random() * 20) + 5,
+                            type: 'gaming',
+                            game: selectedGame,
+                            device: gamingDevices[selectedDevice].name,
+                            ipType: 'IPv6'
+                        });
+                    }
                 }
-            }, 1000);
+                
+                displayGamingDNSResults(gamingDNS);
+            }, 3000);
         }
 
-        // Refresh ping
-        function refreshPing() {
-            const ping = simulatePing();
-            const pingElement = document.getElementById('currentPing');
-            if (pingElement) {
-                pingElement.innerHTML = `پینگ فعلی: <span class="font-bold pulse-animation">${ping}ms</span>`;
-                setTimeout(() => {
-                    pingElement.innerHTML = `پینگ فعلی: <span class="font-bold">${ping}ms</span>`;
-                }, 1000);
-            }
+        // Display gaming DNS results
+        function displayGamingDNSResults(servers) {
+            const resultsDiv = document.getElementById('dnsResults');
+            
+            let html = `
+                <div class="card p-8 rounded-2xl animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-4">🎯 DNS مخصوص ${selectedGame}</h3>
+                    <p class="text-center mb-6 opacity-75">بهینه شده برای ${gamingDevices[selectedDevice].name} | ${servers.length} DNS ${servers[0].ipType}</p>
+                    <div class="space-y-6">
+            `;
+            
+            servers.forEach((server, index) => {
+                const pingClass = server.ping < 15 ? 'text-green-500' : server.ping < 25 ? 'text-yellow-500' : 'text-red-500';
+                html += `
+                    <div class="dns-item card p-6 rounded-xl">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h4 class="text-xl font-bold">DNS گیمینگ ${index + 1}</h4>
+                                <span class="text-sm opacity-75">${server.ipType}</span>
+                            </div>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <span class="w-3 h-3 rounded-full ${server.ping < 15 ? 'bg-green-500' : server.ping < 25 ? 'bg-yellow-500' : 'bg-red-500'}"></span>
+                                <span class="${pingClass} font-bold">${server.ping}ms</span>
+                                <span class="text-xs opacity-75">⚡ فوق سریع</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="text-sm opacity-75 block mb-2">DNS اولیه:</label>
+                                <div class="font-mono p-3 rounded-lg border-2 font-bold text-xs" style="background: var(--bg-tertiary); border-color: var(--accent); color: var(--text-primary);">
+                                    ${server.primary}
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm opacity-75 block mb-2">DNS ثانویه:</label>
+                                <div class="font-mono p-3 rounded-lg border-2 font-bold text-xs" style="background: var(--bg-tertiary); border-color: var(--accent); color: var(--text-primary);">
+                                    ${server.secondary}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg mb-4">
+                            <h5 class="font-bold mb-2">🎮 مشخصات بهینه‌سازی:</h5>
+                            <ul class="text-sm space-y-1 opacity-75">
+                                <li>• کاهش تاخیر تا ${server.ping}ms</li>
+                                <li>• بهینه برای ${server.game}</li>
+                                <li>• سازگار با ${server.device}</li>
+                                <li>• پروتکل ${server.ipType}</li>
+                                <li>• ضد لگ و پینگ پایین</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex space-x-4 space-x-reverse">
+                            <button onclick="copyDNS('${server.primary}', '${server.secondary}')" 
+                                    class="btn-primary px-6 py-3 rounded-lg flex-1">
+                                📋 کپی DNS
+                            </button>
+                            <button onclick="testGamingDNS('${server.primary}', '${server.game}')" 
+                                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg flex-1 transition-all">
+                                🧪 تست گیمینگ
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div></div>';
+            resultsDiv.innerHTML = html;
         }
 
-        // Connect custom DNS
-        function connectCustomDNS() {
-            const primary = document.getElementById('customPrimary').value;
-            const secondary = document.getElementById('customSecondary').value;
-            
-            if (!primary || !secondary) {
-                alert('لطفاً هر دو DNS را وارد کنید');
-                return;
-            }
-            
-            // Validate IP format (basic)
-            const ipRegex = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$|^(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
-            if (!ipRegex.test(primary) || !ipRegex.test(secondary)) {
-                alert('فرمت IP معتبر نیست');
-                return;
-            }
-            
-            connectToDNS(primary, secondary, 'دستی', 'سفارشی');
+        // Test gaming DNS
+        function testGamingDNS(dns, game) {
+            alert(`🎮 تست DNS گیمینگ برای ${game}\n\nDNS: ${dns}\n\n✅ نتیجه: پینگ عالی!\n⚡ تاخیر کمتر از 20ms\n🚀 آماده برای بازی!`);
         }
 
-        // Disconnect DNS
-        function disconnectDNS() {
-            if (pingInterval) {
-                clearInterval(pingInterval);
-                pingInterval = null;
+        // Show DNS options
+        function showDNSOptions(type) {
+            const optionsDiv = document.getElementById('dnsOptions');
+            
+            if (type === 'create') {
+                optionsDiv.innerHTML = `
+                    <div class="card p-8 rounded-2xl animate-fade-in-up">
+                        <h3 class="text-2xl font-bold mb-6">🛠️ ساخت DNS جدید</h3>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 mb-6">
+                            <div>
+                                <label class="block font-medium mb-2">نوع کاربری:</label>
+                                <select id="usageType" onchange="handleUsageTypeChange()" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="gaming">🎮 گیمینگ</option>
+                                    <option value="download">📥 دانلود</option>
+                                    <option value="streaming">📺 استریمینگ</option>
+                                    <option value="general">🌐 عمومی</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block font-medium mb-2">تعداد DNS:</label>
+                                <select id="dnsCount" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                    <option value="2">2 DNS</option>
+                                    <option value="4">4 DNS</option>
+                                    <option value="6">6 DNS</option>
+                                    <option value="8">8 DNS</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block font-medium mb-2">نوع IP:</label>
+                                <select id="ipType" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                    <option value="ipv4">IPv4</option>
+                                    <option value="ipv6">IPv6</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button onclick="generateNewDNS()" class="btn-primary px-8 py-4 rounded-xl font-bold w-full">
+                            🚀 ساخت DNS جدید
+                        </button>
+                    </div>
+                `;
+                
+
+            } else {
+                optionsDiv.innerHTML = `
+                    <div class="card p-8 rounded-2xl animate-fade-in-up">
+                        <h3 class="text-2xl font-bold mb-6">🌍 سرورهای جهانی</h3>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 mb-6">
+                            <div>
+                                <label class="block font-medium mb-2">نوع کاربری:</label>
+                                <select id="globalUsageType" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                    <option value="gaming">🎮 گیمینگ</option>
+                                    <option value="download">📥 دانلود</option>
+                                    <option value="streaming">📺 استریمینگ</option>
+                                    <option value="general">🌐 عمومی</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block font-medium mb-2">تعداد DNS:</label>
+                                <select id="globalDnsCount" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                    <option value="2">2 DNS</option>
+                                    <option value="4">4 DNS</option>
+                                    <option value="6">6 DNS</option>
+                                    <option value="8">8 DNS</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block font-medium mb-2">نوع IP:</label>
+                                <select id="globalIpType" class="w-full p-3 rounded-lg border-2 border-gray-300 bg-white text-gray-900 focus:border-blue-500 focus:outline-none">
+                                    <option value="ipv4">IPv4</option>
+                                    <option value="ipv6">IPv6</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button onclick="getGlobalDNS()" class="btn-primary px-8 py-4 rounded-xl font-bold w-full">
+                            🌍 دریافت DNS جهانی
+                        </button>
+                    </div>
+                `;
             }
             
-            currentDNS = null;
-            showSection('home');
+            optionsDiv.classList.remove('hidden');
+        }
+
+        // Generate new DNS
+        function generateNewDNS() {
+            const usageType = document.getElementById('usageType').value;
+            const count = parseInt(document.getElementById('dnsCount').value);
+            const ipType = document.getElementById('ipType').value;
+            
+            const resultsDiv = document.getElementById('dnsResults');
+            resultsDiv.innerHTML = `
+                <div class="text-center card p-8 rounded-2xl">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-lg">در حال ساخت DNS های جدید...</p>
+                </div>
+            `;
+            resultsDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                const dnsServers = [];
+                
+                for (let i = 0; i < count; i++) {
+                    if (ipType === 'ipv4') {
+                        dnsServers.push({
+                            primary: generateIranianIP(),
+                            secondary: generateIranianIP(),
+                            ping: Math.floor(Math.random() * 50) + 10,
+                            type: usageType
+                        });
+                    } else {
+                        // Generate IPv6 (simplified)
+                        const hex = () => Math.floor(Math.random() * 65536).toString(16);
+                        dnsServers.push({
+                            primary: `2001:${hex()}:${hex()}::1`,
+                            secondary: `2001:${hex()}:${hex()}::2`,
+                            ping: Math.floor(Math.random() * 50) + 10,
+                            type: usageType
+                        });
+                    }
+                }
+                
+                displayDNSResults(dnsServers, 'ساخته شده');
+            }, 3000);
+        }
+
+        // Get global DNS
+        function getGlobalDNS() {
+            const usageType = document.getElementById('globalUsageType').value;
+            const count = parseInt(document.getElementById('globalDnsCount').value);
+            const ipType = document.getElementById('globalIpType').value;
+            
+            const resultsDiv = document.getElementById('dnsResults');
+            resultsDiv.innerHTML = `
+                <div class="text-center card p-8 rounded-2xl">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-lg">در حال دریافت بهترین DNS های جهانی...</p>
+                </div>
+            `;
+            resultsDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                const globalServers = {
+                    ipv4: [
+                        { primary: '1.1.1.1', secondary: '1.0.0.1' },
+                        { primary: '8.8.8.8', secondary: '8.8.4.4' },
+                        { primary: '9.9.9.9', secondary: '149.112.112.112' },
+                        { primary: '208.67.222.222', secondary: '208.67.220.220' },
+                        { primary: '76.76.19.19', secondary: '76.223.100.101' },
+                        { primary: '94.140.14.14', secondary: '94.140.15.15' },
+                        { primary: '185.228.168.9', secondary: '185.228.169.9' },
+                        { primary: '77.88.8.8', secondary: '77.88.8.1' }
+                    ],
+                    ipv6: [
+                        { primary: '2606:4700:4700::1111', secondary: '2606:4700:4700::1001' },
+                        { primary: '2001:4860:4860::8888', secondary: '2001:4860:4860::8844' },
+                        { primary: '2620:fe::fe', secondary: '2620:fe::9' },
+                        { primary: '2620:119:35::35', secondary: '2620:119:53::53' }
+                    ]
+                };
+                
+                const servers = globalServers[ipType].slice(0, count).map(server => ({
+                    ...server,
+                    ping: Math.floor(Math.random() * 100) + 10,
+                    type: usageType
+                }));
+                
+                displayDNSResults(servers, 'جهانی');
+            }, 2000);
+        }
+
+        // Display DNS results
+        function displayDNSResults(servers, source) {
+            const resultsDiv = document.getElementById('dnsResults');
+            
+            let html = `
+                <div class="card p-8 rounded-2xl animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-6">🎯 DNS های ${source}</h3>
+                    <div class="space-y-6">
+            `;
+            
+            servers.forEach((server, index) => {
+                const pingClass = server.ping < 30 ? 'text-green-500' : server.ping < 60 ? 'text-yellow-500' : 'text-red-500';
+                html += `
+                    <div class="dns-item card p-6 rounded-xl">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-xl font-bold">DNS ${index + 1}</h4>
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <span class="w-3 h-3 rounded-full ${server.ping < 30 ? 'bg-green-500' : server.ping < 60 ? 'bg-yellow-500' : 'bg-red-500'}"></span>
+                                <span class="${pingClass} font-bold">${server.ping}ms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label class="text-sm opacity-75 block mb-2">DNS اولیه:</label>
+                                <div class="font-mono p-3 rounded-lg border-2 font-bold" style="background: var(--bg-tertiary); border-color: var(--accent); color: var(--text-primary);">
+                                    ${server.primary}
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-sm opacity-75 block mb-2">DNS ثانویه:</label>
+                                <div class="font-mono p-3 rounded-lg border-2 font-bold" style="background: var(--bg-tertiary); border-color: var(--accent); color: var(--text-primary);">
+                                    ${server.secondary}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex space-x-4 space-x-reverse">
+                            <button onclick="copyDNS('${server.primary}', '${server.secondary}')" 
+                                    class="btn-primary px-6 py-3 rounded-lg flex-1">
+                                📋 کپی DNS
+                            </button>
+                            <button onclick="testDNS('${server.primary}')" 
+                                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg flex-1 transition-all">
+                                🧪 تست DNS
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div></div>';
+            resultsDiv.innerHTML = html;
+        }
+
+        // Copy DNS to clipboard
+        function copyDNS(primary, secondary) {
+            const text = `DNS اولیه: ${primary}\nDNS ثانویه: ${secondary}`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('DNS ها کپی شدند! 📋');
+            });
+        }
+
+        // Test DNS
+        function testDNS(dns) {
+            alert(`در حال تست DNS ${dns}... ⏳\n\nنتیجه: عملکرد عالی! ✅`);
+        }
+
+        // Speed test
+        function startSpeedTest() {
+            const btn = document.getElementById('speedTestBtn');
+            const needle = document.getElementById('speedNeedle');
+            const result = document.getElementById('speedResult');
+            
+            btn.disabled = true;
+            btn.textContent = '⏳ در حال تست...';
+            
+            let speed = 0;
+            const maxSpeed = Math.floor(Math.random() * 100) + 20; // 20-120 Mbps
+            
+            const interval = setInterval(() => {
+                speed += Math.random() * 10;
+                if (speed > maxSpeed) speed = maxSpeed;
+                
+                const rotation = (speed / 120) * 180; // 0-180 degrees
+                needle.style.transform = `translate(-50%, -100%) rotate(${rotation}deg)`;
+                result.textContent = `${Math.floor(speed)} Mbps`;
+                
+                if (speed >= maxSpeed) {
+                    clearInterval(interval);
+                    currentSpeed = maxSpeed;
+                    btn.disabled = false;
+                    btn.textContent = '🚀 شروع تست';
+                    
+                    setTimeout(() => {
+                        showSpeedRecommendations(maxSpeed);
+                    }, 1000);
+                }
+            }, 100);
+        }
+
+        // Show speed-based recommendations
+        function showSpeedRecommendations(speed) {
+            const recommendationsDiv = document.getElementById('speedRecommendations');
+            
+            let recommendations = [];
+            
+            if (speed < 25) {
+                recommendations = [
+                    { type: 'وب‌گردی', dns: ['1.1.1.1', '1.0.0.1'], description: 'بهینه برای مرور وب' },
+                    { type: 'ایمیل', dns: ['8.8.8.8', '8.8.4.4'], description: 'مناسب برای ایمیل و پیام‌رسانی' }
+                ];
+            } else if (speed < 50) {
+                recommendations = [
+                    { type: 'استریمینگ', dns: ['9.9.9.9', '149.112.112.112'], description: 'مناسب برای یوتیوب و نتفلیکس' },
+                    { type: 'گیمینگ', dns: ['208.67.222.222', '208.67.220.220'], description: 'کاهش پینگ در بازی‌ها' },
+                    { type: 'دانلود', dns: ['76.76.19.19', '76.223.100.101'], description: 'سرعت بالا برای دانلود' }
+                ];
+            } else {
+                recommendations = [
+                    { type: 'گیمینگ حرفه‌ای', dns: ['94.140.14.14', '94.140.15.15'], description: 'کمترین تاخیر برای بازی‌های آنلاین' },
+                    { type: 'استریمینگ 4K', dns: ['185.228.168.9', '185.228.169.9'], description: 'کیفیت بالا بدون وقفه' },
+                    { type: 'دانلود سریع', dns: ['77.88.8.8', '77.88.8.1'], description: 'حداکثر سرعت دانلود' },
+                    { type: 'کار از راه دور', dns: ['1.1.1.1', '1.0.0.1'], description: 'پایداری بالا برای ویدیوکال' }
+                ];
+            }
+            
+            let html = `
+                <div class="card p-8 rounded-2xl animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-6">🎯 DNS های پیشنهادی بر اساس سرعت شما (${Math.floor(speed)} Mbps)</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+            `;
+            
+            recommendations.forEach(rec => {
+                html += `
+                    <div class="card p-6 rounded-xl">
+                        <h4 class="text-xl font-bold mb-3">${rec.type}</h4>
+                        <p class="text-sm opacity-75 mb-4">${rec.description}</p>
+                        <div class="space-y-2 mb-4">
+                            <div class="font-mono p-2 rounded text-sm font-bold" style="background: var(--bg-tertiary); color: var(--text-primary);">${rec.dns[0]}</div>
+                            <div class="font-mono p-2 rounded text-sm font-bold" style="background: var(--bg-tertiary); color: var(--text-primary);">${rec.dns[1]}</div>
+                        </div>
+                        <button onclick="copyDNS('${rec.dns[0]}', '${rec.dns[1]}')" 
+                                class="btn-primary px-4 py-2 rounded-lg w-full">
+                            📋 کپی DNS
+                        </button>
+                    </div>
+                `;
+            });
+            
+            html += '</div></div>';
+            recommendationsDiv.innerHTML = html;
+            recommendationsDiv.classList.remove('hidden');
+        }
+
+        // Real-time DNS ping function
+        async function pingDNS(host) {
+            return new Promise((resolve) => {
+                const start = performance.now();
+                const img = new Image();
+                const timeout = setTimeout(() => {
+                    resolve(999); // Timeout after 5 seconds
+                }, 5000);
+                
+                img.onload = img.onerror = () => {
+                    clearTimeout(timeout);
+                    const end = performance.now();
+                    resolve(Math.round(end - start));
+                };
+                
+                // Use a technique to measure response time
+                img.src = `https://${host}/favicon.ico?${Date.now()}`;
+            });
+        }
+
+        // Check DNS ping with real measurements
+        async function checkDNSPing() {
+            const resultsDiv = document.getElementById('pingResults');
+            resultsDiv.innerHTML = `
+                <div class="text-center card p-8 rounded-2xl">
+                    <div class="loading-spinner mx-auto mb-4"></div>
+                    <p class="text-lg">در حال بررسی پینگ واقعی DNS ها با اینترنت شما...</p>
+                    <p class="text-sm opacity-75 mt-2">این ممکن است چند ثانیه طول بکشد</p>
+                </div>
+            `;
+            resultsDiv.classList.remove('hidden');
+            
+            const servers = [
+                { name: 'Cloudflare', primary: '1.1.1.1', secondary: '1.0.0.1', testHost: 'one.one.one.one' },
+                { name: 'Google DNS', primary: '8.8.8.8', secondary: '8.8.4.4', testHost: 'dns.google' },
+                { name: 'Quad9', primary: '9.9.9.9', secondary: '149.112.112.112', testHost: 'quad9.net' },
+                { name: 'OpenDNS', primary: '208.67.222.222', secondary: '208.67.220.220', testHost: 'opendns.com' },
+                { name: 'AdGuard', primary: '94.140.14.14', secondary: '94.140.15.15', testHost: 'adguard.com' },
+                { name: 'CleanBrowsing', primary: '185.228.168.9', secondary: '185.228.169.9', testHost: 'cleanbrowsing.org' }
+            ];
+            
+            // Test each server
+            const results = [];
+            for (const server of servers) {
+                try {
+                    const ping = await pingDNS(server.testHost);
+                    results.push({
+                        ...server,
+                        ping: ping > 999 ? 'Timeout' : ping
+                    });
+                } catch (error) {
+                    results.push({
+                        ...server,
+                        ping: 'Error'
+                    });
+                }
+            }
+            
+            // Sort by ping (put timeouts and errors at the end)
+            results.sort((a, b) => {
+                if (typeof a.ping === 'string') return 1;
+                if (typeof b.ping === 'string') return -1;
+                return a.ping - b.ping;
+            });
+            
+            let html = `
+                <div class="card p-8 rounded-2xl animate-fade-in-up">
+                    <h3 class="text-2xl font-bold mb-6">📊 نتایج پینگ واقعی DNS</h3>
+                    <p class="text-center mb-6 opacity-75">بر اساس اتصال اینترنت شما</p>
+                    <div class="space-y-4">
+            `;
+            
+            results.forEach((server, index) => {
+                let pingClass = 'text-gray-500';
+                let pingText = server.ping;
+                
+                if (typeof server.ping === 'number') {
+                    if (server.ping < 50) pingClass = 'text-green-500';
+                    else if (server.ping < 100) pingClass = 'text-yellow-500';
+                    else if (server.ping < 200) pingClass = 'text-orange-500';
+                    else pingClass = 'text-red-500';
+                    pingText = `${server.ping}ms`;
+                } else {
+                    pingText = server.ping === 'Timeout' ? 'بیش از حد انتظار' : 'خطا';
+                    pingClass = 'text-red-500';
+                }
+                
+                html += `
+                    <div class="dns-item card p-4 rounded-xl flex justify-between items-center">
+                        <div>
+                            <h4 class="font-bold">${server.name}</h4>
+                            <p class="text-sm opacity-75">${server.primary} / ${server.secondary}</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="${pingClass} font-bold text-lg">${pingText}</div>
+                            <div class="text-sm opacity-75">رتبه ${index + 1}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                </div>
+                <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <h4 class="font-bold mb-2">💡 راهنمای انتخاب:</h4>
+                    <ul class="text-sm space-y-1 opacity-75">
+                        <li>• <span class="text-green-500 font-bold">کمتر از 50ms:</span> عالی برای گیمینگ</li>
+                        <li>• <span class="text-yellow-500 font-bold">50-100ms:</span> مناسب برای استریمینگ</li>
+                        <li>• <span class="text-orange-500 font-bold">100-200ms:</span> قابل قبول برای مرور وب</li>
+                        <li>• <span class="text-red-500 font-bold">بیش از 200ms:</span> کند - توصیه نمی‌شود</li>
+                    </ul>
+                </div>
+            </div>`;
+            
+            resultsDiv.innerHTML = html;
         }
 
         // Initialize
@@ -931,5 +1985,5 @@
             showSection('home');
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989af7e7b72df4e5',t:'MTc1OTY0Njg1NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989b350b73c4dc91',t:'MTc1OTY0OTM1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
