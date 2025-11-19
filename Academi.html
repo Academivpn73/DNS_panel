@@ -4,11 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Academi VPN</title>
-  <link rel="icon" type="image/png" href="...">
-  <script src="/_sdk/element_sdk.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academi VPN</title>
   <link rel="icon" type="image/png" href="https://github.com/Academivpn73/DNS_panel/blob/main/Academi_logo1.png?raw=true">
   <script src="/_sdk/element_sdk.js"></script>
   <style>
@@ -52,11 +47,6 @@
             animation: logoFloat 3s ease-in-out infinite;
         }
 
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
         .logo img {
             width: 100%;
             height: 100%;
@@ -69,25 +59,9 @@
             font-weight: 900;
             margin-bottom: 10px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: textGradient 3s ease infinite, textPulse 2s ease-in-out infinite;
+            color: #ffffff;
             letter-spacing: 2px;
             text-transform: uppercase;
-        }
-
-        @keyframes textGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes textPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         /* Connectix Banner Styles */
@@ -97,12 +71,6 @@
             padding: 20px;
             margin: 20px 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: bannerPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes bannerPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); }
         }
 
         .banner-content {
@@ -117,12 +85,6 @@
             height: 80px;
             border-radius: 15px;
             object-fit: cover;
-            animation: logoRotate 6s linear infinite;
-        }
-
-        @keyframes logoRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
 
         .banner-text h2 {
@@ -195,7 +157,7 @@
         .nav-item {
             position: relative;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -211,7 +173,7 @@
             border-radius: 50%;
             background-color: #000;
             color: #fff;
-            transition: all 0.3s ease-in-out;
+            transition: transform 0.2s ease;
             border: 2px solid #333;
         }
 
@@ -220,7 +182,7 @@
             font-weight: 600;
             color: #ccc;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: color 0.2s ease;
         }
 
         .nav-item.active .nav-label {
@@ -241,25 +203,7 @@
         }
 
         .nav-item:hover .nav-icon {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
-            border-color: #fff;
-        }
-
-        .nav-item:nth-child(1):hover .nav-icon {
-            background: linear-gradient(45deg, #4CAF50, #2196F3);
-        }
-
-        .nav-item:nth-child(2):hover .nav-icon {
-            background: linear-gradient(45deg, #00a2ff, #0078d4);
-        }
-
-        .nav-item:nth-child(3):hover .nav-icon {
-            background: linear-gradient(45deg, #ff009d, #ff6b6b);
-        }
-
-        .nav-item:nth-child(4):hover .nav-icon {
-            background: linear-gradient(45deg, #23b100, #4CAF50);
+            transform: translateY(-3px);
         }
 
         .nav-tooltip {
@@ -275,14 +219,13 @@
             visibility: hidden;
             font-size: 12px;
             font-weight: 700;
-            transition: all 0.3s ease;
+            transition: opacity 0.2s ease;
             white-space: nowrap;
         }
 
         .nav-item:hover .nav-tooltip {
             opacity: 1;
             visibility: visible;
-            top: -50px;
         }
 
         .nav-item.active .nav-icon {
@@ -297,16 +240,10 @@
 
         .page {
             display: none;
-            animation: fadeIn 0.5s ease;
         }
 
         .page.active {
             display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .current-page-title {
@@ -318,7 +255,7 @@
             padding: 10px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
 
         /* Home Page Styles */
@@ -333,15 +270,14 @@
             background: rgba(255, 255, 255, 0.15);
             padding: 20px;
             border-radius: 15px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
         }
 
         .feature-card h3 {
@@ -368,7 +304,7 @@
             background: rgba(255, 255, 255, 0.15);
             padding: 30px;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
             max-width: 350px;
@@ -407,7 +343,7 @@
             font-weight: 700;
             font-size: 14px;
             display: inline-block;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
@@ -417,7 +353,6 @@
 
         .telegram-btn:hover, .support-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         /* Page Header Styles */
@@ -458,12 +393,6 @@
 
         .websites-page.active .websites-fullscreen {
             display: block;
-            animation: slideInFromRight 0.5s ease;
-        }
-
-        @keyframes slideInFromRight {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
         }
 
         .websites-header {
@@ -552,20 +481,18 @@
             padding: 25px;
             border-radius: 20px;
             color: #ffffff;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
             position: relative;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: flex-start;
             gap: 20px;
         }
 
         .website-card:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
         }
 
         .website-card.active {
@@ -643,7 +570,7 @@
             font-weight: 700;
             font-size: 14px;
             display: inline-block;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             width: fit-content;
             text-align: center;
@@ -652,8 +579,6 @@
 
         .enter-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-            background: linear-gradient(45deg, #45a049, #1976d2);
         }
 
         /* Websites Navigation Styles */
@@ -677,15 +602,14 @@
             align-items: center;
             gap: 15px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
 
         .websites-nav-item:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
         }
 
         .websites-nav-icon {
@@ -738,7 +662,17 @@
             }
         }
 
-
+        .description {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
         .footer {
             text-align: center;
@@ -781,11 +715,6 @@
             .description {
                 padding: 15px;
                 font-size: 14px;
-            }
-            
-            .option {
-                padding: 15px 18px;
-                font-size: 15px;
             }
         }
 
@@ -882,7 +811,7 @@
     </div><!-- Telegram Page -->
     <div class="page telegram-page" id="telegram-page">
      <div class="page-header">
-      <h2>📱 کانال تلگرام ما</h2>
+      <h2>���� کانال تلگرام ما</h2>
      </div>
      <div class="telegram-content">
       <div class="telegram-card"><img src="https://github.com/Academivpn73/DNS_panel/blob/main/Academi_logo1.png?raw=true" alt="Telegram" class="telegram-logo">
@@ -893,7 +822,7 @@
     </div><!-- Support Page -->
     <div class="page support-page" id="support-page">
      <div class="page-header">
-      <h2>🛠️ پشتیبانی</h2>
+      <h2>🛠��� ��شتیبانی</h2>
      </div>
      <div class="support-content">
       <div class="support-card"><img src="https://github.com/Academivpn73/DNS_panel/blob/main/Mahdi.jpg?raw=true" alt="Support" class="support-avatar">
@@ -945,6 +874,24 @@
          <p>مدیریت و بهینه‌سازی Cloudflare Warp</p><span class="card-status available">✅ فعال</span> <a href="https://t.me/academipasswordbot?start=NThrmMFu7n7i" target="_blank" rel="noopener noreferrer" class="enter-btn"> ورود 🚀 </a>
         </div>
        </div>
+       <div class="website-card active" id="fourth-option">
+        <div class="card-icon">
+         🔗
+        </div>
+        <div class="card-content">
+         <h4>کوتاه کننده لینک</h4>
+         <p>کوتاه کردن و مدیریت لینک‌های بلند</p><span class="card-status available">✅ فعال</span> <a href="https://t.me/academipasswordbot?start=a8tzG7tQ" target="_blank" rel="noopener noreferrer" class="enter-btn"> ورود 🚀 </a>
+        </div>
+       </div>
+       <div class="website-card coming-soon">
+        <div class="card-icon">
+         🎯
+        </div>
+        <div class="card-content">
+         <h4>به زودی</h4>
+         <p>سرویس جدید به زودی راه‌اندازی می‌شود</p><span class="card-status coming">⏳ به زودی</span> <a href="https://t.me/academipasswordbot?start=tC7YkNndG" target="_blank" rel="noopener noreferrer" class="enter-btn"> ورود 🚀 </a>
+        </div>
+       </div>
       </div><!-- Bottom Navigation in Websites Page -->
       <div class="websites-navigation">
        <div class="websites-nav-grid">
@@ -953,7 +900,7 @@
          </div>
          <div class="websites-nav-content">
           <h4>کانال تلگرام</h4>
-          <p>آخرین اخبار و آپدیت‌ها</p>
+          <p>آخرین اخبار و ��پدیت‌ها</p>
          </div>
         </div>
         <div class="websites-nav-item" onclick="navigateToSupport()">
@@ -977,7 +924,7 @@
         const defaultConfig = {
             site_title: "Academi VPN",
             channel_name: "Telegram channel",
-            description: "به چنل و سایت‌های Academi VPN خوش آمدید! ما ارائه‌دهنده بهترین سرویس‌های VPN و ابزارهای امنیتی هستیم. در اینجا می‌توانید به تمامی سرویس‌ها و ابزارهای ما دسترسی پیدا کنید.",
+            description: "به چنل و سایت‌های Academi VPN خوش آمدید! ما ارائه‌دهنده بهترین سرویس‌های VPN و ابزارهای امنیتی هستیم.",
             first_option: "DNS Manager",
             second_option: "تست پینگ DNS",
             third_option: "وارپ منیجر",
@@ -1063,25 +1010,29 @@
 
             // Update text content
             document.getElementById('site-title').textContent = siteTitle;
-            document.getElementById('description').textContent = description;
-            document.getElementById('first-option').textContent = firstOption;
-            document.getElementById('second-option').textContent = secondOption;
-            document.getElementById('third-option').textContent = thirdOption;
+            const descElement = document.querySelector('.description');
+            if (descElement) descElement.textContent = description;
+            
+            const firstOptionCard = document.getElementById('first-option');
+            if (firstOptionCard) firstOptionCard.querySelector('h4').textContent = firstOption;
+            
+            const secondOptionCard = document.getElementById('second-option');
+            if (secondOptionCard) secondOptionCard.querySelector('h4').textContent = secondOption;
+            
+            const thirdOptionCard = document.getElementById('third-option');
+            if (thirdOptionCard) thirdOptionCard.querySelector('h4').textContent = thirdOption;
 
             // Update colors
             document.body.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
             document.body.style.color = textColor;
             
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                if (!option.classList.contains('active') && !option.classList.contains('coming-soon')) {
-                    option.style.background = surfaceColor;
-                    option.style.color = textColor;
-                }
-            });
+            const websitesFullscreen = document.querySelector('.websites-fullscreen');
+            if (websitesFullscreen) {
+                websitesFullscreen.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+            }
 
             const footer = document.querySelector('.footer');
-            footer.style.color = accentColor;
+            if (footer) footer.style.color = accentColor;
         }
 
         function mapToCapabilities(config) {
@@ -1154,5 +1105,5 @@
             });
         }
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99f9dcb1f3ba371d',t:'MTc2MzMyNjI0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
- </html>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a0fc1ad05916ae1',t:'MTc2MzU1NTgyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+                          </html>
